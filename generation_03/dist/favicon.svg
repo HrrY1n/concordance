@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .paper { fill: #f7f4ed; }
+    .bars  { fill: #211b10; }
+    .live  { fill: #2547d0; }
+    @media (prefers-color-scheme: dark) {
+      .paper { fill: #1d1a15; }
+      .bars  { fill: #ebe5d8; }
+      .live  { fill: #97acff; }
+    }
+  </style>
+  <rect class="paper" width="64" height="64" />
+  <rect class="bars" x="12" y="38" width="9" height="16" />
+  <rect class="bars" x="27.5" y="28" width="9" height="26" />
+  <rect class="live" x="43" y="14" width="9" height="40" />
+</svg>

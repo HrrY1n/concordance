@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "_template",
+    "generation_02/*",
+    "generation_03",
+    "final"
+  ],
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

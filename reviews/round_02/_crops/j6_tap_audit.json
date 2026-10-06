@@ -1,0 +1,424 @@
+{
+  "A": {
+    "390": {
+      "overflow": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "Skip to content",
+          "w": 1,
+          "h": 1,
+          "cls": "t-mono sr-only focus:not-sr-only focus:fixed focus:left-4 fo"
+        },
+        {
+          "tag": "a",
+          "text": "Selected Work ↘",
+          "w": 114,
+          "h": 22,
+          "cls": "t-body-sm text-ink-2 underline decoration-line-2 underline-o"
+        },
+        {
+          "tag": "a",
+          "text": "Lab ↘",
+          "w": 42,
+          "h": 22,
+          "cls": "t-body-sm text-ink-2 underline decoration-line-2 underline-o"
+        },
+        {
+          "tag": "a",
+          "text": "Open the instrument in the Lab ↘",
+          "w": 227,
+          "h": 14,
+          "cls": "t-mono-sm uppercase text-accent-ink underline decoration-acc"
+        },
+        {
+          "tag": "a",
+          "text": "Inject it in the Lab ↘",
+          "w": 135,
+          "h": 17,
+          "cls": "text-ink-2 underline decoration-line-2 underline-offset-4 tr"
+        }
+      ],
+      "pageErrors": []
+    },
+    "430": {
+      "overflow": {
+        "scrollWidth": 430,
+        "clientWidth": 430,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "Skip to content",
+          "w": 1,
+          "h": 1,
+          "cls": "t-mono sr-only focus:not-sr-only focus:fixed focus:left-4 fo"
+        },
+        {
+          "tag": "a",
+          "text": "Selected Work ↘",
+          "w": 114,
+          "h": 22,
+          "cls": "t-body-sm text-ink-2 underline decoration-line-2 underline-o"
+        },
+        {
+          "tag": "a",
+          "text": "Lab ↘",
+          "w": 42,
+          "h": 22,
+          "cls": "t-body-sm text-ink-2 underline decoration-line-2 underline-o"
+        },
+        {
+          "tag": "a",
+          "text": "Open the instrument in the Lab ↘",
+          "w": 227,
+          "h": 14,
+          "cls": "t-mono-sm uppercase text-accent-ink underline decoration-acc"
+        },
+        {
+          "tag": "a",
+          "text": "Inject it in the Lab ↘",
+          "w": 367,
+          "h": 39,
+          "cls": "text-ink-2 underline decoration-line-2 underline-offset-4 tr"
+        }
+      ],
+      "pageErrors": []
+    }
+  },
+  "D": {
+    "390": {
+      "overflow": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "Skip to content",
+          "w": 1,
+          "h": 1,
+          "cls": "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top"
+        },
+        {
+          "tag": "a",
+          "text": "OFFPRINT· WORKING EDITION",
+          "w": 71,
+          "h": 16,
+          "cls": "font-mono text-xs font-medium tracking-[0.14em] text-ink-str"
+        },
+        {
+          "tag": "a",
+          "text": "↓ 01 — THE QUESTION LEDGER",
+          "w": 187,
+          "h": 16,
+          "cls": "type-mono link-ink"
+        },
+        {
+          "tag": "a",
+          "text": "→ 02 — SELECTED WORK",
+          "w": 149,
+          "h": 16,
+          "cls": "type-mono link-ink"
+        },
+        {
+          "tag": "a",
+          "text": "→ READ THE LEDGER",
+          "w": 127,
+          "h": 16,
+          "cls": "type-mono link-quiet mt-3 inline-block"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "summary",
+          "text": "[1]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        },
+        {
+          "tag": "a",
+          "text": "→ RUN IT IN THE LAB",
+          "w": 142,
+          "h": 16,
+          "cls": "type-mono link-ink font-medium"
+        },
+        {
+          "tag": "a",
+          "text": "→ RUN IT IN THE LAB",
+          "w": 142,
+          "h": 16,
+          "cls": "type-mono link-ink font-medium"
+        },
+        {
+          "tag": "a",
+          "text": "▶ TRY IT NOW — CORRUPTION SANDBOX",
+          "w": 242,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "a",
+          "text": "→ YOU ARE LOOKING AT IT",
+          "w": 170,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "a",
+          "text": "OPEN THE SANDBOX →",
+          "w": 134,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "summary",
+          "text": "[2]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        },
+        {
+          "tag": "summary",
+          "text": "[3]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        }
+      ],
+      "pageErrors": []
+    },
+    "430": {
+      "overflow": {
+        "scrollWidth": 430,
+        "clientWidth": 430,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "Skip to content",
+          "w": 1,
+          "h": 1,
+          "cls": "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top"
+        },
+        {
+          "tag": "a",
+          "text": "OFFPRINT· WORKING EDITION",
+          "w": 71,
+          "h": 16,
+          "cls": "font-mono text-xs font-medium tracking-[0.14em] text-ink-str"
+        },
+        {
+          "tag": "a",
+          "text": "↓ 01 — THE QUESTION LEDGER",
+          "w": 187,
+          "h": 16,
+          "cls": "type-mono link-ink"
+        },
+        {
+          "tag": "a",
+          "text": "→ 02 — SELECTED WORK",
+          "w": 149,
+          "h": 16,
+          "cls": "type-mono link-ink"
+        },
+        {
+          "tag": "a",
+          "text": "→ READ THE LEDGER",
+          "w": 127,
+          "h": 16,
+          "cls": "type-mono link-quiet mt-3 inline-block"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "button",
+          "text": "RAG",
+          "w": 22,
+          "h": 44,
+          "cls": "link-quiet font-mono"
+        },
+        {
+          "tag": "summary",
+          "text": "[1]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        },
+        {
+          "tag": "a",
+          "text": "→ RUN IT IN THE LAB",
+          "w": 142,
+          "h": 16,
+          "cls": "type-mono link-ink font-medium"
+        },
+        {
+          "tag": "a",
+          "text": "→ RUN IT IN THE LAB",
+          "w": 142,
+          "h": 16,
+          "cls": "type-mono link-ink font-medium"
+        },
+        {
+          "tag": "a",
+          "text": "▶ TRY IT NOW — CORRUPTION SANDBOX",
+          "w": 242,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "a",
+          "text": "→ YOU ARE LOOKING AT IT",
+          "w": 170,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "a",
+          "text": "OPEN THE SANDBOX →",
+          "w": 134,
+          "h": 16,
+          "cls": "type-mono font-medium text-ink-strong underline decoration-d"
+        },
+        {
+          "tag": "summary",
+          "text": "[2]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        },
+        {
+          "tag": "summary",
+          "text": "[3]",
+          "w": 35,
+          "h": 44,
+          "cls": ""
+        }
+      ],
+      "pageErrors": []
+    }
+  },
+  "H": {
+    "390": {
+      "overflow": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "⌕retrieval index",
+          "w": 21,
+          "h": 44,
+          "cls": "flex min-h-[44px] items-center gap-2 pr-2"
+        },
+        {
+          "tag": "a",
+          "text": "Open the sandbox →",
+          "w": 149,
+          "h": 24,
+          "cls": "u-link t-small"
+        },
+        {
+          "tag": "a",
+          "text": "The research is already visible →",
+          "w": 235,
+          "h": 24,
+          "cls": "u-link t-small"
+        },
+        {
+          "tag": "a",
+          "text": "Working notes appear first →",
+          "w": 207,
+          "h": 24,
+          "cls": "u-link t-small"
+        }
+      ],
+      "pageErrors": []
+    },
+    "430": {
+      "overflow": {
+        "scrollWidth": 430,
+        "clientWidth": 430,
+        "overflowPx": 0,
+        "bodyOverflow": 0
+      },
+      "smallTapTargets": [
+        {
+          "tag": "a",
+          "text": "⌕retrieval index",
+          "w": 21,
+          "h": 44,
+          "cls": "flex min-h-[44px] items-center gap-2 pr-2"
+        },
+        {
+          "tag": "a",
+          "text": "Open the sandbox →",
+          "w": 149,
+          "h": 24,
+          "cls": "u-link t-small"
+        },
+        {
+          "tag": "a",
+          "text": "The research is already visible →",
+          "w": 235,
+          "h": 24,
+          "cls": "u-link t-small"
+        },
+        {
+          "tag": "a",
+          "text": "Working notes appear first →",
+          "w": 207,
+          "h": 24,
+          "cls": "u-link t-small"
+        }
+      ],
+      "pageErrors": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+A2b menu links (height + computed min-height): [{"h":54,"minH":"44px","text":"§01Research6 TOPICS "},{"h":54,"minH":"44px","text":"§02Selected Work4 CH"},{"h":54,"minH":"44px","text":"§03Lab3 DEMOS · 0MS "},{"h":54,"minH":"44px","text":"§04Notes3 ENTRIES"},{"h":54,"minH":"44px","text":"§05Publications0 REC"},{"h":54,"minH":"44px","text":"§06About"},{"h":54,"minH":"44px","text":"§07Connect"}]
+A4 menu link tap -> {"url":"/research","menuGone":true,"htmlOverflow":"","scrollY":0,"darkStillOn":false}
+A5 Esc closes: {"menuGone":true,"htmlOverflow":""}
+A6 30x Tab inside dialog: {"inside":false}
+A7 radio ArrowRight from Dark: {"dark":false,"active":"Sys"}
+B1 chip -> palette prefilled: {"open":true,"q":"RAG","opts":4,"top":85,"h":56,"focused":true}
+B2 option tap -> {"url":"/research","closed":true}
+B3 palette @ keyboard-height 300px: {"vh":300,"inputTop":41,"inputBottom":97,"listH":322}
+B3b first option rect @300px: {"top":98,"bottom":142}
+C2 inject: {"bars":["scaleX(1)","scaleX(0.508294)","scaleX(0.491298)","scaleX(0.267774)","scaleX(0.258355)"],"poisoned":true,"live":"Poisoned document injected: it ranks 1 with score 3.73."}
+C3 defense: {"live":"Toy defense on: the poisoned document is demoted to rank 6. Top result is d1.","defenseNote":"Toy heuristic — instruction-pattern passages down-weighted ×0.1. Not a real defense."}
+C4 geometry: {"trackW":[129,129,129,129,129],"btnH":[44,44],"rowW":[300,300,300]}
+C5 remove poison -> live: Poisoned document removed. Clean corpus restored.
+D1 notes fold: {"folds":2,"summaryH":44,"measure":342} -> open after tap: true
+E1 430px connect + safe-area (env=0 emulation): {"sw":430,"vw":430,"headerPadTop":"0px","footerMarginBottom":"0px","viewportFit":"width=device-width, initial-scale=1.0, viewport-fit=cover"}

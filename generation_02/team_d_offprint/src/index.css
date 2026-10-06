@@ -1,0 +1,477 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   OFFPRINT — generation 2 design tokens
+   Light = warm paper on a desk. Dark = the same sheet under a reading lamp.
+   Accent (cinnabar) is SEMANTIC: it marks the question currently being asked,
+   the point of live attention, and keyboard focus — nothing else.
+   Every text/background pair below is contrast-verified (see DESIGN_NOTES.md).
+--------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* Light — daylight paper */
+  --paper: #faf7f1;
+  --paper-deep: #f2ebdf;
+  --surface: #ffffff;
+  --ink: #26211b;
+  --ink-strong: #1b1611;
+  --ink-2: #4a4238;
+  --ink-soft: #6b6255;
+  --ink-faint: #908672; /* decorative only (ghost rows, ≥3:1 verified) */
+  --divider: #e5dccb;
+  --divider-strong: #d2c6b0;
+  --accent: #a63d2a;
+  --accent-strong: #82301f; /* hover / small-size text */
+  --accent-wash: #f3e3da;
+  --code-bg: #f2ebdf;
+  --code-text: #3a3226;
+  --tok-key: #93402c;
+  --tok-str: #55693f;
+  --tok-num: #7e6128;
+  --tok-com: #8a7f6c;
+  --selection: #efd9cb;
+  --shadow-panel: 0 1px 2px rgba(38, 26, 15, 0.08), 0 8px 24px rgba(38, 26, 15, 0.08);
+  --wght-display: 500;
+
+  /* Type */
+  --font-serif-stack: "Newsreader Variable", "Noto Serif SC", "Source Han Serif SC",
+    "Songti SC", "SimSun", Georgia, serif;
+  --font-mono-stack: "IBM Plex Mono", "Noto Sans SC", ui-monospace, "Cascadia Mono",
+    Consolas, monospace;
+}
+
+:root[data-theme="dark"] {
+  /* Dark — the reading room */
+  --paper: #17130f;
+  --paper-deep: #211b15;
+  --surface: #1d1812;
+  --ink: #eae2d3;
+  --ink-strong: #f8f2e6;
+  --ink-2: #c9bfae; /* long-form prose uses this in dark (halation guard) */
+  --ink-soft: #aba08c;
+  --ink-faint: #7a7161;
+  --divider: #332b21;
+  --divider-strong: #4b402f;
+  --accent: #de8b61;
+  --accent-strong: #ecac89;
+  --accent-wash: #2c221a;
+  --code-bg: #211b15;
+  --code-text: #ded4c2;
+  --tok-key: #de8b61;
+  --tok-str: #9cb584;
+  --tok-num: #cba86b;
+  --tok-com: #8a7f6c;
+  --selection: #3c2e22;
+  --shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --wght-display: 470; /* dark-mode weight compensation against halation */
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-deep: var(--paper-deep);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
+  --color-ink-2: var(--ink-2);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-divider: var(--divider);
+  --color-divider-strong: var(--divider-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-wash: var(--accent-wash);
+  --color-code-bg: var(--code-bg);
+  --color-code-text: var(--code-text);
+
+  --font-serif: var(--font-serif-stack);
+  --font-mono: var(--font-mono-stack);
+
+  /* lg is the sidenote-float breakpoint (1120px), not the default 1024. */
+  --breakpoint-lg: 70rem;
+}
+
+:root {
+  --prose-ink: var(--ink);
+}
+:root[data-theme="dark"] {
+  --prose-ink: var(--ink-2);
+}
+
+/* ------------------------------- base ----------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--divider-strong) transparent;
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif-stack);
+  font-size: 17px;
+  line-height: 28px; /* 4px baseline grid: every line below lands on it */
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--ink-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* Theme-switch event feel: a 240ms ink-wash, armed only while switching. */
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    fill 200ms ease,
+    stroke 200ms ease !important;
+}
+
+/* ---------------------------- typography -------------------------------- */
+
+.type-display {
+  font-weight: var(--wght-display);
+  font-size: clamp(2.75rem, 5vw + 1rem, 4.75rem); /* 44 → 76px */
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.type-h1 {
+  font-weight: var(--wght-display);
+  font-size: 2.5rem; /* 40px */
+  line-height: 44px;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.type-h2 {
+  font-weight: var(--wght-display);
+  font-size: 1.75rem; /* 28px */
+  line-height: 36px;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+.type-h3 {
+  font-weight: 500;
+  font-size: 1.3125rem; /* 21px */
+  line-height: 32px;
+  text-wrap: balance;
+}
+.type-lede {
+  font-size: 1.1875rem; /* 19px */
+  line-height: 32px;
+  color: var(--prose-ink);
+}
+.type-body {
+  font-size: 1.0625rem; /* 17px */
+  line-height: 28px;
+  color: var(--prose-ink);
+}
+.type-note {
+  font-size: 0.8125rem; /* 13px */
+  line-height: 20px;
+  color: var(--ink-soft);
+}
+.type-mono {
+  font-family: var(--font-mono-stack);
+  font-size: 0.75rem; /* 12px */
+  line-height: 16px;
+  color: var(--ink-soft);
+  font-feature-settings: "tnum";
+}
+.type-label {
+  font-family: var(--font-mono-stack);
+  font-size: 0.6875rem; /* 11px */
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* Prose blocks: 60ch measure, paragraph gap = exactly one blank line (28px).
+   The measure cap on the container is load-bearing: floating sidenotes are
+   positioned relative to it and would otherwise escape the text column. */
+.prose {
+  max-width: 60ch;
+}
+.prose p {
+  max-width: 60ch;
+  margin-top: 28px;
+  color: var(--prose-ink);
+}
+.prose p:first-child {
+  margin-top: 0;
+}
+
+/* Inline code — the only "code block" this site ships */
+code {
+  font-family: var(--font-mono-stack);
+  font-size: 0.8125em;
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1px 5px;
+  border: 1px solid var(--divider);
+}
+
+/* ------------------------------ links ------------------------------------ */
+
+.link-ink {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--divider-strong);
+  text-underline-offset: 3px;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+.link-ink:hover {
+  color: var(--ink-strong);
+  text-decoration-color: var(--ink-soft);
+}
+.link-quiet {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+.link-quiet:hover {
+  color: var(--ink-strong);
+  text-decoration-color: var(--divider-strong);
+}
+
+/* ------------------------------ chips ------------------------------------ */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono-stack);
+  font-size: 0.6875rem;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid var(--divider-strong);
+  border-radius: 2px;
+  padding: 3px 8px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.chip-active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-wash);
+}
+.chip-resting {
+  color: var(--ink-soft);
+  border-style: dashed;
+}
+
+/* --------------------------- layout primitives --------------------------- */
+
+.shell {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 48rem) {
+  .shell {
+    padding-inline: 2rem;
+  }
+}
+.measure {
+  max-width: 60ch;
+}
+.measure-head {
+  max-width: 28ch;
+}
+
+/* Sidenotes — three-stage degradation (float → inline → fold) */
+.sn-float {
+  float: right;
+  clear: right;
+  width: 21ch;
+  margin-right: -26ch;
+  margin-bottom: 16px;
+  font-size: 0.8125rem;
+  line-height: 20px;
+  color: var(--ink-soft);
+}
+.sn-inline {
+  max-width: 52ch;
+  margin-block: 16px 20px;
+  padding-left: 16px;
+  border-left: 2px solid var(--accent-wash);
+  font-size: 0.8125rem;
+  line-height: 20px;
+  color: var(--ink-soft);
+}
+.sn-fold {
+  margin-block: 8px;
+  border-left: 2px solid transparent;
+}
+.sn-fold > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-family: var(--font-mono-stack);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.sn-fold > summary::-webkit-details-marker {
+  display: none;
+}
+.sn-fold > summary::after {
+  content: "+";
+  margin-left: 6px;
+  font-family: var(--font-mono-stack);
+}
+.sn-fold[open] > summary::after {
+  content: "–";
+}
+.sn-fold[open] {
+  border-left: 2px solid var(--accent-wash);
+  padding-left: 12px;
+}
+.sn-num {
+  font-family: var(--font-mono-stack);
+  font-size: 0.625rem;
+  line-height: 16px;
+  vertical-align: super;
+  color: var(--ink-soft);
+  margin-left: 2px;
+}
+
+@media (pointer: coarse) {
+  .tap,
+  .sn-fold > summary,
+  button,
+  [role="radio"] {
+    min-height: 44px;
+  }
+}
+
+/* --------------------------- section rhythm ------------------------------ */
+
+.section {
+  border-top: 1px solid var(--divider);
+  padding-block: 64px;
+}
+@media (min-width: 70rem) {
+  .section {
+    padding-block: 128px;
+  }
+}
+
+/* --------------------------- ledger rows --------------------------------- */
+
+.row-hover {
+  position: relative;
+  transition: background-color 160ms ease;
+}
+.row-hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--divider-strong);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.row-hover:hover,
+.row-hover:active {
+  background: color-mix(in srgb, var(--paper-deep) 70%, transparent);
+}
+.row-hover:hover::before,
+.row-hover:active::before {
+  transform: scaleY(1);
+}
+
+/* Ghost rows — Publications empty state */
+.ghost-row {
+  border-top: 1px dashed var(--divider-strong);
+  color: var(--ink-faint);
+  font-family: var(--font-mono-stack);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* Score bars — transform-only width representation */
+.scorebar {
+  height: 6px;
+  background: color-mix(in srgb, var(--divider) 60%, transparent);
+  overflow: hidden;
+}
+.scorebar > i {
+  display: block;
+  height: 100%;
+  background: var(--ink-soft);
+  transform-origin: left;
+  transition: transform 160ms ease;
+}
+.scorebar-poisoned > i {
+  background: var(--accent);
+}
+
+/* The signature ghost numeral (hero) */
+.ghost-q {
+  position: absolute;
+  z-index: 0;
+  color: color-mix(in srgb, var(--accent) 9%, transparent);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 0.8;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* kbd */
+.kbd {
+  font-family: var(--font-mono-stack);
+  font-size: 0.6875rem;
+  line-height: 16px;
+  border: 1px solid var(--divider-strong);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: var(--ink-2);
+  background: var(--paper-deep);
+}
+
+/* ------------------------- reduced motion (global) ------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

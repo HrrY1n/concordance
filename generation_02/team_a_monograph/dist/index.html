@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monograph — Retrieval · Robustness · Security</title>
+    <meta
+      name="description"
+      content="The working monograph of a graduate student in computer science: retrieval-augmented generation, its robustness, knowledge poisoning, and the security of the retrieval–generation loop."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fcfcfd" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Monograph" />
+    <meta property="og:title" content="Monograph — Retrieval · Robustness · Security" />
+    <meta
+      property="og:description"
+      content="Retrieval-augmented generation, before it breaks. Research directions, open questions, four plates of built work, and a playable corruption sandbox."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- No-FOUC theme: resolve auto/light/dark before first paint -->
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem("monograph.theme") || "auto";
+          var dark =
+            mode === "dark" ||
+            (mode === "auto" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = dark ? "dark" : "light";
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", dark ? "#0e1013" : "#fcfcfd");
+        } catch (e) {
+          /* no storage — system preference still applies via CSS */
+        }
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Monograph",
+            "url": "https://example.com/",
+            "description": "The working monograph of a graduate student in computer science: retrieval-augmented generation, its robustness, knowledge poisoning, and the security of the retrieval–generation loop.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "Person",
+            "jobTitle": "Graduate student, Computer Science",
+            "url": "https://example.com/",
+            "knowsAbout": [
+              "Retrieval-Augmented Generation",
+              "RAG Robustness",
+              "Knowledge Poisoning",
+              "AI Security",
+              "LLM Systems",
+              "Retrieval–Generation Interaction"
+            ]
+          }
+        ]
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-cBKz1pph.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B7jjBbsy.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

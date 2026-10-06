@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (toggled on <html>), for System/Light/Dark tri-state support */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

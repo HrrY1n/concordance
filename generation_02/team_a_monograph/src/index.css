@@ -1,0 +1,328 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (toggled on <html>), for System/Light/Dark tri-state support */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Monograph design tokens — cool-gray near-monochrome + one orange hue.
+   The orange is a semantic signal, never decoration: it marks living things
+   (current chapter, running work, poisoned evidence, keyboard focus, caret).
+--------------------------------------------------------------------------- */
+@theme {
+  --color-bg: #fcfcfd;
+  --color-bg-inset: #f4f6f8;
+  --color-ink-1: #191c1f;
+  --color-ink-2: #4a5058;
+  --color-ink-3: #6b7178;
+  --color-ink-4: #9aa1a8;
+  --color-line-1: #e3e6e9;
+  --color-line-2: #cfd4d9;
+  --color-accent: #ff4a00;
+  --color-accent-ink: #c2410c;
+  --color-wash: #ffe5da;
+
+  --font-sans: "Inter Variable", Inter, system-ui, -apple-system, "Segoe UI",
+    "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-serif: "Newsreader Variable", Newsreader, Georgia, "Noto Serif SC",
+    "Songti SC", SimSun, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas,
+    "SFMono-Regular", monospace;
+
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dark =「Night Proof」— not an inversion: a re-tuned proof (§Gen1 4.2). */
+.dark {
+  --color-bg: #0e1013;
+  --color-bg-inset: #14171b;
+  --color-ink-1: #e9ebee;
+  --color-ink-2: #a8aeb6;
+  --color-ink-3: #878e96;
+  --color-ink-4: #5a6068;
+  --color-line-1: #23272d;
+  --color-line-2: #383e45;
+  --color-accent: #ff5a1f;
+  --color-accent-ink: #ff7a45;
+  --color-wash: rgb(255 90 31 / 0.14);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink-1);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-wash);
+  color: var(--color-ink-1);
+}
+.dark ::selection {
+  background-color: rgb(255 90 31 / 0.3);
+  color: var(--color-ink-1);
+}
+
+/* Focus = the interface's live point (accent semantics, last legal site). */
+:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 3px;
+  border-radius: 0;
+}
+/* Programmatic focus targets (chapter sections after search navigation). */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Quiet scrollbar, token-driven. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-2) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-line-2);
+  border: 3px solid var(--color-bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Inline evidence highlight (search matches). */
+mark {
+  background-color: var(--color-wash);
+  color: var(--color-ink-1);
+  padding: 0 0.1em;
+}
+
+/* ---------------------------------------------------------------------------
+   Type scale — the hierarchy lives in size / weight / gray / spacing only.
+--------------------------------------------------------------------------- */
+.t-display {
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.t-display-2 {
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.t-title {
+  font-size: clamp(20px, 2.2vw, 24px);
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.t-lede {
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--color-ink-2);
+}
+.t-body {
+  font-size: 16px;
+  line-height: 1.75;
+}
+.t-body-sm {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.t-label {
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.t-mono-sm {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.t-serif-voice {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+@media (max-width: 767px) {
+  .t-body {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .t-lede {
+    font-size: 18px;
+    line-height: 1.75;
+  }
+}
+
+/* Dark long-form reads at ink-2 to suppress halation; display type is
+   pre-compensated on the variable weight axis (500 → 470). */
+.dark .t-display,
+.dark .t-display-2 {
+  font-weight: 470;
+  letter-spacing: -0.024em;
+}
+.dark .t-lede {
+  color: var(--color-ink-2);
+}
+
+/* ---------------------------------------------------------------------------
+   The orange caret — "this monograph is still being written".
+   Runs only while the hero is in view (data-live on the hero root).
+--------------------------------------------------------------------------- */
+.caret {
+  display: inline-block;
+  width: 0.12em;
+  height: 0.78em;
+  margin-left: 0.18em;
+  transform: translateY(0.06em);
+  background-color: var(--color-accent);
+}
+[data-live="true"] .caret {
+  animation: caret-blink 1.1s steps(2, start) infinite;
+}
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Index overlay open — a single fade, no stagger (motion budget). */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Theme switching — "re-ink the sheet".
+   L1: View Transitions → the new proof is revealed by a top-to-bottom press
+       wipe (a monograph being reprinted — deliberately NOT the circular
+       aperture everyone ships).
+   L2: no VT → staged color crossfade (surface → text → lines), one-shot,
+       scoped to the .theming window so hover transitions stay clean.
+   L3: reduced motion → instant swap (JS skips both paths).
+--------------------------------------------------------------------------- */
+::view-transition-old(root) {
+  animation: none;
+}
+::view-transition-new(root) {
+  animation: vt-reink 420ms var(--ease-settle) both;
+}
+@keyframes vt-reink {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+html.theming body {
+  transition: background-color 280ms ease 0ms;
+}
+html.theming body :where(*) {
+  transition:
+    background-color 280ms ease 60ms,
+    color 280ms ease 120ms,
+    border-color 280ms ease 180ms,
+    fill 280ms ease 120ms,
+    stroke 280ms ease 120ms;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion — global degradation. Everything lands static and elegant.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* Native range inputs (Lab sliders) — 44px touch target, square thumb. */
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background-color: var(--color-line-2);
+}
+input[type="range"]::-moz-range-track {
+  height: 1px;
+  background-color: var(--color-line-2);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6.5px;
+  border-radius: 0;
+  background-color: var(--color-accent);
+  border: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 0;
+  background-color: var(--color-accent);
+  border: none;
+}
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 3px;
+}

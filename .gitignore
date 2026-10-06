@@ -1,0 +1,17 @@
+# Dependencies & build outputs
+node_modules/
+final/dist/
+final/dist-single/
+_template/dist/
+
+# Screenshot archives (evidence kept locally; final-round shots are committed)
+shots/gen2/
+shots/gen3/
+
+# Local tooling (Playwright environment lives here, not needed in repo)
+_tools/
+
+# OS / editor noise
+*.log
+.DS_Store
+Thumbs.db

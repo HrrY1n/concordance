@@ -1,0 +1,870 @@
+/* ============================================================================
+   CONCORDANCE — Generation 3 design system (single stylesheet)
+   ----------------------------------------------------------------------------
+   One metaphor: a concordance is a printed retrieval index — the one artifact
+   that is both a book and a search system. Print discipline (Monograph) +
+   live readings (Retrieval) + research apparatus (Offprint).
+
+   REGISTERS — the "second variation" (§4 / M1). Three typographic registers
+   replace the monotone mono+hairline drumbeat; every page composes them so no
+   two adjacent blocks share a register. The register is REAL CSS now (P2-19):
+   a section/page that declares data-register inherits its vertical rhythm
+   from the [data-register] rules below — no per-page padding table:
+     REGISTER LEDGER — dense rows, hairlines, mono-first (research ledger,
+                       lab readouts, colophon)         [data-register="ledger"]
+     REGISTER PLATE  — display serif, generous air, bordered figures
+                       (hero, work plates, figures)    [data-register="plate"]
+     REGISTER ESSAY  — 66ch serif measure, sidenotes
+                       (notes, about prose, findings)  .essay / [data-register="essay"]
+
+   FONT CONTRACT: 2 families, 6 files, latin + latin-ext subsets only
+   (synced from @fontsource-variable by scripts/sync-fonts.mjs).
+     Inter Variable     = interface + body latin
+     Newsreader Variable= display serif, roman + italic
+     system mono stack  = machine voice (readings, coordinates, code)
+   Weights in use: 400 / 500 (+470 dark halation compensation on the variable
+   axis). Mono is 400 only.
+
+   CONTRAST CONTRACT (§4 / G2): every token that carries readable text is
+   >= 4.5:1 on --bg AND --bg-inset in BOTH themes (verified by
+   src/lib/__tests__/contrast.test.ts, which parses this file). --faint is
+   decorative-only: never the sole carrier of meaning.
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* ------------------------------- @font-face ------------------------------- */
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/newsreader-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/newsreader-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/newsreader-latin-wght-italic.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/newsreader-latin-ext-wght-italic.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --------------------------------- tokens --------------------------------- */
+
+/* Light — "day paper": warm paper, cobalt ink. Ratios are on --bg (verified
+   by contrast.test.ts; on --bg-inset/--raised every readable token stays
+   above 4.5:1 as well — worst case ink-2 on --bg-inset = 6.3:1). */
+:root {
+  --bg: #f7f4ed; /* paper */
+  --bg-inset: #efeadd; /* demo wells, code wells */
+  --raised: #fffdf6; /* palette, dialogs */
+  --ink: #211b10; /* 15.6:1 */
+  --ink-2: #5c5342; /* 6.9:1 — muted, still ≥ 6.3:1 on all surfaces */
+  --faint: #8b8168; /* 3.5:1 — DECORATIVE ONLY (G2) */
+  --line: #ded7c4;
+  --line-strong: #b5ac93;
+  --accent: #2547d0; /* 6.6:1 — the one accent: living / current / actionable */
+  --accent-wash: #e3e8fa;
+  --signal: #a43a10; /* 6.0:1 — poisoned / failing / truncated */
+  --ok: #1f6b50; /* 5.8:1 — verified / defended */
+  --selection: #d7def7;
+  --code-bg: #f0ebdd;
+  --shadow: rgb(33 27 16 / 0.14);
+
+  /* Structure tokens (P2-26): the whole stacking order lives here. */
+  --z-header: 40;
+  --z-overlay: 50;
+  --z-skip-link: 100;
+
+  /* Figure measures (P2-26): the two figure widths + the note-spread width.
+     Everything that frames computed data uses one of these, no ad-hoc px. */
+  --measure-figure: 40rem; /* 640px — wide figures, the palette dialog */
+  --measure-figure-sm: 35rem; /* 560px — compact figures, dl readouts */
+  --measure-note-spread: 68.75rem; /* 1100px — essay + margin-note grid */
+}
+
+/* Dark — "reading room": warm near-black, re-tuned not inverted. */
+.dark {
+  --bg: #151310;
+  --bg-inset: #1d1a15;
+  --raised: #211d17;
+  --ink: #ebe5d8; /* 14.8:1 */
+  --ink-2: #a99f8b; /* 7.1:1 — ≥ 6.4:1 on all surfaces */
+  --faint: #7c7360; /* 4.0:1 — DECORATIVE ONLY (G2) */
+  --line: #322d24;
+  --line-strong: #4c4536;
+  --accent: #97acff; /* 8.5:1 */
+  --accent-wash: #262f52;
+  --signal: #ff9d6b; /* 9.1:1 */
+  --ok: #74d3a5; /* 10.3:1 */
+  --selection: #3a4160;
+  --code-bg: #100e0b;
+  --shadow: rgb(0 0 0 / 0.5);
+}
+
+/* Forced more contrast: hairlines and decorative mono come up to AA. */
+@media (prefers-contrast: more) {
+  :root {
+    --faint: #6d6449;
+    --line: #c9c1a9;
+  }
+  .dark {
+    --faint: #9a917c;
+    --line: #454033;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-inset: var(--bg-inset);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-wash: var(--accent-wash);
+  --color-signal: var(--signal);
+  --color-ok: var(--ok);
+  --color-selection: var(--selection);
+  --color-code-bg: var(--code-bg);
+
+  /* Metric-aligned fallbacks (P2-24): while the variable woff2 loads, the
+     local stand-in is resized so the 80px hero line does not reflow. */
+  --font-sans: "Inter Variable", "Inter Fallback", "Noto Sans SC", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-display: "Newsreader Variable", "Newsreader Fallback", "Noto Serif SC",
+    "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Consolas",
+    "Noto Sans Mono CJK SC", monospace;
+
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Fallback faces tuned to the variable fonts' vertical metrics (P2-24).
+   Values follow the published Inter metrics and a Georgia stand-in for
+   Newsreader; they only render during the swap window. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Segoe UI");
+  size-adjust: 107.64%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Newsreader Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 104%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+/* ---------------------------------- base ---------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 28px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--line-strong);
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+mark {
+  background: var(--accent-wash);
+  color: var(--ink);
+  padding: 0 0.1em;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 12px; /* the ladder's meta step — was an off-scale 11px */
+  line-height: 16px;
+  border: 1px solid var(--line-strong);
+  padding: 1px 6px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+/* ------------------------- type scale (the ladder) ------------------------
+   One ratio, quantized to 4px baselines:
+   12/16 meta · 15/24 small · 17/28 body · 19/28 entry · 21/32 lede
+   22/30 question · 26/34 h3 · 32/40 h2 · clamp h1 · clamp display
+   Weights: 400 body, 500 display/labels, 470 dark compensation only. */
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(46px, 7.5vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.t-h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.t-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.t-h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 34px;
+  letter-spacing: -0.012em;
+  text-wrap: pretty;
+}
+.t-h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+.t-lede {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 32px;
+  letter-spacing: 0;
+}
+.t-entry {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 28px;
+  letter-spacing: -0.005em;
+}
+.t-body {
+  font-size: 17px;
+  line-height: 28px;
+}
+.t-small {
+  font-size: 15px;
+  line-height: 24px;
+}
+.t-meta {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.t-kicker {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.t-caps {
+  text-transform: uppercase; /* latin-only labels; :lang(zh) resets this */
+}
+.t-code {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.t-serif-voice {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+/* Dark halation compensation: display weights 500 → 470, tracking eased. */
+.dark .t-display,
+.dark .t-h1,
+.dark .t-h2,
+.dark .t-h3,
+.dark .t-h4,
+.dark .t-entry {
+  font-weight: 470;
+  letter-spacing: -0.019em;
+}
+
+/* CJK: never italicize, never negative-track, never uppercase. Same
+   specificity as the dark compensation above but declared later, so Chinese
+   text keeps its positive tracking even inside display sizes (P2-24). */
+:lang(zh) {
+  font-style: normal;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+.dark :lang(zh) {
+  letter-spacing: 0.01em;
+}
+
+/* ------------------------------- primitives ------------------------------- */
+
+.wrap {
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+}
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: max(3rem, env(safe-area-inset-left));
+    padding-right: max(3rem, env(safe-area-inset-right));
+  }
+}
+
+/* Figure measures (P2-26): two figure tiers + the note spread. Previously the
+   codebase carried nine ad-hoc max-w-[…px] values; now the vocabulary is:
+   .u-figure (640) for wide figures and dialogs, .u-figure-sm (560) for
+   compact readouts, .u-note-spread (1100) for the essay + margin-note grid. */
+.u-figure {
+  max-width: var(--measure-figure);
+}
+.u-figure-sm {
+  max-width: var(--measure-figure-sm);
+}
+.u-note-spread {
+  max-width: var(--measure-note-spread);
+}
+
+/* REGISTERS (P2-19) — the mechanical half of M1. A Section or PageShell that
+   declares data-register gets its vertical rhythm from here; adding a page or
+   section inherits correct rhythm without re-reading docs. Section rhythm
+   (was the REGISTER_PAD table in structure.tsx — identical values): */
+[data-register="ledger"] {
+  --register-pad: 3.5rem; /* py-14 */
+  --register-pad-lg: 4rem; /* md:py-16 */
+}
+[data-register="plate"] {
+  --register-pad: 5rem; /* py-20 */
+  --register-pad-lg: 7rem; /* md:py-28 */
+}
+[data-register="essay"] {
+  --register-pad: 4rem; /* py-16 */
+  --register-pad-lg: 6rem; /* md:py-24 */
+}
+/* Rhythm applies to <section> registers; page shells own theirs below. */
+section[data-register] {
+  padding-block: var(--register-pad, 3.5rem);
+}
+@media (min-width: 768px) {
+  section[data-register] {
+    padding-block: var(--register-pad-lg, 4rem);
+  }
+}
+
+/* Page-level shells: PLATE pages keep their breathing room; LEDGER pages
+   (research/lab/publications) deliberately get less top air (P2-19) — the
+   200px+ dead white at the top of ledger pages was flagged by review. */
+.page-shell {
+  padding-top: 7rem; /* plate: pt-28 */
+  padding-bottom: 5rem; /* pb-20 */
+}
+.page-shell[data-register="ledger"] {
+  padding-top: 5rem; /* pt-20 */
+}
+.page-shell[data-register="essay"] {
+  padding-top: 6rem; /* pt-24 */
+}
+@media (min-width: 768px) {
+  .page-shell {
+    padding-top: 9rem; /* md:pt-36 */
+    padding-bottom: 6rem; /* md:pb-24 */
+  }
+  .page-shell[data-register="ledger"] {
+    padding-top: 7rem; /* md:pt-28 */
+  }
+  .page-shell[data-register="essay"] {
+    padding-top: 8rem; /* md:pt-32 */
+  }
+}
+
+.u-measure {
+  max-width: 66ch;
+}
+.u-measure-sm {
+  max-width: 54ch;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: var(--z-skip-link);
+  transform: translateY(-300%);
+  background: var(--raised);
+  color: var(--ink);
+  border: 1px solid var(--accent);
+  padding: 10px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  transition: transform 160ms var(--ease-settle);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Link grammar: hairline underline, accent on hover. */
+.u-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color 160ms var(--ease-settle),
+    text-decoration-color 160ms var(--ease-settle);
+}
+.u-link:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* Buttons: bordered rows, 44px min-height everywhere (G3). */
+.u-btn {
+  font-size: 15px;
+  line-height: 20px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-2);
+  background: transparent;
+  transition:
+    color 160ms var(--ease-settle),
+    border-color 160ms var(--ease-settle),
+    background-color 160ms var(--ease-settle);
+}
+.u-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-2);
+}
+.u-btn:disabled,
+.u-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.u-btn[aria-pressed="true"],
+.u-btn[data-active="true"] {
+  color: var(--ink);
+  border-color: var(--ink);
+  background: var(--bg-inset);
+}
+
+/* Chip / facet (M3): a real search entry point, not a decorative tag. */
+.u-chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-2);
+  background: transparent;
+  transition:
+    color 160ms var(--ease-settle),
+    border-color 160ms var(--ease-settle);
+}
+.u-chip:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Status dots (ledger legend) — never color-only; paired with text labels. */
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+.dot[data-tone="exploring"] {
+  background: var(--ink-2);
+}
+.dot[data-tone="paused"] {
+  background: transparent;
+  border: 1.5px solid var(--ink-2);
+}
+.dot[data-tone="alive"] {
+  background: var(--ok);
+}
+.dot[data-tone="quiet"] {
+  background: var(--line-strong);
+}
+
+/* The rank bar — transform-only growth; JS applies the 0.02 visibility floor
+   and clamps overflow (§4 / A1, D2). */
+.rank-track {
+  position: relative;
+  height: 6px;
+  min-width: 2rem;
+  flex: 1;
+  background: color-mix(in oklab, var(--line) 55%, transparent);
+  overflow: hidden;
+}
+.rank-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: var(--ink-2);
+  transition: transform 240ms var(--ease-settle);
+}
+.rank-fill[data-poisoned="true"] {
+  background: var(--signal);
+}
+
+/* Sidenotes — grid-anchored (§4 / D1). The note lives in its own grid column
+   next to the measure; it can never escape or overlap the text column.
+   Three stages, chosen by breakpoint in the component:
+     ≥68rem  grid row: [measure | margin note]
+     ≥48rem  inline aside with a wash bar
+     <48rem  native <details> fold, numbered summary        */
+.sn-row {
+  display: grid;
+  grid-template-columns: minmax(0, 66ch) minmax(13rem, 1fr);
+  column-gap: 2.75rem;
+  align-items: start;
+}
+@media (max-width: 67.99rem) {
+  .sn-row {
+    display: block;
+  }
+}
+
+/* ESSAY register (P0-10) — the name now matches the type: a serif reading
+   register. 66ch measure, looser leading, margin apparatus. */
+.essay {
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 29px; /* slightly looser for reading measure */
+}
+.essay p {
+  max-width: 66ch;
+}
+.essay p + p,
+.essay p + .sn-row,
+.essay .sn-row + p,
+.essay .sn-row + .sn-row,
+.essay h2 + p,
+.essay figure {
+  margin-top: 1.15rem;
+}
+.essay h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px; /* the ladder's h4 step — was an off-scale 24px */
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  margin-top: 2.25rem;
+}
+
+.sn-num {
+  font-family: var(--font-mono);
+  font-size: 12px; /* meta step — was an off-scale 11px */
+  color: var(--accent);
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+/* Code blocks (dual-theme: tokens are CSS vars, so the block re-inks itself). */
+.codeblock {
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  overflow-x: auto;
+  max-width: 66ch;
+}
+.codeblock code {
+  font-size: 14px;
+  line-height: 24px;
+  white-space: pre;
+}
+
+/* The one standing animation: the caret in the hero's serif line. It runs
+   only while the hero is in view (data-live) — motion budget ≤ 3. */
+.caret {
+  display: inline-block;
+  width: 0.12em;
+  height: 0.76em;
+  margin-left: 0.16em;
+  transform: translateY(0.05em);
+  background: var(--accent);
+}
+[data-live="true"] .caret {
+  animation: caret-blink 1.1s steps(2, start) infinite;
+}
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* The Settle (G1-compliant): transform-only, elements are VISIBLE at every
+   frame (no opacity:0 anywhere). Runs once per session; the root <html> gets
+   data-settled on return visits, killing the animation before first paint.
+   Budget: 4 rows, 480ms + 90ms stagger — at most 3 rows animate at once. */
+.settle {
+  animation: settle-up 0.48s var(--ease-settle) both;
+  animation-delay: calc(var(--settle-i, 0) * 90ms);
+}
+@keyframes settle-up {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+html[data-settled="true"] .settle {
+  animation: none;
+}
+
+/* Theme re-ink: applied for ~300ms on a user-initiated toggle only. */
+html.theme-anim body,
+html.theme-anim body * {
+  transition:
+    background-color 240ms var(--ease-settle),
+    color 240ms var(--ease-settle),
+    border-color 240ms var(--ease-settle),
+    fill 240ms var(--ease-settle),
+    stroke 240ms var(--ease-settle) !important;
+}
+
+/* Native range inputs (Lab) — hairline track, square accent thumb, 44px. */
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--line-strong);
+}
+input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--line-strong);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6.5px;
+  border-radius: 0;
+  background: var(--accent);
+  border: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 0;
+  background: var(--accent);
+  border: none;
+}
+
+/* Coarse pointers: everything interactive gets its 44px target (G3).
+   min-height alone does nothing on inline <a>, so text links (.u-link) are
+   switched to inline-flex — they stay in the inline flow while carrying the
+   target height. Scoped to .u-link so the unlayered rule cannot silently
+   override block-level Tailwind display utilities on other anchors. */
+@media (pointer: coarse) {
+  a,
+  button,
+  [role="option"],
+  summary {
+    min-height: 44px;
+  }
+  a.u-link,
+  .u-link {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* --------------------------- reduced motion ------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .settle {
+    animation: none !important;
+  }
+  [data-live="true"] .caret {
+    animation: none;
+  }
+}
+
+/* --------------------------------- print ---------------------------------- */
+/* G1: print is a first-class output. Header, overlays and chrome go away;
+   every fold opens; hairlines and text re-ink to pure paper. */
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --bg-inset: #ffffff;
+    --raised: #ffffff;
+    --ink: #000000;
+    --ink-2: #222222;
+    --faint: #555555;
+    --line: #999999;
+    --line-strong: #666666;
+    --accent: #000000;
+    --signal: #000000;
+    --code-bg: #f2f2f2;
+  }
+  .no-print,
+  .skip-link {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  main {
+    padding: 0 !important;
+  }
+  section {
+    border-color: #999 !important;
+    break-inside: avoid-page;
+  }
+  .sn-fold,
+  .sn-fold > * {
+    display: block !important;
+  }
+  .sn-fold summary {
+    display: none;
+  }
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  .settle {
+    animation: none !important;
+  }
+}

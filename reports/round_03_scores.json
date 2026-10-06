@@ -1,0 +1,234 @@
+{
+  "judges": [
+    {
+      "file": "judge_visual.md",
+      "judge": "visual",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 9,
+          "information_hierarchy": 9,
+          "ux": 8.5,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 9,
+          "research_presentation": 9,
+          "portfolio_presentation": 8.5,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 9,
+          "accessibility": 9
+        }
+      }
+    },
+    {
+      "file": "judge_typography.md",
+      "judge": "typography",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 8,
+          "information_hierarchy": 8.5,
+          "ux": 8.5,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 9,
+          "research_presentation": 8.5,
+          "portfolio_presentation": 8.5,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 8.5,
+          "accessibility": 9
+        }
+      }
+    },
+    {
+      "file": "judge_ux.md",
+      "judge": "ux",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 9,
+          "information_hierarchy": 9,
+          "ux": 8,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 9,
+          "research_presentation": 9,
+          "portfolio_presentation": 8.5,
+          "light_mode": 9,
+          "dark_mode": 8.5,
+          "performance": 9,
+          "accessibility": 8.5
+        }
+      }
+    },
+    {
+      "file": "judge_engineering.md",
+      "judge": "engineering",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8,
+          "originality": 8.5,
+          "typography": 8.5,
+          "information_hierarchy": 8,
+          "ux": 8,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 8,
+          "long_term_maintainability": 7,
+          "research_presentation": 8.5,
+          "portfolio_presentation": 8,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 9,
+          "accessibility": 8.5
+        }
+      }
+    },
+    {
+      "file": "judge_a11y.md",
+      "judge": "a11y",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 8.5,
+          "information_hierarchy": 8.5,
+          "ux": 7,
+          "mobile_experience": 8,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 8.5,
+          "research_presentation": 9,
+          "portfolio_presentation": 8,
+          "light_mode": 8.5,
+          "dark_mode": 8.5,
+          "performance": 9,
+          "accessibility": 7
+        }
+      }
+    },
+    {
+      "file": "judge_mobile.md",
+      "judge": "j6_mobile",
+      "verdict": "NEEDS_WORK",
+      "scores": {
+        "G3": {
+          "visual_quality": 8,
+          "originality": 8,
+          "typography": 8.5,
+          "information_hierarchy": 8,
+          "ux": 7.5,
+          "mobile_experience": 7,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 8,
+          "research_presentation": 8.5,
+          "portfolio_presentation": 8,
+          "light_mode": 8.5,
+          "dark_mode": 8.5,
+          "performance": 9,
+          "accessibility": 7
+        }
+      }
+    },
+    {
+      "file": "judge_researcher.md",
+      "judge": "researcher",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 8.5,
+          "information_hierarchy": 9,
+          "ux": 8.5,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 7,
+          "research_presentation": 9,
+          "portfolio_presentation": 8.5,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 9,
+          "accessibility": 9
+        }
+      }
+    },
+    {
+      "file": "judge_recruiter.md",
+      "judge": "recruiter",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 9,
+          "information_hierarchy": 8.5,
+          "ux": 8,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 9,
+          "research_presentation": 8.5,
+          "portfolio_presentation": 7.5,
+          "light_mode": 9,
+          "dark_mode": 8.5,
+          "performance": 9,
+          "accessibility": 9
+        }
+      }
+    },
+    {
+      "file": "judge_product.md",
+      "judge": "product",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 9,
+          "typography": 9,
+          "information_hierarchy": 8.5,
+          "ux": 8.5,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 7.5,
+          "research_presentation": 8.5,
+          "portfolio_presentation": 8.5,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 8.5,
+          "accessibility": 8.5
+        }
+      }
+    },
+    {
+      "file": "judge_originality.md",
+      "judge": "originality",
+      "verdict": "PASS",
+      "scores": {
+        "G3": {
+          "visual_quality": 8.5,
+          "originality": 8.5,
+          "typography": 9,
+          "information_hierarchy": 9,
+          "ux": 8.5,
+          "mobile_experience": 8.5,
+          "technical_feasibility": 9,
+          "long_term_maintainability": 9,
+          "research_presentation": 9,
+          "portfolio_presentation": 9,
+          "light_mode": 9,
+          "dark_mode": 9,
+          "performance": 9,
+          "accessibility": 9
+        }
+      }
+    }
+  ]
+}

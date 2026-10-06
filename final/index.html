@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Concordance — Research Archive</title>
+    <meta
+      name="description"
+      content="A research archive built as a concordance: retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — every figure computed in your browser, every reading counted from the data."
+    />
+    <link rel="canonical" href="https://example.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Concordance" />
+    <meta property="og:title" content="Concordance — Research Archive" />
+    <meta
+      property="og:description"
+      content="Retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — a research archive where every figure is computed in your browser."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Concordance — Retrieval-augmented generation, read at the level of the ranking." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://example.com/og.png" />
+
+    <!-- Fonts: preload the two files the hero needs so first paint is final
+         paint (P2-24 — 80px FOUT/CLS fix). -->
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/newsreader-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Theme: resolve before first paint (no FOUC). Same rules as src/lib/theme.ts -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("concordance-theme");
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored === "light" || stored === "dark" ? stored : systemDark ? "dark" : "light";
+          var root = document.documentElement;
+          root.classList.toggle("dark", theme === "dark");
+          root.style.colorScheme = theme;
+          // The hero Settle plays once per session — return visits are static
+          // from the very first paint (G1).
+          if (sessionStorage.getItem("concordance-settled") === "1") {
+            root.dataset.settled = "true";
+          }
+        } catch (e) {
+          /* no storage — system preference only, settle replays */
+        }
+      })();
+    </script>
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ed" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#151310" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD: profile.name is null in content, so no name is claimed here either.
+         Fields the person fills later go into src/content/*.ts and this block. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "url": "https://example.com/",
+        "jobTitle": "Graduate Student in Computer Science",
+        "description": "Graduate student in computer science working on retrieval-augmented generation — LLM systems that ground their answers in retrieved evidence, and what happens when that evidence is noisy, conflicting, or deliberately poisoned.",
+        "knowsAbout": [
+          "Retrieval-Augmented Generation",
+          "RAG Robustness",
+          "Knowledge Poisoning",
+          "AI Security",
+          "LLM Systems",
+          "Retrieval-Generation Interaction"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div
+        style="max-width: 44rem; margin: 8rem auto; padding: 0 1.5rem; font-family: Georgia, 'Times New Roman', serif; line-height: 1.6; color: #211b10"
+      >
+        <p style="font-size: 1.6rem; margin: 0 0 1rem">Concordance — research archive</p>
+        <p style="margin: 0 0 1rem">
+          Retrieval-augmented generation, its robustness, knowledge poisoning, and the systems
+          around them. This site treats its own content as a small corpus: every section has a
+          coordinate (§01–§07), and a local search index answers queries about the person it
+          indexes.
+        </p>
+        <ul style="margin: 0 0 1rem; padding-left: 1.2rem">
+          <li>§01 Research — directions and the question ledger</li>
+          <li>§02 Selected Work — plates with evidence chains</li>
+          <li>§03 Lab — three instruments, computed in your browser</li>
+          <li>§04 Notes — working notes with margin apparatus</li>
+          <li>§05 Publications — honestly empty</li>
+          <li>§06 About · §07 Connect</li>
+        </ul>
+        <p style="margin: 0">
+          The full concordance needs JavaScript; the text above is the static skeleton —
+          intentionally honest about what is missing.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

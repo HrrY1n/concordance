@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>A Retrievable Self — Research Index</title>
+    <meta
+      name="description"
+      content="A research portfolio built as a small retrieval system: retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them."
+    />
+    <link rel="canonical" href="https://example.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="A Retrievable Self" />
+    <meta property="og:title" content="A Retrievable Self — Research Index" />
+    <meta
+      property="og:description"
+      content="Retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — a research index that treats its own content as a corpus."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Theme: resolve before first paint (no FOUC). Same rules as src/lib/theme.ts -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("h-theme");
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored === "light" || stored === "dark" ? stored : systemDark ? "dark" : "light";
+          var root = document.documentElement;
+          root.classList.toggle("dark", theme === "dark");
+          root.style.colorScheme = theme;
+        } catch (e) {
+          /* no storage — system preference only */
+        }
+      })();
+    </script>
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ee" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121110" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD: name is null in content/profile.ts, so no name is claimed here either -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "url": "https://example.com/",
+        "description": "Graduate student in computer science working on retrieval-augmented generation — LLM systems that ground their answers in retrieved evidence, and what happens when that evidence is noisy, conflicting, or deliberately poisoned.",
+        "knowsAbout": [
+          "Retrieval-Augmented Generation",
+          "RAG Robustness",
+          "Knowledge Poisoning",
+          "AI Security",
+          "LLM Systems",
+          "Retrieval-Generation Interaction"
+        ]
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-VmNmPBdU.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C4RlOXhZ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width: 44rem; margin: 8rem auto; padding: 0 1.5rem; font-family: Georgia, 'Times New Roman', serif; line-height: 1.6">
+        <p style="font-size: 1.6rem; margin: 0 0 1rem">A Retrievable Self — research index</p>
+        <p style="margin: 0 0 1rem">
+          Retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them. This site
+          treats its own content as a small corpus: every section has an address, and a local search index answers
+          queries about the person it indexes.
+        </p>
+        <p style="margin: 0">
+          It is a single-page application, so the full corpus needs JavaScript. The text above is the static skeleton —
+          intentionally honest about what is missing.
+        </p>
+      </div>
+    </noscript>
+  </body>
+</html>

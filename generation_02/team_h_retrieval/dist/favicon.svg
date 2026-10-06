@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- the retrieval mark: a lens with a signal dot -->
+  <circle cx="14" cy="14" r="9" fill="none" stroke="#2547d0" stroke-width="3"/>
+  <line x1="21" y1="21" x2="28" y2="28" stroke="#2547d0" stroke-width="3" stroke-linecap="square"/>
+</svg>

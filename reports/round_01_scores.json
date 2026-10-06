@@ -1,0 +1,154 @@
+{
+  "judges": [
+    {
+      "judge": "visual",
+      "file": "judge_01_visual.md",
+      "top3": ["A", "E", "B"],
+      "scores": {
+        "A": {"visual_quality": 8.5, "originality": 8, "typography": 9.5, "information_hierarchy": 9, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 9, "performance": 9.5, "accessibility": 9},
+        "B": {"visual_quality": 8.5, "originality": 7.5, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 8.5, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 7.5, "accessibility": 8.5},
+        "C": {"visual_quality": 8, "originality": 7, "typography": 8.5, "information_hierarchy": 8.5, "ux": 9, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8.5},
+        "D": {"visual_quality": 7.5, "originality": 7, "typography": 8.5, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 9.5, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8, "accessibility": 8.5},
+        "E": {"visual_quality": 8.5, "originality": 8, "typography": 8, "information_hierarchy": 8, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 8, "research_presentation": 8.5, "portfolio_presentation": 9, "light_mode": 8.5, "dark_mode": 8.5, "performance": 7.5, "accessibility": 9.5},
+        "F": {"visual_quality": 8.5, "originality": 6.5, "typography": 8, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 7.5, "performance": 8.5, "accessibility": 7.5},
+        "G": {"visual_quality": 8, "originality": 7, "typography": 8.5, "information_hierarchy": 8, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 8, "portfolio_presentation": 8.5, "light_mode": 9, "dark_mode": 9, "performance": 8, "accessibility": 8.5},
+        "H": {"visual_quality": 7.5, "originality": 8, "typography": 8, "information_hierarchy": 8.5, "ux": 9, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8.5, "accessibility": 9.5}
+      }
+    },
+    {
+      "judge": "typography",
+      "file": "judge_02_typography.md",
+      "top3": ["B", "A", "D"],
+      "scores": {
+        "A": {"visual_quality": 9, "originality": 8.5, "typography": 9.5, "information_hierarchy": 9, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 9, "long_term_maintainability": 9, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 9.5, "performance": 9.5, "accessibility": 9},
+        "B": {"visual_quality": 9, "originality": 8.5, "typography": 9.5, "information_hierarchy": 9, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 9, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 9, "dark_mode": 8.5, "performance": 7, "accessibility": 8.5},
+        "C": {"visual_quality": 8.5, "originality": 8.5, "typography": 7.5, "information_hierarchy": 7.5, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 9, "performance": 8.5, "accessibility": 8},
+        "D": {"visual_quality": 8.5, "originality": 8.5, "typography": 9, "information_hierarchy": 9, "ux": 8, "mobile_experience": 9, "technical_feasibility": 8, "long_term_maintainability": 8, "research_presentation": 9.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 8.5, "performance": 9, "accessibility": 8.5},
+        "E": {"visual_quality": 8, "originality": 8.5, "typography": 7, "information_hierarchy": 8, "ux": 9, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 8.5, "research_presentation": 8, "portfolio_presentation": 9, "light_mode": 8, "dark_mode": 8, "performance": 7.5, "accessibility": 9},
+        "F": {"visual_quality": 8.5, "originality": 8, "typography": 8.5, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 9, "long_term_maintainability": 9, "research_presentation": 8, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9, "accessibility": 8.5},
+        "G": {"visual_quality": 8.5, "originality": 7.5, "typography": 8, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 9.5, "performance": 8, "accessibility": 8},
+        "H": {"visual_quality": 8, "originality": 9, "typography": 6.5, "information_hierarchy": 8, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 8.5, "performance": 8, "accessibility": 9}
+      }
+    },
+    {
+      "judge": "ux",
+      "file": "judge_03_ux.md",
+      "top3": ["A", "E", "D"],
+      "scores": {
+        "A": {"visual_quality": 8.0, "originality": 7.0, "typography": 9.0, "information_hierarchy": 9.0, "ux": 9.0, "mobile_experience": 8.5, "technical_feasibility": 9.0, "long_term_maintainability": 9.0, "research_presentation": 8.5, "portfolio_presentation": 8.0, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9.0, "accessibility": 9.0},
+        "B": {"visual_quality": 8.5, "originality": 8.0, "typography": 9.0, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 8.5, "research_presentation": 9.0, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 7.5, "accessibility": 8.5},
+        "C": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.0, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 9.0, "portfolio_presentation": 8.5, "light_mode": 8.0, "dark_mode": 9.0, "performance": 8.5, "accessibility": 8.5},
+        "D": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.5, "information_hierarchy": 9.0, "ux": 8.5, "mobile_experience": 9.0, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 9.5, "portfolio_presentation": 8.0, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8.0, "accessibility": 8.5},
+        "E": {"visual_quality": 8.0, "originality": 8.0, "typography": 8.0, "information_hierarchy": 8.5, "ux": 9.0, "mobile_experience": 9.0, "technical_feasibility": 7.5, "long_term_maintainability": 8.0, "research_presentation": 8.5, "portfolio_presentation": 9.0, "light_mode": 8.5, "dark_mode": 8.5, "performance": 7.5, "accessibility": 9.0},
+        "F": {"visual_quality": 8.5, "originality": 7.5, "typography": 8.0, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 9.0, "long_term_maintainability": 9.0, "research_presentation": 8.0, "portfolio_presentation": 8.0, "light_mode": 8.5, "dark_mode": 8.0, "performance": 9.0, "accessibility": 8.5},
+        "G": {"visual_quality": 9.0, "originality": 7.5, "typography": 8.5, "information_hierarchy": 8.5, "ux": 8.0, "mobile_experience": 8.5, "technical_feasibility": 8.0, "long_term_maintainability": 8.5, "research_presentation": 8.0, "portfolio_presentation": 9.0, "light_mode": 8.0, "dark_mode": 9.0, "performance": 8.0, "accessibility": 8.0},
+        "H": {"visual_quality": 8.0, "originality": 9.0, "typography": 8.0, "information_hierarchy": 8.5, "ux": 8.0, "mobile_experience": 8.5, "technical_feasibility": 8.0, "long_term_maintainability": 8.5, "research_presentation": 9.0, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8.5, "accessibility": 9.0}
+      }
+    },
+    {
+      "judge": "engineering",
+      "file": "judge_04_engineering.md",
+      "top3": ["A", "C", "F"],
+      "scores": {
+        "A": {"visual_quality": 8.5, "originality": 7.5, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 9.5, "long_term_maintainability": 9.5, "research_presentation": 8, "portfolio_presentation": 7.5, "light_mode": 9, "dark_mode": 8.5, "performance": 9.5, "accessibility": 9},
+        "B": {"visual_quality": 8.5, "originality": 8.5, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8, "technical_feasibility": 8, "long_term_maintainability": 7, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8.5, "performance": 7, "accessibility": 7.5},
+        "C": {"visual_quality": 8, "originality": 8, "typography": 7.5, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 9, "performance": 8.5, "accessibility": 8.5},
+        "D": {"visual_quality": 7.5, "originality": 8, "typography": 9, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 9, "portfolio_presentation": 7.5, "light_mode": 9, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8.5},
+        "E": {"visual_quality": 8, "originality": 9, "typography": 7.5, "information_hierarchy": 8, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 7, "research_presentation": 8, "portfolio_presentation": 9, "light_mode": 8, "dark_mode": 8, "performance": 7, "accessibility": 9},
+        "F": {"visual_quality": 8.5, "originality": 7.5, "typography": 8, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 7.5, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8, "performance": 8.5, "accessibility": 8},
+        "G": {"visual_quality": 8.5, "originality": 7.5, "typography": 8.5, "information_hierarchy": 8, "ux": 8, "mobile_experience": 7.5, "technical_feasibility": 8.5, "long_term_maintainability": 7.5, "research_presentation": 7.5, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 9, "performance": 8, "accessibility": 8},
+        "H": {"visual_quality": 7.5, "originality": 9.5, "typography": 8, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8, "accessibility": 9}
+      }
+    },
+    {
+      "judge": "a11y",
+      "file": "judge_05_a11y.md",
+      "top3": ["E", "A", "H"],
+      "scores": {
+        "A": {"visual_quality": 8.5, "originality": 7.5, "typography": 9, "information_hierarchy": 9, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 8.5, "performance": 9.5, "accessibility": 9},
+        "B": {"visual_quality": 8.5, "originality": 8, "typography": 9.5, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 8, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 8.5, "performance": 7.5, "accessibility": 7.5},
+        "C": {"visual_quality": 8, "originality": 8, "typography": 8, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 9, "performance": 8.5, "accessibility": 7},
+        "D": {"visual_quality": 8, "originality": 8, "typography": 9, "information_hierarchy": 9, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 9.5, "portfolio_presentation": 8, "light_mode": 9, "dark_mode": 8.5, "performance": 9, "accessibility": 8.5},
+        "E": {"visual_quality": 8, "originality": 8.5, "typography": 8, "information_hierarchy": 8.5, "ux": 9, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 8.5, "portfolio_presentation": 9, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8, "accessibility": 9},
+        "F": {"visual_quality": 8, "originality": 8, "typography": 8, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 7.5, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8, "performance": 9, "accessibility": 6.5},
+        "G": {"visual_quality": 9, "originality": 8, "typography": 8.5, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 7.5, "portfolio_presentation": 8.5, "light_mode": 7.5, "dark_mode": 8, "performance": 8, "accessibility": 6.5},
+        "H": {"visual_quality": 8, "originality": 9, "typography": 8, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9, "accessibility": 8.5}
+      }
+    },
+    {
+      "judge": "mobile",
+      "file": "judge_06_mobile.md",
+      "top3": ["A", "C", "E"],
+      "scores": {
+        "A": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.5, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 9.0, "technical_feasibility": 8.5, "long_term_maintainability": 8.0, "research_presentation": 8.0, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.0, "performance": 9.0, "accessibility": 8.5},
+        "B": {"visual_quality": 8.5, "originality": 8.0, "typography": 9.0, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 8.0, "research_presentation": 8.0, "portfolio_presentation": 8.0, "light_mode": 8.5, "dark_mode": 8.0, "performance": 7.0, "accessibility": 8.0},
+        "C": {"visual_quality": 8.0, "originality": 7.5, "typography": 7.5, "information_hierarchy": 8.0, "ux": 8.5, "mobile_experience": 9.0, "technical_feasibility": 8.0, "long_term_maintainability": 8.0, "research_presentation": 8.0, "portfolio_presentation": 8.0, "light_mode": 8.0, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8.0},
+        "D": {"visual_quality": 7.5, "originality": 7.5, "typography": 8.5, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 7.0, "long_term_maintainability": 7.5, "research_presentation": 9.0, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.0, "performance": 7.5, "accessibility": 8.5},
+        "E": {"visual_quality": 8.0, "originality": 8.5, "typography": 7.5, "information_hierarchy": 7.5, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 8.0, "portfolio_presentation": 9.0, "light_mode": 8.0, "dark_mode": 8.0, "performance": 8.0, "accessibility": 8.5},
+        "F": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.0, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 7.5, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 7.5, "performance": 9.0, "accessibility": 7.5},
+        "G": {"visual_quality": 8.5, "originality": 7.0, "typography": 8.0, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 7.0, "technical_feasibility": 8.0, "long_term_maintainability": 8.0, "research_presentation": 7.5, "portfolio_presentation": 8.5, "light_mode": 8.0, "dark_mode": 9.0, "performance": 7.5, "accessibility": 7.5},
+        "H": {"visual_quality": 7.5, "originality": 9.0, "typography": 7.5, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 8.0, "portfolio_presentation": 8.0, "light_mode": 8.0, "dark_mode": 8.0, "performance": 8.0, "accessibility": 8.5}
+      }
+    },
+    {
+      "judge": "researcher",
+      "file": "judge_07_researcher.md",
+      "top3": ["D", "B", "H"],
+      "scores": {
+        "A": {"visual_quality": 8, "originality": 7.5, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8, "technical_feasibility": 9, "long_term_maintainability": 9, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9, "accessibility": 8.5},
+        "B": {"visual_quality": 8.5, "originality": 8.5, "typography": 9, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 9, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8, "performance": 7.5, "accessibility": 8},
+        "C": {"visual_quality": 8, "originality": 7.5, "typography": 8, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 8, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8},
+        "D": {"visual_quality": 7.5, "originality": 8, "typography": 9, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 8, "research_presentation": 9.5, "portfolio_presentation": 8, "light_mode": 8.5, "dark_mode": 8, "performance": 8, "accessibility": 8.5},
+        "E": {"visual_quality": 8, "originality": 8.5, "typography": 7.5, "information_hierarchy": 7.5, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 8, "portfolio_presentation": 9, "light_mode": 8, "dark_mode": 8, "performance": 7.5, "accessibility": 9},
+        "F": {"visual_quality": 8, "originality": 8, "typography": 8, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 9, "long_term_maintainability": 9.5, "research_presentation": 7.5, "portfolio_presentation": 8, "light_mode": 8, "dark_mode": 7.5, "performance": 9, "accessibility": 8},
+        "G": {"visual_quality": 8.5, "originality": 7.5, "typography": 8, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 6.5, "portfolio_presentation": 8, "light_mode": 7.5, "dark_mode": 9, "performance": 8, "accessibility": 7.5},
+        "H": {"visual_quality": 7.5, "originality": 9, "typography": 7.5, "information_hierarchy": 8, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 8, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 8, "performance": 8, "accessibility": 9}
+      }
+    },
+    {
+      "judge": "recruiter",
+      "file": "judge_08_recruiter.md",
+      "top3": ["E", "C", "H"],
+      "scores": {
+        "A": {"visual_quality": 8, "originality": 7, "typography": 9, "information_hierarchy": 9, "ux": 9, "mobile_experience": 8.5, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9, "accessibility": 9},
+        "B": {"visual_quality": 8.5, "originality": 8.5, "typography": 9, "information_hierarchy": 7, "ux": 6.5, "mobile_experience": 8, "technical_feasibility": 7.5, "long_term_maintainability": 6.5, "research_presentation": 8.5, "portfolio_presentation": 7, "light_mode": 8.5, "dark_mode": 8, "performance": 7, "accessibility": 7},
+        "C": {"visual_quality": 8, "originality": 7, "typography": 8, "information_hierarchy": 8, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 8.5, "research_presentation": 8.5, "portfolio_presentation": 9, "light_mode": 8, "dark_mode": 9, "performance": 8.5, "accessibility": 8},
+        "D": {"visual_quality": 8, "originality": 8, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7, "research_presentation": 9, "portfolio_presentation": 8.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8, "accessibility": 8.5},
+        "E": {"visual_quality": 7.5, "originality": 8.5, "typography": 7.5, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 7, "long_term_maintainability": 7.5, "research_presentation": 7.5, "portfolio_presentation": 9, "light_mode": 8, "dark_mode": 8, "performance": 7.5, "accessibility": 9},
+        "F": {"visual_quality": 8, "originality": 6.5, "typography": 7.5, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 8.5, "long_term_maintainability": 8, "research_presentation": 7.5, "portfolio_presentation": 8, "light_mode": 8, "dark_mode": 7.5, "performance": 8.5, "accessibility": 8},
+        "G": {"visual_quality": 8.5, "originality": 7, "typography": 8.5, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 8, "portfolio_presentation": 8.5, "light_mode": 8, "dark_mode": 9, "performance": 7.5, "accessibility": 7.5},
+        "H": {"visual_quality": 7.5, "originality": 9, "typography": 8, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 8, "long_term_maintainability": 8, "research_presentation": 8.5, "portfolio_presentation": 9, "light_mode": 8.5, "dark_mode": 8.5, "performance": 8.5, "accessibility": 9}
+      }
+    },
+    {
+      "judge": "product",
+      "file": "judge_09_product.md",
+      "top3": ["A", "C", "B"],
+      "scores": {
+        "A": {"visual_quality": 8.0, "originality": 7.5, "typography": 9.0, "information_hierarchy": 9.0, "ux": 8.0, "mobile_experience": 8.5, "technical_feasibility": 9.0, "long_term_maintainability": 9.5, "research_presentation": 8.5, "portfolio_presentation": 8.0, "light_mode": 8.5, "dark_mode": 9.0, "performance": 9.0, "accessibility": 9.0},
+        "B": {"visual_quality": 8.5, "originality": 8.0, "typography": 9.0, "information_hierarchy": 7.5, "ux": 7.5, "mobile_experience": 8.0, "technical_feasibility": 7.5, "long_term_maintainability": 8.0, "research_presentation": 9.0, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.0, "performance": 7.0, "accessibility": 7.5},
+        "C": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.0, "information_hierarchy": 7.5, "ux": 8.5, "mobile_experience": 8.5, "technical_feasibility": 8.5, "long_term_maintainability": 9.0, "research_presentation": 8.5, "portfolio_presentation": 8.0, "light_mode": 8.0, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8.0},
+        "D": {"visual_quality": 7.5, "originality": 7.5, "typography": 9.0, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 7.5, "long_term_maintainability": 7.5, "research_presentation": 9.0, "portfolio_presentation": 7.5, "light_mode": 9.0, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8.5},
+        "E": {"visual_quality": 7.5, "originality": 8.0, "typography": 7.0, "information_hierarchy": 7.5, "ux": 9.0, "mobile_experience": 8.0, "technical_feasibility": 8.0, "long_term_maintainability": 7.5, "research_presentation": 8.0, "portfolio_presentation": 8.5, "light_mode": 8.0, "dark_mode": 8.0, "performance": 8.0, "accessibility": 8.5},
+        "F": {"visual_quality": 8.0, "originality": 7.5, "typography": 8.0, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 8.5, "technical_feasibility": 9.0, "long_term_maintainability": 9.0, "research_presentation": 7.5, "portfolio_presentation": 8.0, "light_mode": 7.5, "dark_mode": 7.0, "performance": 9.0, "accessibility": 8.0},
+        "G": {"visual_quality": 8.5, "originality": 7.0, "typography": 8.0, "information_hierarchy": 8.0, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.0, "research_presentation": 7.5, "portfolio_presentation": 9.0, "light_mode": 8.5, "dark_mode": 9.0, "performance": 8.0, "accessibility": 8.0},
+        "H": {"visual_quality": 7.5, "originality": 9.0, "typography": 7.5, "information_hierarchy": 7.0, "ux": 8.5, "mobile_experience": 8.0, "technical_feasibility": 7.0, "long_term_maintainability": 7.5, "research_presentation": 8.5, "portfolio_presentation": 8.5, "light_mode": 8.0, "dark_mode": 8.0, "performance": 7.5, "accessibility": 8.5}
+      }
+    },
+    {
+      "judge": "originality",
+      "file": "judge_10_originality.md",
+      "top3": ["H", "E", "B"],
+      "scores": {
+        "A": {"visual_quality": 8, "originality": 6.5, "typography": 9, "information_hierarchy": 8.5, "ux": 8, "mobile_experience": 7.5, "technical_feasibility": 9, "long_term_maintainability": 8.5, "research_presentation": 8, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8.5, "performance": 9.5, "accessibility": 9},
+        "B": {"visual_quality": 8.5, "originality": 7, "typography": 9, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 7.5, "long_term_maintainability": 8, "research_presentation": 8.5, "portfolio_presentation": 7.5, "light_mode": 8.5, "dark_mode": 8, "performance": 7.5, "accessibility": 8},
+        "C": {"visual_quality": 7.5, "originality": 5.5, "typography": 7.5, "information_hierarchy": 8.5, "ux": 8.5, "mobile_experience": 7.5, "technical_feasibility": 8, "long_term_maintainability": 8, "research_presentation": 8, "portfolio_presentation": 7.5, "light_mode": 7.5, "dark_mode": 8.5, "performance": 8.5, "accessibility": 8},
+        "D": {"visual_quality": 8, "originality": 6.5, "typography": 8.5, "information_hierarchy": 8.5, "ux": 7.5, "mobile_experience": 8, "technical_feasibility": 7, "long_term_maintainability": 7, "research_presentation": 9, "portfolio_presentation": 7, "light_mode": 8.5, "dark_mode": 7.5, "performance": 8, "accessibility": 8.5},
+        "E": {"visual_quality": 7.5, "originality": 7.5, "typography": 7.5, "information_hierarchy": 7.5, "ux": 9, "mobile_experience": 7.5, "technical_feasibility": 6.5, "long_term_maintainability": 7, "research_presentation": 7.5, "portfolio_presentation": 8.5, "light_mode": 7.5, "dark_mode": 7.5, "performance": 7, "accessibility": 9},
+        "F": {"visual_quality": 8, "originality": 6, "typography": 8, "information_hierarchy": 8, "ux": 7.5, "mobile_experience": 7.5, "technical_feasibility": 8.5, "long_term_maintainability": 8.5, "research_presentation": 7, "portfolio_presentation": 7, "light_mode": 8, "dark_mode": 7, "performance": 9, "accessibility": 8},
+        "G": {"visual_quality": 7.5, "originality": 5, "typography": 8, "information_hierarchy": 7.5, "ux": 7, "mobile_experience": 7.5, "technical_feasibility": 8, "long_term_maintainability": 7.5, "research_presentation": 7, "portfolio_presentation": 8, "light_mode": 7.5, "dark_mode": 8.5, "performance": 8, "accessibility": 7.5},
+        "H": {"visual_quality": 7, "originality": 8, "typography": 7.5, "information_hierarchy": 8, "ux": 8.5, "mobile_experience": 8, "technical_feasibility": 8.5, "long_term_maintainability": 8, "research_presentation": 8.5, "portfolio_presentation": 8, "light_mode": 8, "dark_mode": 7.5, "performance": 8.5, "accessibility": 9.5}
+      }
+    }
+  ]
+}

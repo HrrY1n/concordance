@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAF7F1"/>
+  <rect x="80" y="60" width="3" height="510" fill="#A63D2A"/>
+  <text x="120" y="150" font-family="monospace" font-size="22" letter-spacing="4" fill="#6B6255">OFFPRINT — WORKING EDITION</text>
+  <text x="120" y="290" font-family="Georgia, serif" font-size="84" fill="#1B1611">Grounded answers,</text>
+  <text x="120" y="390" font-family="Georgia, serif" font-size="84" font-style="italic" fill="#1B1611">studied where they break.</text>
+  <text x="120" y="500" font-family="monospace" font-size="20" letter-spacing="2" fill="#6B6255">RAG · ROBUSTNESS · POISONING · SECURITY</text>
+</svg>
