@@ -7,8 +7,9 @@ import { fileURLToPath } from "node:url";
  * G2 guard: every token that carries readable text must reach 4.5:1 (WCAG AA)
  * on --bg, --bg-inset and --raised — in BOTH themes. The hex values are parsed
  * straight out of src/styles/index.css, so the test cannot drift from the
- * stylesheet. --faint is asserted to stay below 4.5:1 to document its
- * decorative-only status.
+ * stylesheet. --faint is the QUIET tier of readable text (production pass:
+ * axe usage-level scanning showed it carried real metadata), so it is inside
+ * the AA matrix — asserted to stay the quietest text tier, below ink-2.
  */
 
 const CSS_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "styles", "index.css");
@@ -57,7 +58,7 @@ const css = readFileSync(CSS_PATH, "utf8");
 const light = extractBlock(css, /^:root \{/m);
 const dark = extractBlock(css, /^\.dark \{/m);
 
-const READABLE = ["ink", "ink-2", "accent", "signal", "ok"];
+const READABLE = ["ink", "ink-2", "accent", "signal", "ok", "faint"];
 const SURFACES = ["bg", "bg-inset", "raised"];
 const THEMES: [string, ThemeTokens][] = [
   ["light", light],
@@ -83,9 +84,13 @@ describe("token contrast (G2 — parsed from the stylesheet itself)", () => {
     }
   }
 
-  it("faint stays decorative (below AA) in both themes — never for readable text", () => {
-    expect(contrast(light.faint, light.bg)).toBeLessThan(4.5);
-    expect(contrast(dark.faint, dark.bg)).toBeLessThan(4.5);
+  it("faint is the quietest readable tier — above AA, below ink-2, both themes", () => {
+    for (const bg of SURFACES) {
+      expect(contrast(light.faint, light[bg])).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(dark.faint, dark[bg])).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(light.faint, light[bg])).toBeLessThan(contrast(light["ink-2"], light[bg]));
+      expect(contrast(dark.faint, dark[bg])).toBeLessThan(contrast(dark["ink-2"], dark[bg]));
+    }
   });
 
   it("selection keeps ink readable in both themes", () => {

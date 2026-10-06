@@ -68,18 +68,17 @@ export default function ConnectPage() {
             ))}
           </ul>
         ) : (
-          /* the explicit mailto slot — visible, labeled, first to become real */
+          /* the explicit email slot — visible, honest, NOT clickable: a
+             mailto to a placeholder address would look like a real contact.
+             It becomes a live mailto the moment links.email exists. */
           <ul className="mt-10">
             <li className="border-t border-line">
-              <a
-                href="mailto:address@example.com"
-                className="group grid min-h-[56px] grid-cols-[8rem_1fr] items-baseline gap-x-6 py-4"
-              >
+              <div className="grid min-h-[56px] grid-cols-[8rem_1fr] items-baseline gap-x-6 py-4">
                 <span className="t-meta t-caps text-ink-2">Email</span>
-                <span className="t-small text-ink min-w-0 break-all transition-colors group-hover:text-accent">
-                  address@example.com <span aria-hidden="true">↗</span>
+                <span className="t-small text-ink-2 min-w-0 break-all">
+                  {site.connectUnconfiguredEmail}
                 </span>
-              </a>
+              </div>
             </li>
             <li className="border-t border-dashed border-line-strong">
               {/* informational row: ink-2, not faint — it carries meaning (P0-11) */}

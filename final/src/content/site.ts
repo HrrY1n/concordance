@@ -14,7 +14,12 @@ export const site = {
   tagline: "A working concordance of one researcher's corpus.",
   description:
     "A research archive built as a concordance: retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — every figure computed in your browser, every reading counted from the data.",
-  url: "https://example.com/",
+  /** PRODUCTION URL — the single source of truth. index.html's canonical /
+   *  og: / twitter: / JSON-LD tags carry a __SITE_URL__ token that a Vite
+   *  build-time transform replaces with this value, and robots.txt +
+   *  sitemap.xml are generated from it (see vite.config.ts). Changing the
+   *  hosting domain is a ONE-LINE edit here; nothing else can drift. */
+  url: "https://hrry1n.github.io/concordance/",
 
   /** Dual-voice hero (sans = statement, serif italic = the human qualifier). */
   heroSans: ["Retrieval-augmented", "generation,"],
@@ -30,6 +35,9 @@ export const site = {
   connectEmptyLine:
     "No public channels are configured yet. The slots below become real the moment a channel is set — nothing else on the page changes.",
   connectMailtoNote: "placeholder slot — a real address takes this place once one exists",
+  /** Connect (and the home strip) render this instead of a clickable address
+   *  while links.email is null — an unconfigured slot never fakes being one. */
+  connectUnconfiguredEmail: "unconfigured — becomes a live address the moment links.ts has one",
 
   /** Publications empty state (§05): academic etiquette, no staged progress. */
   publicationsEmptyTitle: "Selected research will appear here.",
@@ -44,3 +52,15 @@ export const site = {
 
 /** The hero identity line — composed from real profile data only. */
 export const heroIdentity = profile.identity.join(" · ");
+
+/** Brand compatibility (production pass): the moment a real name exists, the
+ *  wordmark, titles and og metadata become "[NAME] — Concordance" everywhere —
+ *  one data edit in profile.ts, zero redesign. Until then the site brand
+ *  stands alone. Consumers: Header wordmark, lib/seo.ts, index.html transform. */
+export const brand = profile.name ? `${profile.name} — Concordance` : "Concordance";
+
+/** Page-title grammar: the home title, and the suffix every other page gets.
+ *  (Home keeps the descriptive subtitle while the site is anonymous; once a
+ *  name exists the brand itself carries the title.) */
+export const homeTitle = profile.name ? brand : "Concordance — Research Archive";
+export const titleSuffix = profile.name ?? "Concordance";

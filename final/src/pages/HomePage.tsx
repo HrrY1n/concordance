@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { bm25Rank } from "@/lib/bm25";
 import { budgetChunks, sandboxCorpus, sandboxQuery, budgetDefault } from "@/content/lab";
+import { links } from "@/content/links";
 import { notes } from "@/content/notes";
 import { projects } from "@/content/projects";
 import { publications } from "@/content/publications";
@@ -126,6 +127,12 @@ export default function HomePage() {
   const recentNotes = [...notes]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 2);
+  // "What is this person working on right now" — derived, never hand-written:
+  // the open ledger questions lead the current-work section (P1).
+  const activeQuestions = researchQuestions
+    .filter((q) => q.status === "active")
+    .slice(0, 3);
+  const email = links.email;
 
   // Honest readings — counted from the content modules, never hand-written.
   const readings = [
@@ -137,91 +144,78 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ——— REGISTER PLATE ——— hero */}
+      {/* ——— REGISTER PLATE ——— hero: the person first (production pass P1).
+           No figure, no system readouts on the first screen — identity, one
+           statement, a few retrieval keywords, and 2–3 primary entries. */}
       <section
         aria-labelledby="hero-title"
         data-live="true"
         data-section="home"
         className="wrap flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-14 pt-12 md:pt-16"
       >
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
-            <p className="t-meta t-caps text-ink-2 settle" style={{ "--settle-i": 0 } as React.CSSProperties}>
-              {site.name} — {heroIdentity}
-            </p>
-            <h1 id="hero-title" className="t-display settle mt-6 max-w-[22ch]" style={{ "--settle-i": 1 } as React.CSSProperties}>
-              <span className="block">
-                {site.heroSans[0]} {site.heroSans[1]}
-              </span>
-              <span className="t-serif-voice block text-ink-2">
-                {site.heroSerif}
-                <span aria-hidden="true" className="caret" />
-              </span>
-            </h1>
-            <p
-              className="t-lede text-ink-2 settle mt-7 max-w-[54ch]"
-              style={{ "--settle-i": 2 } as React.CSSProperties}
-            >
-              {site.heroLede}
-            </p>
+        <div className="max-w-[54rem]">
+          <p className="t-meta t-caps text-ink-2 settle" style={{ "--settle-i": 0 } as React.CSSProperties}>
+            {heroIdentity}
+          </p>
+          <h1 id="hero-title" className="t-display settle mt-6 max-w-[22ch]" style={{ "--settle-i": 1 } as React.CSSProperties}>
+            <span className="block">
+              {site.heroSans[0]} {site.heroSans[1]}
+            </span>
+            <span className="t-serif-voice block text-ink-2">
+              {site.heroSerif}
+              <span aria-hidden="true" className="caret" />
+            </span>
+          </h1>
+          <p
+            className="t-lede text-ink-2 settle mt-7 max-w-[54ch]"
+            style={{ "--settle-i": 2 } as React.CSSProperties}
+          >
+            {site.heroLede}
+          </p>
 
-            {/* M3: facets are real retrieval entries — each opens the palette
-                pre-queried with the term itself. */}
-            <div
-              className="mt-8 flex flex-wrap gap-2.5"
-              role="group"
-              aria-label="Search entries — each opens the site palette with this term"
-            >
-              {facets.map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  className="u-chip"
-                  onClick={() => openSearch(f.short)}
-                >
-                  {f.short}
-                  <span aria-hidden="true"> ⌕</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="settle mt-10" style={{ "--settle-i": 3 } as React.CSSProperties}>
-              <DeltaFigure />
-            </div>
-
-            <p className="t-meta text-ink-2 mt-6">{readings}</p>
+          {/* M3: facets are real retrieval entries — each opens the palette
+              pre-queried with the term itself. */}
+          <div
+            className="mt-8 flex flex-wrap gap-2.5"
+            role="group"
+            aria-label="Search entries — each opens the site palette with this term"
+          >
+            {facets.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                className="u-chip"
+                onClick={() => openSearch(f.short)}
+              >
+                {f.short}
+                <span aria-hidden="true"> ⌕</span>
+              </button>
+            ))}
           </div>
 
-          {/* the archive's own index — the 10-second orientation map */}
-          <aside aria-label="Site index" className="lg:col-span-4 lg:col-start-9">
-            <p className="t-kicker text-ink-2">index of one researcher</p>
-            <ul className="mt-4">
-              {sections.map((s) => (
-                <li key={s.id} className="border-b border-line">
-                  <Link
-                    to={s.route}
-                    className="group flex min-h-[48px] items-baseline gap-3 py-3 transition-colors hover:bg-inset"
-                  >
-                    <span className="t-meta text-faint" aria-hidden="true">
-                      §{s.num}
-                    </span>
-                    <span className="t-small text-ink transition-colors group-hover:text-accent">
-                      {s.title}
-                    </span>
-                    {s.reading ? (
-                      <span className="t-meta text-ink-2 ml-auto hidden text-right sm:inline">
-                        {s.reading}
-                      </span>
-                    ) : null}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </aside>
+          {/* the 2–3 primary entries — addresses, not a system index */}
+          <nav aria-label="Primary sections" className="settle mt-10 flex flex-wrap gap-x-8 gap-y-2" style={{ "--settle-i": 3 } as React.CSSProperties}>
+            {(["research", "work", "connect"] as const).map((id) => {
+              const s = sections.find((x) => x.id === id)!;
+              return (
+                <Link
+                  key={s.id}
+                  to={s.route}
+                  className="u-link t-small inline-flex min-h-[44px] items-center"
+                >
+                  <span className="t-meta text-faint mr-2" aria-hidden="true">
+                    §{s.num}
+                  </span>
+                  {s.title}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
       </section>
 
-      {/* ——— REGISTER LEDGER ——— research preview */}
+      {/* ——— REGISTER LEDGER ——— research preview: directions, then FIG.01 —
+           the first signature moment sits right after the first screen (P1). */}
       <Section
         meta={sections.find((s) => s.id === "research")!}
         register="ledger"
@@ -243,6 +237,9 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
+        <div className="settle mt-10">
+          <DeltaFigure />
+        </div>
         <div className="mt-6 flex flex-wrap items-baseline justify-between gap-4">
           <p className="t-meta text-ink-2">
             ledger — {researchQuestions.length} questions ·{" "}
@@ -252,14 +249,41 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ——— REGISTER PLATE ——— work preview: plate 01 only, display scale */}
+      {/* ——— REGISTER PLATE ——— current work: the 2–3 things happening now
+           (active ledger questions) and the flagship plate (P1). */}
       <Section
         meta={sections.find((s) => s.id === "work")!}
         register="plate"
-        lede="Work is presented as numbered plates with evidence chains — no card walls, no screenshots of screenshots."
+        lede="What is open right now, then the work itself — presented as numbered plates with evidence chains, no card walls."
       >
-        <article className="max-w-[54rem]">
-          <p className="t-meta t-caps text-ink-2">PLATE 01 · {featured[0]?.year}</p>
+        <div className="max-w-[62rem]">
+          <p className="t-meta t-caps text-ink-2">current — active questions</p>
+          <ul className="mt-3">
+            {activeQuestions.map((q) => (
+              <li key={q.id} className="border-b border-line last:border-b-0">
+                <Link
+                  to={`/research#${q.id}`}
+                  className="group grid min-h-[52px] grid-cols-[auto_1fr] items-baseline gap-x-6 py-3.5 md:grid-cols-[4rem_1fr_auto]"
+                >
+                  <span className="t-meta text-accent">{q.id.toUpperCase()}</span>
+                  <span className="t-small text-ink transition-colors group-hover:text-accent">
+                    {q.text}
+                  </span>
+                  <span className="t-meta text-ink-2 max-md:col-start-2">
+                    {q.relatedDemo ? "run: sandbox →" : "ledger →"}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <article className="mt-14 max-w-[54rem]">
+          <p className="t-meta t-caps text-ink-2">
+            PLATE 01 · {featured[0]?.year}
+            {featured[0]?.sample ? (
+              <span className="text-ink-2"> · sample entry</span>
+            ) : null}
+          </p>
           <h3 className="t-h1 mt-3">{featured[0]?.title}</h3>
           <p className="t-lede text-ink-2 mt-4 max-w-[54ch]">{featured[0]?.summary}</p>
           <div className="mt-6 flex flex-wrap gap-2.5">
@@ -288,6 +312,50 @@ export default function HomePage() {
           </div>
         </article>
       </Section>
+
+      {/* ——— THE ARCHIVE, AT A GLANCE ——— the concordance introduces itself
+           after the person and the work: full § index + honest readings (P1). */}
+      <section aria-label="Archive index" className="border-y border-line bg-inset">
+        <div className="wrap grid gap-10 py-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
+            <p className="t-kicker text-ink-2">index of one researcher</p>
+            <ul className="mt-4">
+              {sections.map((s) => (
+                <li key={s.id} className="border-b border-line last:border-b-0">
+                  <Link
+                    to={s.route}
+                    className="group flex min-h-[48px] items-baseline gap-3 py-3 transition-colors hover:bg-raised"
+                  >
+                    <span className="t-meta text-faint" aria-hidden="true">
+                      §{s.num}
+                    </span>
+                    <span className="t-small text-ink transition-colors group-hover:text-accent">
+                      {s.title}
+                    </span>
+                    {s.reading ? (
+                      <span className="t-meta text-ink-2 ml-auto hidden text-right sm:inline">
+                        {s.reading}
+                      </span>
+                    ) : null}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <p className="t-kicker text-ink-2">readings</p>
+            <p className="t-meta text-ink-2 mt-4 leading-6">{readings}</p>
+            <p className="t-small text-ink-2 mt-5 max-w-[44ch]">
+              A concordance is a printed retrieval index — the one artifact that is both a book
+              and a search system. This site is one too: every reading above is counted from the
+              content, nothing is hand-written.{" "}
+            </p>
+            <div className="mt-4">
+              <XRef to="/lab">Open the Lab →</XRef>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ——— REGISTER LEDGER ——— lab preview: one figure, the instruments */}
       <Section
@@ -340,19 +408,26 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* ——— REGISTER PLATE ——— connect strip (M5: action-oriented) */}
+      {/* ——— REGISTER PLATE ——— connect strip (M5: action-oriented, derived —
+           no clickable address exists until links.email does, P0-2) */}
       <Section meta={sections.find((s) => s.id === "connect")!} register="plate">
         <div className="max-w-[54rem]">
-          <h3 className="t-h2">Fastest signal right now: email.</h3>
+          <h3 className="t-h2">
+            {site.connectFastest}{" "}
+            <span className="t-serif-voice text-ink-2">
+              {email ? "email." : "the correspondence page."}
+            </span>
+          </h3>
           <p className="t-lede text-ink-2 mt-4 max-w-[52ch]">{site.connectIntro}</p>
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-            <a
-              href="mailto:address@example.com"
-              className="u-link t-small inline-flex min-h-[44px] items-center"
-              aria-label="Email slot — placeholder address"
-            >
-              address@example.com <span aria-hidden="true">↗</span>
-            </a>
+            {email ? (
+              <a
+                href={`mailto:${email}`}
+                className="u-link t-small inline-flex min-h-[44px] items-center"
+              >
+                {email} <span aria-hidden="true">↗</span>
+              </a>
+            ) : null}
             <XRef to="/connect">All channels</XRef>
           </div>
         </div>

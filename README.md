@@ -31,6 +31,17 @@ npm run build && npm run preview   # http://localhost:4173
 > 注意：直接双击 `final/index.html`（源码模板）或 `final/dist/index.html`（生产构建）都会白屏——
 > 前者是给构建工具的输入，后者的 ES Module 在 file:// 下被浏览器 CORS 策略拦截。请用上面三种方式。
 
+**线上地址与 URL 单源**：正式站点 https://hrry1n.github.io/concordance/ 。域名/子路径只存在
+于 `final/src/content/site.ts` 的 `url` 一处——index.html 的 canonical/OG/JSON-LD 由构建期
+注入（`__SITE_URL__` token），robots.txt 与 sitemap.xml 构建期生成。换域名 = 改一行。
+
+**GitHub Pages 深链事实**：`/` 为真 200；`/research` 等深链是 **HTTP 404 + 404.html SPA 接管**
+（浏览器中全部正常渲染）。这是 GitHub Pages 托管 BrowserRouter SPA 的固有行为；首页可正常
+索引，深链有 soft-404 风险——若未来需要单篇笔记被搜索索引，再加构建期 prerender。
+
+**质量门禁**：`npm run test`（76 用例：sandbox 数学 / 内容契约 / 对比度 / sitemap）·
+`npm run test:a11y`（axe 五页，零 critical/serious）· `npm run lint`（0/0）。
+
 其他命令（均在 `final/` 下）：
 
 ```bash

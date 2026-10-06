@@ -228,3 +228,41 @@ Notes/About 整页 ESSAY——密度、构图、图版形态的层级差异由�
 1. `package.json` 的 `url` 仍是 `https://example.com/`（placeholder）——部署时改 `content/site.ts` 一处即可（sitemap/OG/canonical 全部随之派生）。
 2. og.png 重生成：打开 `scripts/og.html`，用 Playwright 以 1200×630 截图存回 `public/og.png`（文件头有现成命令）。
 3. FLIP 修复经规范推演 + 代码复核；如需实证可在 DevTools Performance 面板确认 280ms 过渡完整。
+
+---
+
+# PRODUCTION PASS（生产化与首页重排 · 2026-10-07）
+
+> 性质：Production Personalization & Homepage Reframing Pass。设计系统、视觉语言、Register、
+> 主题、IA 全部保留；只动信息优先级、生产 URL/SEO、placeholder 诚实性与长期维护成本。
+
+## P0 — 生产上线问题
+
+| # | 修复 | 落点 |
+|---|---|---|
+| 1 | URL 单一数据源：`site.url` = `https://hrry1n.github.io/concordance/`；index.html 的 canonical/og:url/og:image/twitter:image/JSON-LD 全部改为 `__SITE_URL__` token，由 `vite.config.ts` 的 concordanceMeta 插件在 build+dev 时注入（og 图片自动携带 /concordance/ 子路径）；robots.txt 删除静态文件、改为构建期从 site.url 生成；sitemap 已派生。改域名 = 只改 site.ts 一行 | `content/site.ts:17-23`、`vite.config.ts`、`index.html:7-36,53` |
+| 2 | 假联系方式：ConnectPage 与首页 Connect 条的可点击 `mailto:address@example.com` 全部移除——links.email 为 null 时渲染不可点击的未配置槽（`site.connectUnconfiguredEmail`），配置后自动成为真 mailto；首页条文案从 links/site 派生（消灭 JSX 硬编码 "Fastest signal right now: email."） | `pages/ConnectPage.tsx:70-93`、`pages/HomePage.tsx`（connect strip） |
+| 3 | aboutZh 开发者式占位句（"替换于 src/content/profile.ts"）→ 与英文 about 同义的中文研究描述（只有研究方向，无履历事实），保留 lang="zh" 排印 | `content/profile.ts:17-21` |
+| 4 | sample 防误认：Work 图版元数据列、首页精选 PLATE 元行、Notes 列表元行增加派生的 mono `sample entry` 读数（仅 `sample: true` 时出现），与全站诚实读数同语法；colophon 统一声明与 `sample: true` 工程机制保留 | `pages/WorkPage.tsx`、`NotesPage.tsx`、`HomePage.tsx` |
+
+## P1 — 首页阅读顺序重排（PERSON → RESEARCH → CURRENT WORK → CONCORDANCE）
+
+- **Hero 瘦身**：kicker 去掉 "Concordance" 前缀只留身份；移除 FIG.01 与 WORK/QUESTIONS/NOTES/PUBS 读数行；移除右侧完整 site index；新增 2–3 个主入口（§01 Research / §02 Selected Work / §07 Connect，mono § 前缀 u-link）。
+- **FIG.01 下移**：成为 §01 Research 段的方向列表之后的第一个 signature moment（首屏之后，不再与身份竞争注意力）。
+- **Current work**：§02 Work 段 lede 改写，段首新增 active questions 条——从 `researchQuestions` 的 `status: "active"` 派生（Q01/Q02 → /research#qid，relatedDemo 显示 "run: sandbox →"），即"我现在最重要的 2~3 件事"，零硬编码。
+- **Archive index 条**：完整 § 索引 + 派生读数下移为 Work 与 Lab 之间的 inset 间歇带（"index of one researcher" + readings 列 + concordance 一句话自述 + Open the Lab →）——CONCORDANCE"既是书也是检索系统"在此自我亮相。
+- Register 节奏：hero(PLATE) → research(LEDGER) → work(PLATE) → index 间歇带 → lab(LEDGER) → notes(ESSAY) → connect(PLATE)，相邻 Section 仍互异；§ 站点坐标体系不受首页段落顺序影响。
+
+## P2 — 长期维护
+
+| # | 项 | 落点 |
+|---|---|---|
+| 1 | 品牌兼容：`site.brand` = name 存在时 "姓名 — Concordance"，否则 "Concordance"；`homeTitle`/`titleSuffix` 同源派生。Header/Footer/MobileMenu 字标、seo.ts 标题、index.html `<title>`（`__SITE_HOME_TITLE__` token）单点消费——未来填入真名 = 只改 profile.ts 一行 | `content/site.ts` 尾部、`lib/seo.ts`、`components/{Header,Footer,MobileMenu}.tsx` |
+| 2 | GitHub Pages 深链事实（已实测，2026-10-07，六路由）：`/` 为真 200；`/research /work /lab /notes /about` 均为 **HTTP 404 + 404.html SPA 接管**，浏览器全部正确渲染。SEO 影响：首页（真正的链接入口）正常可索引；深链 URL 有 soft-404 风险。**不切 HashRouter**（URL 质量 + 索引同样受限），若未来单篇笔记需要被索引，再加构建期 prerender（最小风险路径） | 本节 + README |
+| 3 | a11y smoke：`@playwright/test@1.63` + `@axe-core/playwright`，五页（/ /research /work /lab /about），门禁 = 零 critical/serious；`npm run test:a11y`，复用已有 Chromium。**发现并修复系统性问题**：`--faint`（3.5:1/4.0:1）被大量可读元数据使用——把 faint 档本身提到 AA（light #6f6752 ≈5.1:1、dark #9a917c ≈5.7:1），contrast.test.ts 的"decorative <4.5"不变量翻转为"faint = 最安静的 AA 文本档"（并断言 < ink-2），prefers-contrast 块相应收敛；五页 axe 全 clean | `styles/index.css`、`lib/__tests__/contrast.test.ts`、`e2e/a11y.spec.ts`、`playwright.config.ts` |
+| 4 | CONTENT_GUIDE：URL 单源、brand 规则、sample 读数语义、深链事实增补 | `CONTENT_GUIDE.md` |
+
+## PRODUCTION PASS 验证
+
+- `npm run build` / `npm run lint` / `npm run test`（76 用例）/ `npm run test:a11y`（5 页）全绿。
+- dist/index.html 零 token 残留；canonical/og:image/robots.txt/sitemap 全部指向生产 URL。

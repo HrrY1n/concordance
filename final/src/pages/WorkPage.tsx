@@ -117,6 +117,11 @@ export default function WorkPage() {
                   </span>
                   <StatusMark status={p.status} />
                   <span className="t-meta text-ink-2">{p.year}</span>
+                  {/* honest readings: sample entries say so in the meta column —
+                      visitors can't mistake them for a real track record (P0-4) */}
+                  {p.sample ? (
+                    <span className="t-meta t-caps text-ink-2">sample entry</span>
+                  ) : null}
                 </div>
 
                 {/* plate body */}

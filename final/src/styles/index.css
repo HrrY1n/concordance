@@ -26,9 +26,10 @@
    axis). Mono is 400 only.
 
    CONTRAST CONTRACT (§4 / G2): every token that carries readable text is
-   >= 4.5:1 on --bg AND --bg-inset in BOTH themes (verified by
-   src/lib/__tests__/contrast.test.ts, which parses this file). --faint is
-   decorative-only: never the sole carrier of meaning.
+   >= 4.5:1 on --bg, --bg-inset AND --raised in BOTH themes (verified by
+   src/lib/__tests__/contrast.test.ts, which parses this file, and at the
+   usage level by the axe smoke suite in e2e/). --faint is the QUIET tier:
+   quietest text color, still AA — never the sole carrier of meaning.
    ========================================================================== */
 
 @import "tailwindcss";
@@ -109,7 +110,10 @@
   --raised: #fffdf6; /* palette, dialogs */
   --ink: #211b10; /* 15.6:1 */
   --ink-2: #5c5342; /* 6.9:1 — muted, still ≥ 6.3:1 on all surfaces */
-  --faint: #8b8168; /* 3.5:1 — DECORATIVE ONLY (G2) */
+  --faint: #6f6752; /* ~5.1:1 — the quiet tier: quietest TEXT color, still AA
+                       (production pass: axe usage-level scanning showed faint
+                       carried readable metadata everywhere, so the tier itself
+                       moved to AA instead of sprinkling exceptions) */
   --line: #ded7c4;
   --line-strong: #b5ac93;
   --accent: #2547d0; /* 6.6:1 — the one accent: living / current / actionable */
@@ -139,7 +143,7 @@
   --raised: #211d17;
   --ink: #ebe5d8; /* 14.8:1 */
   --ink-2: #a99f8b; /* 7.1:1 — ≥ 6.4:1 on all surfaces */
-  --faint: #7c7360; /* 4.0:1 — DECORATIVE ONLY (G2) */
+  --faint: #9a917c; /* ~5.7:1 — quiet tier, AA on the dark surfaces */
   --line: #322d24;
   --line-strong: #4c4536;
   --accent: #97acff; /* 8.5:1 */
@@ -151,14 +155,12 @@
   --shadow: rgb(0 0 0 / 0.5);
 }
 
-/* Forced more contrast: hairlines and decorative mono come up to AA. */
+/* Forced more contrast: hairlines come up (text tiers are already AA). */
 @media (prefers-contrast: more) {
   :root {
-    --faint: #6d6449;
     --line: #c9c1a9;
   }
   .dark {
-    --faint: #9a917c;
     --line: #454033;
   }
 }

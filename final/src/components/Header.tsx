@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { sections } from "@/lib/sections";
 import { useTheme } from "@/lib/theme";
-import { site } from "@/content/site";
+import { brand, site } from "@/content/site";
 
 /** The site's mark: three ascending rank bars — a ranking, set like type. */
 export function Mark({ className = "" }: { className?: string }) {
@@ -100,9 +100,9 @@ export function Header({
       }}
     >
       <div className="wrap flex h-16 items-center gap-2 md:gap-4">
-        <Link to="/" className="flex min-h-[44px] items-center gap-2.5 pr-2" aria-label={`${site.name} — home`}>
+        <Link to="/" className="flex min-h-[44px] items-center gap-2.5 pr-2" aria-label={`${brand} — home`}>
           <Mark className="h-[18px] w-[18px] text-ink" />
-          <span className="t-entry tracking-[0.01em]">{site.name}</span>
+          <span className="t-entry tracking-[0.01em]">{brand}</span>
         </Link>
 
         <nav aria-label="Sections" className="ml-4 hidden flex-1 lg:block">

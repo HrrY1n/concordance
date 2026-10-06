@@ -14,6 +14,11 @@ export const profile = {
     "LLM systems that ground their answers in retrieved evidence, and what happens when " +
     "that evidence is noisy, conflicting, or deliberately poisoned. I build tools to make " +
     "those failure modes visible, and I write notes as I go.",
-  aboutZh: "这是一个占位段落：替换于 src/content/profile.ts。",
+  // Same statement as `about`, in Chinese — research focus only, no
+  // biographical facts, so it stays honest while `name` is still null.
+  aboutZh:
+    "计算机科学研究生。我研究检索增强生成——让语言模型的回答建立在可检索的证据之上，" +
+    "以及当这些证据有噪声、彼此冲突或被刻意投毒时，系统会发生什么。" +
+    "我把这些失效模式做成可在浏览器里运行的小工具，让问题可以被亲眼看到。",
   location: null,
 } satisfies Profile & { aboutZh: string };

@@ -72,6 +72,7 @@ export default function NotesPage() {
           <li key={n.id} className="border-b border-line py-6 last:border-b-0">
             <p className="t-meta text-ink-2">
               {n.date} · {n.kind}
+              {n.sample ? " · sample entry" : ""}
             </p>
             <h2 className="t-h4 mt-2">
               <Link to={`/notes/${n.id}`} className="u-link">

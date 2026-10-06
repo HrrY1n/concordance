@@ -3,6 +3,8 @@ node_modules/
 final/dist/
 final/dist-single/
 _template/dist/
+final/test-results/
+final/playwright-report/
 
 # Screenshot archives (evidence kept locally; final-round shots are committed)
 shots/gen2/

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { corpusReading, sections } from "@/lib/sections";
 import { colophonHonesty } from "@/content/lab";
-import { site } from "@/content/site";
+import { brand, site } from "@/content/site";
 import { Mark } from "@/components/Header";
 
 declare const __BUILD_DATE__: string;
@@ -23,7 +23,7 @@ export function Footer() {
           <div>
             <p className="t-entry flex items-center gap-2.5">
               <Mark className="h-4 w-4 text-ink" />
-              {site.name}
+              {brand}
             </p>
             <p className="t-small text-ink-2 mt-3 max-w-[52ch]">{site.tagline}</p>
             <p className="t-meta text-ink-2 mt-5 max-w-[62ch]">{colophonHonesty}</p>

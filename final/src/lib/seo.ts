@@ -1,15 +1,17 @@
 import { useEffect } from "react";
-import { site } from "@/content/site";
+import { site, homeTitle, titleSuffix } from "@/content/site";
 
 /**
  * Per-route document metadata (GEN3 SEO requirement): title + description +
  * canonical + Open Graph, all routed through one hook. Placeholder fields
- * stay placeholder (site.url is example.com) — nothing is fabricated.
+ * stay placeholder (name/url are null / example-free) — nothing is fabricated.
+ * Title grammar derives from profile: "— Concordance" today, "— [Name]" the
+ * moment a real name exists (site.ts is the single source).
  */
 
 export function useDocumentMeta(title: string, description?: string): void {
   useEffect(() => {
-    const fullTitle = title === "" ? site.name : `${title} — ${site.name}`;
+    const fullTitle = title === "" ? homeTitle : `${title} — ${titleSuffix}`;
     document.title = fullTitle;
 
     if (description) {

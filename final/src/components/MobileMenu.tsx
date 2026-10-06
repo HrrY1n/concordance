@@ -4,7 +4,7 @@ import { corpusReading, sections } from "@/lib/sections";
 import { lockScroll, setOverlayOpen, trapTab } from "@/lib/focus";
 import { useTheme } from "@/lib/theme";
 import { Mark } from "@/components/Header";
-import { site } from "@/content/site";
+import { brand, site } from "@/content/site";
 
 const THEME_OPTIONS = [
   { value: "system", label: "Sys" },
@@ -119,7 +119,7 @@ export function MobileMenu({
       <div className="wrap flex h-16 shrink-0 items-center justify-between">
         <span className="t-meta t-caps text-ink-2 flex items-center gap-2" aria-hidden="true">
           <Mark className="h-4 w-4" />
-          {site.name}
+          {brand}
         </span>
         <button
           ref={closeRef}

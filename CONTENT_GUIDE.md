@@ -40,12 +40,23 @@ export const profile: Profile = {
 ```ts
 export const site = {
   name: "Concordance",           // 站名；不想要概念名可以改成你的名字
-  url: "https://example.com/",   // ★ 部署前必改：你的真实域名
+  url: "https://hrry1n.github.io/concordance/",   // ★ 部署前必改：你的真实域名
   …
 };
 ```
 
-`url` 一处修改，canonical、Open Graph、sitemap 全部自动跟随。
+`url` 是**全站唯一的 URL 来源**：index.html 里的 canonical / og:url / og:image /
+twitter:image / JSON-LD 由构建期自动注入，robots.txt 与 sitemap.xml 构建期生成——
+换域名或改路径 = 只改这一行，然后 `npm run build`。
+
+**品牌规则**：Header 字标和页面标题自动使用 `profile.name`——
+- `name: null` 时：站名 "Concordance"、标题 "Concordance — Research Archive"；
+- 填入真名后：字标变为 "你的名字 — Concordance"、标题以你的名字结尾。
+无需改任何组件或 HTML，一次 `profile.ts` 修改全站生效。
+
+**sample 读数**：数据里 `sample: true` 的条目会在 Work 图版元数据列、首页精选与
+Notes 列表里显示一行 mono 的 `sample entry`——访客不会把示例误认成真实履历。
+替换为真实内容后（删掉 sample 字段），该读数自动消失。
 
 ## 3. 研究方向与研究问题 —— `research.ts`
 

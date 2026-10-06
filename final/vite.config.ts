@@ -6,12 +6,12 @@ import fs from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 // Relative imports: the config bundle resolves before the "@" alias exists.
 import { sitemapUrls } from "./src/lib/sitemap";
+import { site, brand } from "./src/content/site";
 
 /**
- * Writes dist/sitemap.xml on every build, derived from content the same way
- * the site's own honest readings are (P1-18). Hand-maintaining note URLs
- * would make the fourth note a silent SEO failure; this plugin plus
- * sitemap.test.ts make that drift impossible.
+ * Writes dist/robots.txt alongside the sitemap on every build, both derived
+ * from site.url (P0-1). Nothing in public/ carries a URL any more — the one
+ * place a hosting change touches is content/site.ts.
  */
 function concordanceSitemap(): Plugin {
   return {
@@ -25,6 +25,32 @@ ${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}
 </urlset>
 `;
       fs.writeFileSync(new URL("./dist/sitemap.xml", import.meta.url), xml);
+      const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${site.url}sitemap.xml
+`;
+      fs.writeFileSync(new URL("./dist/robots.txt", import.meta.url), robots);
+    },
+  };
+}
+
+/**
+ * Production URL / brand single source (P0-1, P2-1): index.html carries
+ * __SITE_URL__ / __SITE_BRAND__ tokens; this transform swaps them for the
+ * values from content/site.ts at build AND in dev, so canonical, og:url,
+ * og:image (subpath included via the trailing slash), twitter:image and
+ * JSON-LD can never drift from the content layer.
+ */
+function concordanceMeta(): Plugin {
+  const homeTitle = brand === site.name ? `${site.name} — Research Archive` : brand;
+  return {
+    name: "concordance-meta",
+    transformIndexHtml(html) {
+      return html
+        .replaceAll("__SITE_URL__", site.url)
+        .replaceAll("__SITE_BRAND__", site.name)
+        .replaceAll("__SITE_HOME_TITLE__", homeTitle);
     },
   };
 }
@@ -38,7 +64,7 @@ export default defineConfig(({ mode }) => {
     // VITE_BASE for subpath hosting (GitHub Pages project sites);
     // "./" for the double-clickable single-file build; "/" otherwise.
     base: process.env.VITE_BASE || (isSingle ? "./" : "/"),
-    plugins: [react(), tailwindcss(), ...(isSingle ? [] : [concordanceSitemap()])],
+    plugins: [react(), tailwindcss(), concordanceMeta(), ...(isSingle ? [] : [concordanceSitemap()])],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),

@@ -4,29 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <title>Concordance — Research Archive</title>
+    <!-- Tokens __SITE_URL__ / __SITE_HOME_TITLE__ are replaced at build and in
+         dev from content/site.ts (vite.config.ts concordanceMeta) — the URL
+         and title have exactly one source of truth. -->
+    <title>__SITE_HOME_TITLE__</title>
     <meta
       name="description"
       content="A research archive built as a concordance: retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — every figure computed in your browser, every reading counted from the data."
     />
-    <link rel="canonical" href="https://example.com/" />
+    <link rel="canonical" href="__SITE_URL__" />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Concordance" />
-    <meta property="og:title" content="Concordance — Research Archive" />
+    <meta property="og:title" content="__SITE_HOME_TITLE__" />
     <meta
       property="og:description"
       content="Retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — a research archive where every figure is computed in your browser."
     />
-    <meta property="og:url" content="https://example.com/" />
-    <meta property="og:image" content="https://example.com/og.png" />
+    <meta property="og:url" content="__SITE_URL__" />
+    <meta property="og:image" content="__SITE_URL__og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Concordance — Retrieval-augmented generation, read at the level of the ranking." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://example.com/og.png" />
+    <meta name="twitter:image" content="__SITE_URL__og.png" />
 
     <!-- Fonts: preload the two files the hero needs so first paint is final
          paint (P2-24 — 80px FOUT/CLS fix). -->
@@ -64,7 +67,7 @@
       {
         "@context": "https://schema.org",
         "@type": "Person",
-        "url": "https://example.com/",
+        "url": "__SITE_URL__",
         "jobTitle": "Graduate Student in Computer Science",
         "description": "Graduate student in computer science working on retrieval-augmented generation — LLM systems that ground their answers in retrieved evidence, and what happens when that evidence is noisy, conflicting, or deliberately poisoned.",
         "knowsAbout": [
