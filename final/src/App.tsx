@@ -226,9 +226,11 @@ export default function App() {
   // Hosted: BrowserRouter (clean URLs, real deep links). Double-clicked
   // dist-single build: file:// cannot rewrite the path on refresh, so the
   // router switches to hash mode — every route and § anchor still works.
+  // basename strips the hosting subpath (e.g. /concordance on GitHub Pages).
   const Router = window.location.protocol === "file:" ? HashRouter : BrowserRouter;
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
   return (
-    <Router>
+    <Router basename={basename || undefined}>
       <Shell />
     </Router>
   );
