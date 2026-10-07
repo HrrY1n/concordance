@@ -7,6 +7,7 @@ import { fileURLToPath, URL } from "node:url";
 // Relative imports: the config bundle resolves before the "@" alias exists.
 import { sitemapUrls } from "./src/lib/sitemap";
 import { site, brand } from "./src/content/site";
+import { profile } from "./src/content/profile";
 
 /**
  * Writes dist/robots.txt alongside the sitemap on every build, both derived
@@ -44,10 +45,24 @@ Sitemap: ${site.url}sitemap.xml
  */
 function concordanceMeta(): Plugin {
   const homeTitle = brand === site.name ? `${site.name} — Research Archive` : brand;
+  // Structured data (placeholder pass): while no real name is configured, the
+  // site publishes a neutral WebSite schema — never a Person schema with an
+  // unconfirmed jobTitle or sample "knowsAbout" claims. A configured name
+  // switches it to a minimal Person schema, derived here from profile.ts.
+  const jsonLd = profile.name
+    ? { "@context": "https://schema.org", "@type": "Person", name: profile.name, url: site.url }
+    : {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: site.name,
+        url: site.url,
+        description: site.description,
+      };
   return {
     name: "concordance-meta",
     transformIndexHtml(html) {
       return html
+        .replaceAll("__SITE_JSON_LD__", JSON.stringify(jsonLd))
         .replaceAll("__SITE_URL__", site.url)
         .replaceAll("__SITE_BRAND__", site.name)
         .replaceAll("__SITE_HOME_TITLE__", homeTitle);

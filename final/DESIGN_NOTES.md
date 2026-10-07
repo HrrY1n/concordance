@@ -266,3 +266,39 @@ Notes/About 整页 ESSAY——密度、构图、图版形态的层级差异由�
 
 - `npm run build` / `npm run lint` / `npm run test`（76 用例）/ `npm run test:a11y`（5 页）全绿。
 - dist/index.html 零 token 残留；canonical/og:image/robots.txt/sitemap 全部指向生产 URL。
+
+---
+
+# PLACEHOLDER HONESTY & VISUAL POLISH PASS（2026-10-07）
+
+> 小修轮：placeholder 诚实性、小 bug、轻量 polish、文档一致性、QA 截图更新。设计系统零改动。
+
+## P0 — placeholder 不再被误认为真实信息
+
+| # | 修复 | 落点 |
+|---|---|---|
+| 1 | 个人身份断言退位：profile.about/aboutZh 改为“档案未配置”中性陈述（无职位、无第一人称）；heroLede 去掉 “I study / I build”；research.ts 4 处 blurb 的 I care/I study → 中性主题描述；AboutPage meta description 中性化 | `content/profile.ts`、`content/site.ts`、`content/research.ts`、`pages/AboutPage.tsx` |
+| 2 | JSON-LD：静态 Person schema（jobTitle + knowsAbout 样例声明）→ `__SITE_JSON_LD__` token 由构建插件派生——name 为空输出 WebSite schema，配置真名后自动切最小 Person schema | `index.html`、`vite.config.ts` |
+| 3 | current questions 逻辑：首页条改为 `active && !sample`；为空时显示 “question ledger preview — sample entries” + 行级 `sample entry` 读数；ResearchPage 台账行、NotePage 头部同步加 sample 读数。sample 问题在任何页面都不再被称为 current | `pages/HomePage.tsx`、`ResearchPage.tsx`、`NotePage.tsx` |
+| 4 | 首页旗舰 Work 优先真实作品：`lib/curation.ts pickLeadPlate()`（featured && !sample 优先，sample 仅 fallback）+ `plateNumberOf()`（图版编号 = Work 页真实序号）。当前 lead = “This site”（PLATE 04，真实存在），不再把 sample 项目当主作品 | `lib/curation.ts`、`pages/HomePage.tsx` |
+| 5 | About Log：两条 `TODO — your degree` / `Replace in src/content/timeline.ts` sample 行删除出渲染（timeline.ts 只保留真实条目 “This site went online”，sample:false）；AboutPage 只渲染非 sample 条目，空 Log 整段隐藏；“name — not yet configured” | `content/timeline.ts`、`pages/AboutPage.tsx` |
+| 6 | Publications 空态： “Nothing is in review, nothing is staged”（替人断言现实投稿状态）→ “No publication records have been added to this archive yet.”（只描述站点记录）；守卫测试禁止 TODO/`src/content` 泄漏进任何导出内容 | `content/site.ts`、`content-contract.test.ts` |
+
+## P1 — 小 bug / 一致性
+
+1. email href 统一：新增 `lib/contact.ts toChannelHref()`（email → mailto:，其余原样），ConnectPage 改用——内容层永远只写邮箱字符串；**实现真正的复制按钮**（CopyEmailButton，aria-live 反馈，此前文档声称但代码没有）。
+2. Connect 未配置态简化：一句 “Contact details will be added later.”——移除 fastest-signal 行、email 槽、"+5 slots"、unconfigured 工程术语；配置后 channel rows 自动恢复。首页 Connect 条同步派生。
+3. `colophonHonesty` 静态串（含 `src/content` 开发路径）→ `lib/sections.ts` 数据派生：有 sample 条目显示无路径声明，清零后自动变为 “No sample entries remain — everything this archive lists is real.”；双分支测试覆盖。
+
+## P2 — polish / QA
+
+1. 主题切换可见文本 system/light/dark → **Auto / Light / Dark**（aria-label 保留完整状态描述；MobileMenu “Sys”→“Auto”）。
+2. 移动端 360/390/430 × 7 路由溢出扫描：全部零横向溢出；桌面节奏目检无需改动。
+3. QA 截图：旧 83 个文件移入 `shots/archive/pre-production/`（git 保留历史）；`shots/final/` 重建为当前版本最小矩阵——6 页 × desktop/mobile × light/dark = 24 张（`reports/qa-matrix.mjs`，0 console issues）。
+4. a11y smoke 扩至 8 页（+/notes /publications /connect——空态是一等公民，也在守卫范围内）。
+5. 测试 +8（84 total）：curation 选择逻辑、toChannelHref、colophon 双分支、dev-path/TODO 泄漏扫描。
+
+## 验证
+
+- `npm run build` / `lint`（0-0）/ `test`（84）/ `test:a11y`（8 页）全绿。
+- JSON-LD 产物断言：`"@type":"WebSite"`，无 jobTitle。

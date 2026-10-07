@@ -62,7 +62,7 @@ export default function NotePage() {
     <article className="wrap pb-20 pt-14 md:pt-20">
       <header className="u-measure">
         <p className="t-meta text-ink-2">
-          §04 · {note.date} · {note.kind}
+          §04 · {note.date} · {note.kind}{note.sample ? " · sample entry" : ""}
         </p>
         <h1 className="t-h1 mt-4">{note.title}</h1>
         <p className="t-lede text-ink-2 mt-5">{note.summary}</p>

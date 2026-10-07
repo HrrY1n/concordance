@@ -9,16 +9,17 @@ import type { Profile } from "./types";
 export const profile = {
   name: null,
   identity: ["Computer Science", "Research × Engineering"],
+  // Honesty rule (placeholder pass): the about copy describes the ARCHIVE's
+  // state — no position, affiliation, or first-person research claims — until
+  // real biographical content is configured.
   about:
-    "Graduate student in computer science. I work on retrieval-augmented generation — " +
-    "LLM systems that ground their answers in retrieved evidence, and what happens when " +
-    "that evidence is noisy, conflicting, or deliberately poisoned. I build tools to make " +
-    "those failure modes visible, and I write notes as I go.",
-  // Same statement as `about`, in Chinese — research focus only, no
-  // biographical facts, so it stays honest while `name` is still null.
+    "This archive is live, but its biography is not written yet: no name, affiliation, " +
+    "or record has been configured. What you can browse here — directions, questions, " +
+    "instruments, notes — is sample corpus for a concordance about retrieval-augmented " +
+    "generation and what happens when evidence turns noisy or poisoned.",
+  // Same statement, in Chinese; wrapped in lang="zh" on About (G5).
   aboutZh:
-    "计算机科学研究生。我研究检索增强生成——让语言模型的回答建立在可检索的证据之上，" +
-    "以及当这些证据有噪声、彼此冲突或被刻意投毒时，系统会发生什么。" +
-    "我把这些失效模式做成可在浏览器里运行的小工具，让问题可以被亲眼看到。",
+    "这个档案已经上线，但它的传记尚未写下——姓名、单位与经历都还没有配置。" +
+    "你现在能浏览的方向、问题与工具，都是关于检索增强生成及其鲁棒性的示例语料，且均已标注。",
   location: null,
 } satisfies Profile & { aboutZh: string };

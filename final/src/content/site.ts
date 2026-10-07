@@ -25,24 +25,24 @@ export const site = {
   heroSans: ["Retrieval-augmented", "generation,"],
   heroSerif: "read at the level of the ranking.",
   heroLede:
-    "I study what retrieval-grounded systems do when their evidence is noisy, conflicting, or deliberately poisoned — and I build small instruments that make those failure modes visible.",
+    "An archive about what retrieval-grounded systems do when their evidence turns noisy, " +
+    "conflicting, or deliberately poisoned — with small instruments that make those " +
+    "failure modes visible.",
 
   /** Connect page (M5): action-oriented, never a dead-end. Copy stays in
    *  human language — file paths for maintainers live in CONTENT_GUIDE.md. */
   connectIntro:
     "The correspondence page. Channels appear here as they exist — nothing on this page is staged, and the fastest one is listed first.",
   connectFastest: "Fastest signal right now:",
-  connectEmptyLine:
-    "No public channels are configured yet. The slots below become real the moment a channel is set — nothing else on the page changes.",
-  connectMailtoNote: "placeholder slot — a real address takes this place once one exists",
-  /** Connect (and the home strip) render this instead of a clickable address
-   *  while links.email is null — an unconfigured slot never fakes being one. */
-  connectUnconfiguredEmail: "unconfigured — becomes a live address the moment links.ts has one",
+  /** All-null Connect state (placeholder pass): one calm sentence, no slots,
+   *  no engineering terms. Channel rows return the moment links exist. */
+  connectEmptyTitle: "Contact details will be added later.",
 
-  /** Publications empty state (§05): academic etiquette, no staged progress. */
+  /** Publications empty state (§05): describes the ARCHIVE's records only —
+   *  never the person's real-world submission state (placeholder pass). */
   publicationsEmptyTitle: "Selected research will appear here.",
   publicationsEmptyBody:
-    "Nothing is in review, nothing is staged. When peer-reviewed work exists, it will be listed with its evidence chain — venue, code, data, and the question it answers.",
+    "No publication records have been added to this archive yet. When work exists, it will be listed with its evidence chain — venue, code, data, and the question it answers.",
   publicationsReserved: "RESERVED — the next record numbers itself here",
 
   /** Palette */

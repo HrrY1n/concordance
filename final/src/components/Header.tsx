@@ -31,7 +31,7 @@ function ThemeToggle() {
       aria-label={`Color scheme: ${choice}. Activate to switch to ${next}.`}
       className="t-meta text-ink-2 hover:text-ink min-h-[44px] px-2 transition-colors"
     >
-      {choice}
+      {choice === "system" ? "Auto" : choice === "light" ? "Light" : "Dark"}
     </button>
   );
 }

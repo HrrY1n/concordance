@@ -7,7 +7,7 @@ import { Mark } from "@/components/Header";
 import { brand, site } from "@/content/site";
 
 const THEME_OPTIONS = [
-  { value: "system", label: "Sys" },
+  { value: "system", label: "Auto" },
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },
 ] as const;

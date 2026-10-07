@@ -10,7 +10,7 @@ export const researchTopics = [
     name: "Retrieval-Augmented Generation",
     short: "RAG",
     blurb:
-      "Grounding language models in external evidence instead of parametric memory alone. I care about the full loop: what gets retrieved, how it conditions generation, and how errors propagate.",
+      "Grounding language models in external evidence instead of parametric memory alone. The full loop matters: what gets retrieved, how it conditions generation, and how errors propagate.",
     facetLine: "What gets retrieved decides what can be said.",
     adjoins: ["robustness", "llm-systems", "retrieval-generation"],
   },
@@ -20,7 +20,7 @@ export const researchTopics = [
     name: "RAG Robustness",
     short: "Robustness",
     blurb:
-      "Real corpora are noisy, conflicting, and sometimes adversarial. I study how retrieval-grounded systems behave when the evidence is wrong, stale, or manipulated — and what “reliably grounded” should even mean.",
+      "Real corpora are noisy, conflicting, and sometimes adversarial. The open question is how retrieval-grounded systems behave when the evidence is wrong, stale, or manipulated — and what “reliably grounded” should even mean.",
     facetLine: "Grounded in evidence, until the evidence turns.",
     adjoins: ["rag", "poisoning"],
     relatedDemo: "rankers-side-by-side",
@@ -31,7 +31,7 @@ export const researchTopics = [
     name: "Knowledge Poisoning",
     short: "Poisoning",
     blurb:
-      "A few adversarial documents in a corpus can steer retrieval and, through it, generation. I study the attack surface, how poisoned content travels through chunks and rankings, and defenses that don’t break normal use.",
+      "A few adversarial documents in a corpus can steer retrieval and, through it, generation. The attack surface runs through chunks and rankings, and defenses have to survive normal use.",
     facetLine: "Whoever writes the corpus writes the ranking.",
     adjoins: ["robustness", "ai-security"],
     relatedDemo: "corruption-sandbox",
@@ -63,7 +63,7 @@ export const researchTopics = [
     name: "Retrieval–Generation Interaction",
     short: "Retrieval × Generation",
     blurb:
-      "Retrieval decisions are generation decisions. Chunking, ranking, and query formulation silently shape what a model can say; I study that interaction directly.",
+      "Retrieval decisions are generation decisions. Chunking, ranking, and query formulation silently shape what a model can say; the interaction is studied directly, at the level of the pipeline.",
     facetLine: "Chunk boundaries are policy decisions.",
     adjoins: ["rag"],
   },

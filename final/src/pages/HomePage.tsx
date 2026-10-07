@@ -9,6 +9,7 @@ import { publications } from "@/content/publications";
 import { researchQuestions, researchTopics } from "@/content/research";
 import { site, heroIdentity } from "@/content/site";
 import { DEMO_REGISTRY } from "@/content/ids";
+import { pickLeadPlate, plateNumberOf } from "@/lib/curation";
 import { DEMO_COUNT, sections } from "@/lib/sections";
 import { useDocumentMeta } from "@/lib/seo";
 import { useSearch } from "@/lib/palette";
@@ -123,15 +124,26 @@ export default function HomePage() {
   const { openSearch } = useSearch();
 
   const facets = researchTopics.slice(0, FACET_COUNT);
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
   const recentNotes = [...notes]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 2);
-  // "What is this person working on right now" — derived, never hand-written:
-  // the open ledger questions lead the current-work section (P1).
-  const activeQuestions = researchQuestions
-    .filter((q) => q.status === "active")
-    .slice(0, 3);
+  // "What is this person working on right now" — derived, never hand-written.
+  // Honesty rule (placeholder pass): sample questions are NEVER presented as
+  // current work. Real active questions lead; while none exist, the strip is
+  // an explicitly-labeled ledger preview of sample questions. No active
+  // questions at all → the strip does not render.
+  const realActive = researchQuestions.filter((q) => q.status === "active" && !q.sample);
+  const sampleActive = researchQuestions.filter((q) => q.status === "active" && q.sample);
+  const currentStrip =
+    realActive.length > 0
+      ? { label: "current — active questions", rows: realActive.slice(0, 3), sample: false }
+      : sampleActive.length > 0
+        ? { label: "question ledger preview — sample entries", rows: sampleActive.slice(0, 2), sample: true }
+        : null;
+  // Lead plate: prefer a real featured project; sample plates only fill in
+  // while the archive is unconfigured (and carry their own sample readout).
+  const lead = pickLeadPlate(projects);
+  const leadPlateNo = plateNumberOf(lead, projects);
   const email = links.email;
 
   // Honest readings — counted from the content modules, never hand-written.
@@ -254,40 +266,41 @@ export default function HomePage() {
       <Section
         meta={sections.find((s) => s.id === "work")!}
         register="plate"
-        lede="What is open right now, then the work itself — presented as numbered plates with evidence chains, no card walls."
+        lede="The ledger's open questions, then the work itself — numbered plates with evidence chains, no card walls."
       >
-        <div className="max-w-[62rem]">
-          <p className="t-meta t-caps text-ink-2">current — active questions</p>
-          <ul className="mt-3">
-            {activeQuestions.map((q) => (
-              <li key={q.id} className="border-b border-line last:border-b-0">
-                <Link
-                  to={`/research#${q.id}`}
-                  className="group grid min-h-[52px] grid-cols-[auto_1fr] items-baseline gap-x-6 py-3.5 md:grid-cols-[4rem_1fr_auto]"
-                >
-                  <span className="t-meta text-accent">{q.id.toUpperCase()}</span>
-                  <span className="t-small text-ink transition-colors group-hover:text-accent">
-                    {q.text}
-                  </span>
-                  <span className="t-meta text-ink-2 max-md:col-start-2">
-                    {q.relatedDemo ? "run: sandbox →" : "ledger →"}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {currentStrip ? (
+          <div className="max-w-[62rem]">
+            <p className="t-meta t-caps text-ink-2">{currentStrip.label}</p>
+            <ul className="mt-3">
+              {currentStrip.rows.map((q) => (
+                <li key={q.id} className="border-b border-line last:border-b-0">
+                  <Link
+                    to={`/research#${q.id}`}
+                    className="group grid min-h-[52px] grid-cols-[auto_1fr] items-baseline gap-x-6 py-3.5 md:grid-cols-[4rem_1fr_auto]"
+                  >
+                    <span className="t-meta text-accent">{q.id.toUpperCase()}</span>
+                    <span className="t-small text-ink transition-colors group-hover:text-accent">
+                      {q.text}
+                    </span>
+                    <span className="t-meta text-ink-2 max-md:col-start-2">
+                      {currentStrip.sample ? "sample entry · " : ""}
+                      {q.relatedDemo ? "run: sandbox →" : "ledger →"}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         <article className="mt-14 max-w-[54rem]">
           <p className="t-meta t-caps text-ink-2">
-            PLATE 01 · {featured[0]?.year}
-            {featured[0]?.sample ? (
-              <span className="text-ink-2"> · sample entry</span>
-            ) : null}
+            PLATE {String(leadPlateNo).padStart(2, "0")} · {lead?.year}
+            {lead?.sample ? <span className="text-ink-2"> · sample entry</span> : null}
           </p>
-          <h3 className="t-h1 mt-3">{featured[0]?.title}</h3>
-          <p className="t-lede text-ink-2 mt-4 max-w-[54ch]">{featured[0]?.summary}</p>
+          <h3 className="t-h1 mt-3">{lead?.title}</h3>
+          <p className="t-lede text-ink-2 mt-4 max-w-[54ch]">{lead?.summary}</p>
           <div className="mt-6 flex flex-wrap gap-2.5">
-            {featured[0]?.tags.map((tag) => (
+            {lead?.tags.map((tag) => (
               <button
                 key={tag}
                 type="button"
@@ -300,12 +313,12 @@ export default function HomePage() {
             ))}
           </div>
           <p className="t-meta text-ink-2 mt-6">
-            {featured[0]?.links.github === null && featured[0]?.links.demo === null
-              ? "repo / demo / writeup are intentionally unlisted until they exist — the in-page instrument is live"
+            {lead?.links.github === null && lead?.links.demo === null
+              ? "repo / demo / writeup are intentionally unlisted until they exist"
               : ""}
           </p>
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-            {featured[0]?.demoRef ? (
+            {lead?.demoRef ? (
               <XRef to="/lab/corruption-sandbox">Case study: run the instrument</XRef>
             ) : null}
             <XRef to="/work">All plates</XRef>
@@ -412,12 +425,14 @@ export default function HomePage() {
            no clickable address exists until links.email does, P0-2) */}
       <Section meta={sections.find((s) => s.id === "connect")!} register="plate">
         <div className="max-w-[54rem]">
-          <h3 className="t-h2">
-            {site.connectFastest}{" "}
-            <span className="t-serif-voice text-ink-2">
-              {email ? "email." : "the correspondence page."}
-            </span>
-          </h3>
+          {email ? (
+            <h3 className="t-h2">
+              {site.connectFastest}{" "}
+              <span className="t-serif-voice text-ink-2">email.</span>
+            </h3>
+          ) : (
+            <h3 className="t-h2 max-w-[30ch]">{site.connectEmptyTitle}</h3>
+          )}
           <p className="t-lede text-ink-2 mt-4 max-w-[52ch]">{site.connectIntro}</p>
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
             {email ? (

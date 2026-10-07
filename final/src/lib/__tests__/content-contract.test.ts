@@ -9,7 +9,7 @@ import { timeline } from "@/content/timeline";
 import { links } from "@/content/links";
 import { budgetChunks, sandboxCorpus } from "@/content/lab";
 import { buildIndex, queryRecords } from "@/lib/search";
-import { sections } from "@/lib/sections";
+import { colophonHonesty, sections } from "@/lib/sections";
 
 /**
  * Content-contract tests (§4 / D3's runtime complement): the compile-time
@@ -20,10 +20,44 @@ describe("content contract", () => {
   it("sample data is flagged; the only unflagged project is this site", () => {
     for (const q of researchQuestions) expect(q.sample).toBe(true);
     for (const n of notes) expect(n.sample).toBe(true);
-    for (const t of timeline) expect(t.sample).toBe(true);
+    // timeline: every entry carries an explicit flag; the site's own
+    // going-online is real (sample:false), everything else must say sample.
+    for (const t of timeline) {
+      expect(typeof t.sample).toBe("boolean");
+      if (t.kind !== "milestone" || !/site went online/i.test(t.title)) {
+        expect(t.sample).toBe(true);
+      }
+    }
     for (const p of projects) {
       if (p.id !== "this-site") expect(p.sample).toBe(true);
       else expect(p.sample).toBe(false);
+    }
+  });
+
+  it("no developer paths or TODOs leak into visitor-visible content", () => {
+    const exported = JSON.stringify({
+      profile,
+      timeline,
+      projects,
+      notes,
+      researchTopics,
+      researchQuestions,
+      publications,
+    });
+    expect(exported).not.toMatch(/TODO/i);
+    expect(exported).not.toContain("src/content");
+    expect(exported).not.toContain("Replace in");
+  });
+
+  it("the colophon honesty line reflects the sample state and carries no paths", () => {
+    const anySample = [...researchQuestions, ...notes, ...projects, ...timeline].some(
+      (e) => e.sample === true,
+    );
+    if (anySample) {
+      expect(colophonHonesty).toContain("sample");
+      expect(colophonHonesty).not.toContain("src/content");
+    } else {
+      expect(colophonHonesty).toContain("No sample entries remain");
     }
   });
 

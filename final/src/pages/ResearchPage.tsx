@@ -162,6 +162,7 @@ export default function ResearchPage() {
                   {/* display name, not the slug (P1-17) */}
                   <span className="t-meta text-ink-2">
                     topic: {researchTopics.find((t) => t.id === q.topic)?.name ?? q.topic}
+                    {q.sample ? " · sample entry" : ""}
                   </span>
                   {q.updated ? (
                     <span className="t-meta text-ink-2">updated {q.updated}</span>

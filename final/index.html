@@ -61,25 +61,10 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- JSON-LD: profile.name is null in content, so no name is claimed here either.
-         Fields the person fills later go into src/content/*.ts and this block. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "url": "__SITE_URL__",
-        "jobTitle": "Graduate Student in Computer Science",
-        "description": "Graduate student in computer science working on retrieval-augmented generation — LLM systems that ground their answers in retrieved evidence, and what happens when that evidence is noisy, conflicting, or deliberately poisoned.",
-        "knowsAbout": [
-          "Retrieval-Augmented Generation",
-          "RAG Robustness",
-          "Knowledge Poisoning",
-          "AI Security",
-          "LLM Systems",
-          "Retrieval-Generation Interaction"
-        ]
-      }
-    </script>
+    <!-- Structured data is derived at build time (vite.config.ts): a neutral
+         WebSite schema while no name is configured; a minimal Person schema
+         once profile.name exists. Never sample claims. -->
+    <script type="application/ld+json">__SITE_JSON_LD__</script>
   </head>
   <body>
     <div id="root"></div>

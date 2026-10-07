@@ -20,10 +20,10 @@ const KIND_LABEL: Record<TimelineEntry["kind"], string> = {
 export default function AboutPage() {
   useDocumentMeta(
     "About",
-    "A graduate student in computer science working on retrieval-augmented generation, its robustness, and knowledge poisoning — plus a log, not a résumé.",
+    "The about page of a research archive built as a concordance — plus a log, not a résumé. Biographical details appear here only once configured.",
   );
   const meta = sectionByRoute("/about")!;
-  const sorted = [...timeline].slice().reverse();
+  const sorted = timeline.filter((entry) => !entry.sample).slice().reverse();
 
   return (
     <PageShell meta={meta} register="essay" lede="Short by design: the archive itself is the longer answer.">
@@ -38,13 +38,15 @@ export default function AboutPage() {
           <p className="t-meta text-ink-2 mt-5">located — {profile.location}</p>
         ) : null}
         {profile.name === null ? (
-          <p className="t-meta text-ink-2 mt-2">name — unlisted by choice of placeholder</p>
+          <p className="t-meta text-ink-2 mt-2">name — not yet configured</p>
         ) : (
           <p className="t-meta text-ink-2 mt-2">{profile.name}</p>
         )}
       </div>
 
-      {/* Now/Log — changelog grammar, no résumé styling */}
+      {/* Now/Log — changelog grammar, no résumé styling. Hidden entirely
+          while no real entry exists: an empty log is not a page. */}
+      {sorted.length > 0 ? (
       <section aria-labelledby="about-log" className="mt-16 max-w-[54rem]">
         <h2 id="about-log" className="t-kicker text-ink-2">
           log — now and then
@@ -71,6 +73,7 @@ export default function AboutPage() {
           content files.
         </p>
       </section>
+      ) : null}
     </PageShell>
   );
 }

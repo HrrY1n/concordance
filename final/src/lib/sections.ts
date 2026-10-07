@@ -5,6 +5,7 @@
  * derived from the content modules (honest readings — never hand-written).
  */
 import { notes } from "@/content/notes";
+import { timeline } from "@/content/timeline";
 import { publications } from "@/content/publications";
 import { projects } from "@/content/projects";
 import { researchQuestions, researchTopics } from "@/content/research";
@@ -84,6 +85,20 @@ export const sections: SectionMeta[] = [
     reading: "",
   },
 ];
+
+/** The colophon's standing honesty line — DERIVED from the data (placeholder
+ *  pass): it says "sample" exactly while sample entries exist, and reports
+ *  their absence the moment the archive is fully real. No file paths. */
+export const hasSampleEntries = [
+  ...projects,
+  ...notes,
+  ...researchQuestions,
+  ...timeline,
+].some((entry) => entry.sample === true);
+
+export const colophonHonesty = hasSampleEntries
+  ? "Entries marked sample in the content files are example data awaiting replacement — the formats are live, nothing else on this site is staged."
+  : "No sample entries remain — everything this archive lists is real.";
 
 export const sectionByRoute = (route: string): SectionMeta | undefined =>
   sections.find((s) => s.route === route);

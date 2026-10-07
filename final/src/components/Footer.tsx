@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { corpusReading, sections } from "@/lib/sections";
-import { colophonHonesty } from "@/content/lab";
+import { colophonHonesty, corpusReading, sections } from "@/lib/sections";
 import { brand, site } from "@/content/site";
 import { Mark } from "@/components/Header";
 

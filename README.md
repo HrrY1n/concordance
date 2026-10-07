@@ -4,7 +4,7 @@
 
 这是一个从零开始的个人主页 / Portfolio 项目，面向 **Computer Science Graduate Student / AI Researcher / Developer** 的身份定位（研究兴趣：Retrieval-Augmented Generation、RAG Robustness、Knowledge Poisoning、AI Security、LLM Systems）。
 
-**当前阶段：网站本体已完整建成，内容为 placeholder / sample 数据。** 真实内容（姓名、论文、项目、联系方式）由你逐步填入——改数据文件即可，全程不需要碰组件代码。
+**当前阶段：网站本体已完整建成，内容为 placeholder / sample 数据（全部带 sample 标记，个人履历类内容一律未配置、不编造）。** 真实内容（姓名、论文、项目、联系方式）由你逐步填入——改数据文件即可，全程不需要碰组件代码。
 
 ---
 
@@ -40,7 +40,7 @@ npm run build && npm run preview   # http://localhost:4173
 索引，深链有 soft-404 风险——若未来需要单篇笔记被搜索索引，再加构建期 prerender。
 
 **质量门禁**：`npm run test`（76 用例：sandbox 数学 / 内容契约 / 对比度 / sitemap）·
-`npm run test:a11y`（axe 五页，零 critical/serious）· `npm run lint`（0/0）。
+`npm run test:a11y`（axe 八页，零 critical/serious）· `npm run lint`（0/0）。
 
 其他命令（均在 `final/` 下）：
 

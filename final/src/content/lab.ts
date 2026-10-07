@@ -104,9 +104,6 @@ export const budgetStep = 16;
 
 /** The one standing honesty declaration (§4 / M4): shown once, in the
  *  colophon — not pinned on every module's face. */
-export const colophonHonesty =
-  "Entries marked sample: true in src/content are example data awaiting replacement — the formats are live, nothing else on this site is staged.";
-
 /** Palette suggestions — real terms from this corpus. */
 export const paletteSuggestions = ["poisoning", "chunking", "robustness", "bm25"];
 

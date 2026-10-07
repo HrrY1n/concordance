@@ -18,7 +18,7 @@
 2. **诚实是站点的宪法。** 所有数字（"LAB 3 DEMOS"、"PUBS 0"、"7 documents"）都是从数据
    实时算出来的，没有任何地方手写数字。所以你只管改数据，网站不会说谎。
 3. **`sample: true` 是"示例"标记。** 目前所有项目、笔记、时间线条目都带 `sample: true`，
-   表示"这是占位示例"。填入真实内容后，**删掉这个字段或改为 `false`**。页脚有一句常驻
+   表示"这是占位示例"。填入真实内容后，**把这个字段改为 `false`**（`sample` 是必填的 boolean，不要删除字段本身）。页脚有一句常驻
    声明解释这件事；当 `sample` 条目清零后，声明自动变成"无示例数据"。
 
 ## 1. 我是谁 —— `profile.ts`
@@ -56,7 +56,7 @@ twitter:image / JSON-LD 由构建期自动注入，robots.txt 与 sitemap.xml �
 
 **sample 读数**：数据里 `sample: true` 的条目会在 Work 图版元数据列、首页精选与
 Notes 列表里显示一行 mono 的 `sample entry`——访客不会把示例误认成真实履历。
-替换为真实内容后（删掉 sample 字段），该读数自动消失。
+替换为真实内容后（`sample: false`），该读数自动消失。
 
 ## 3. 研究方向与研究问题 —— `research.ts`
 
@@ -118,7 +118,7 @@ Notes 列表里显示一行 mono 的 `sample entry`——访客不会把示例�
     writeup: null,
   },
   featured: true,                // true = 首页精选（建议 ≤ 3 件）
-  sample: false,                 // 真实内容删掉 sample 字段或设 false
+  sample: false,                 // 真实内容设 false（字段必填，不要删除）
   demoRef: undefined,            // 若在站内 Lab 有对应 demo，填 demo id
 }
 ```
@@ -195,7 +195,7 @@ export const links: Links = {
 };
 ```
 
-`email: null` 时 Connect 页显示行动导向空态；填入后自动出现 mailto 与复制按钮。
+`email: null` 时 Connect 页只显示一句克制的空态（“Contact details will be added later.”）；填入后自动出现 mailto 链接与复制按钮——内容里只写邮箱本身，不需要写 `mailto:` 前缀。
 **全站没有任何"假联系方式"**——所有槽位都是"配置即出现，不配置即隐藏"。
 
 ## 9. Lab 语料与 demo —— `lab.ts`

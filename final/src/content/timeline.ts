@@ -1,24 +1,12 @@
 import type { TimelineEntry } from "./types";
 
-/** CONTENT_PACK §timeline — a Now/Log, not a résumé. The 20XX rows are
- *  explicit TODOs; they render as themselves. */
+/** CONTENT_PACK §timeline — a Now/Log, not a résumé. Honesty rule (placeholder
+ *  pass): developer TODOs never render to visitors. Only real entries live
+ *  here; the archive's own going-online is the first true event. Sample rows
+ *  (if one is ever staged) are filtered out of the public Log by AboutPage. */
 export const timeline = [
   {
-    sample: true,
-    year: "20XX",
-    kind: "education",
-    title: "TODO — your degree",
-    detail: "Replace in src/content/timeline.ts.",
-  },
-  {
-    sample: true,
-    year: "20XX",
-    kind: "research",
-    title: "TODO — research role or internship",
-    detail: "Replace in src/content/timeline.ts.",
-  },
-  {
-    sample: true,
+    sample: false,
     year: "2026",
     kind: "milestone",
     title: "This site went online",

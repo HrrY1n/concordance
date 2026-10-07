@@ -17,6 +17,11 @@ const PAGES: { route: string; marker: string }[] = [
   { route: "/work", marker: "PLATE" },
   { route: "/lab", marker: "instrument" },
   { route: "/about", marker: "About" },
+  // Empty states are first-class pages in this archive — they are part of
+  // the a11y surface (placeholder pass).
+  { route: "/notes", marker: "Notes are written to be read in place" },
+  { route: "/publications", marker: "Selected research will appear here" },
+  { route: "/connect", marker: "Contact details will be added later" },
 ];
 
 for (const { route, marker } of PAGES) {
