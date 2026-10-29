@@ -145,7 +145,12 @@ export function SearchPalette({
       className="fixed inset-0 z-[var(--z-overlay)] overflow-y-auto p-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-6"
       style={{ background: "color-mix(in oklab, var(--ink) 32%, transparent)" }}
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose();
+        if (event.target === event.currentTarget) {
+          // preventDefault stops mousedown's default focus transfer (to
+          // <body>) from running after restoreTriggerFocus and wiping it.
+          event.preventDefault();
+          onClose();
+        }
       }}
     >
       <div className="u-figure mx-auto mt-[8vh] w-full">
@@ -301,7 +306,12 @@ export function HelpOverlay({ open, onClose }: { open: boolean; onClose: () => v
       className="fixed inset-0 z-[var(--z-overlay)] overflow-y-auto p-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-6"
       style={{ background: "color-mix(in oklab, var(--ink) 32%, transparent)" }}
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose();
+        if (event.target === event.currentTarget) {
+          // preventDefault stops mousedown's default focus transfer (to
+          // <body>) from running after restoreTriggerFocus and wiping it.
+          event.preventDefault();
+          onClose();
+        }
       }}
     >
       <div className="mx-auto mt-[14vh] w-full max-w-[540px]">

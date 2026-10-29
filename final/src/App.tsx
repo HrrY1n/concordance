@@ -119,6 +119,13 @@ function Shell() {
     setHelpOpen(true);
   }, []);
 
+  const openMenu = useCallback(() => {
+    rememberTrigger();
+    setPaletteOpen(false);
+    setHelpOpen(false);
+    setMenuOpen(true);
+  }, []);
+
   const closePalette = useCallback(() => {
     setPaletteOpen(false);
     restoreTriggerFocus();
@@ -187,7 +194,7 @@ function Shell() {
         Skip to content
       </a>
       <ScrollManager />
-      <Header onOpenPalette={() => openPalette()} onOpenMenu={() => setMenuOpen(true)} />
+      <Header onOpenPalette={() => openPalette()} onOpenMenu={openMenu} />
       <main id="main-content" tabIndex={-1} className="pt-16 focus:outline-none">
         <Suspense fallback={null}>
           <Routes>
