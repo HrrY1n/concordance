@@ -15,22 +15,20 @@ import NotFoundPage from "@/pages/NotFoundPage";
 
 function FigureRow({ slug, figure }: { slug: string; figure: CaseFigure }) {
   const src = `${import.meta.env.BASE_URL}cases/${slug}/${figure.file}`;
+  // never upscale beyond intrinsic width (mobile captures stay sharp);
+  // larger captures downscale to the column via max-w-full
   const img = (
     <img
       src={src}
       alt={figure.alt}
       loading="lazy"
       decoding="async"
-      className="block w-full border border-line bg-raised"
+      className="block max-w-full border border-line bg-raised"
     />
   );
   return (
-    <figure className={figure.variant === "half" ? "mt-8" : "mt-10"}>
-      {figure.variant === "half" ? (
-        img /* rendered inside the two-up grid by the caller */
-      ) : (
-        img
-      )}
+    <figure className="mt-8">
+      {img}
       <figcaption className="t-meta text-ink-2 mt-2.5 max-w-[62ch]">{figure.caption}</figcaption>
     </figure>
   );
@@ -85,7 +83,7 @@ export default function CasePage() {
           src={`${import.meta.env.BASE_URL}cases/${cs.slug}/${cs.hero.file}`}
           alt={cs.hero.alt}
           decoding="async"
-          className="block w-full border border-line bg-raised"
+          className="block max-w-full border border-line bg-raised"
         />
         <figcaption className="mt-3">
           <span className="t-meta t-caps text-ink">HERO — {cs.hero.caption}</span>
