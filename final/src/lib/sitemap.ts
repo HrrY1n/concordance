@@ -64,6 +64,11 @@ const STATIC_PAGE_META: Record<string, { title: string; description: string }> =
     description:
       "Hand-built, offline instruments: the Corruption Sandbox, Context Budget and Rankers Side-by-Side — every demo computes in your browser.",
   },
+  "/lab/corruption-sandbox": {
+    title: "Corruption Sandbox",
+    description:
+      "Inject one poisoned passage into a hand-written corpus and watch a live BM25 ranking rewrite itself — then toggle a toy defense and watch it rewrite again. All computation is local.",
+  },
   "/notes": {
     title: "Notes",
     description: "Working notes from the archive's own engineering — read in place.",

@@ -98,7 +98,10 @@ export const hasSampleEntries = [
 
 export const colophonHonesty = hasSampleEntries
   ? "Entries marked sample in the content files are example data awaiting replacement — the formats are live, nothing else on this site is staged."
-  : "No sample entries remain — everything this archive lists is real.";
+  : // Release-candidate wording: the archive's claims stay scoped — work
+    // plates point at public repos, Lab demos are labeled teaching data, and
+    // no blanket "everything is real" guarantee is made on the site's behalf.
+    "No sample entries remain — work links to its public repositories, Lab demos run on hand-written teaching data, and details not yet configured stay empty.";
 
 export const sectionByRoute = (route: string): SectionMeta | undefined =>
   sections.find((s) => s.route === route);

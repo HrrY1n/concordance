@@ -10,9 +10,9 @@
 |---|---|
 | 分支 | `codex/concordance-real-content-cases`（自 main@5d404c9 切出） |
 | 基线 SHA | `5d404c9b21d07e385dea24fbfc058ba76a906dad` |
-| 最终 SHA | `bf453c6`（+ 本报告与 shots 归档提交） |
+| 最终 SHA | `7ae9845`（bf453c6 之后的第 4 个提交：本报告 + shots 归档；发布评审时补记） |
 | Git 状态 | 分支内三段式提交（见 H）；未推送、未合并、未部署 |
-| 提交历史 | `ff995e9` 焦点修复+回归 → `cb08c92` 真实内容+案例系统 → `bf453c6` 静态深链+文档清理 |
+| 提交历史 | `ff995e9` 焦点修复+回归 → `cb08c92` 真实内容+案例系统 → `bf453c6` 静态深链+文档清理 → `7ae9845` 验收证据+本报告（共 4 个提交） |
 | 改动规模 | 46 文件，+1241 / −422（不含截图资产与报告） |
 | 位置说明 | 旧目录 `D:\Codex\play` 系用户主动迁移；本仓库在 `D:\Codex\Vibe Coding\portfolio`，remote 已核实为 github.com/HrrY1n/concordance |
 
@@ -88,7 +88,7 @@
 
 1. 审阅两篇案例内容（`final/src/content/cases.ts`）与真实笔记（`final/src/content/notes.ts`）——文案语气、范围、数字引用是否符合你的预期；笔记可整体删除
 2. 审阅 about/hero 文案（profile.ts / site.ts）与 `handle` 署名方式
-3. 部署后复核：深链 200（`curl -I https://hrry1n.github.io/concordance/work/item-storage-app`）、sitemap 13 条 URL、分享预览图
+3. 部署后复核：深链 200（`curl -I https://hrry1n.github.io/concordance/work/item-storage-app`）、sitemap 12 条 URL（9 静态 + 2 案例 + 1 笔记；初稿误写 13，发布评审已实测修正）、分享预览图
 4. 决策项：item-storage-app 是否补 LICENSE（其仓库）；soundisle 是否部署 Pages（案例可后补 demo 链接）
 5. og.png 仍是无名版本（1200×630，site.name 品牌）——名字公开后再刷新
 

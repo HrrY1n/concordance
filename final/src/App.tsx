@@ -197,7 +197,16 @@ function Shell() {
       <ScrollManager />
       <Header onOpenPalette={() => openPalette()} onOpenMenu={openMenu} />
       <main id="main-content" tabIndex={-1} className="pt-16 focus:outline-none">
-        <Suspense fallback={null}>
+        {/* Reserve the first viewport while a lazy route chunk loads (release-
+            candidate CLS fix): fallback=null let the footer sit at y≈64 then
+            jump ~3 viewports down when content arrived — measured CLS 0.39
+            on the case pages. The skeleton holds the first screen so the
+            remaining shift is bounded by content below the fold. */}
+        <Suspense
+          fallback={
+            <div aria-hidden="true" className="min-h-[calc(100svh-4rem)]" data-state="route-skeleton" />
+          }
+        >
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/research" element={<ResearchPage />} />

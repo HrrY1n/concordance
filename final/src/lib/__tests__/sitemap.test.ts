@@ -75,6 +75,16 @@ describe("route head metadata", () => {
     }
   });
 
+  it("every static route has a specific head (no bare-brand fallback)", () => {
+    // /lab/corruption-sandbox regressed to the bare "Concordance" title once
+    // — pin every STATIC_PAGE_META route to a real title.
+    for (const path of sitemapPaths()) {
+      const head = routeHead(path);
+      expect(head.title, `route ${path} needs a specific title`).not.toBe("Concordance");
+      expect(head.description.length).toBeGreaterThan(20);
+    }
+  });
+
   it("unknown deep paths still produce a sane, absolute head", () => {
     const head = routeHead("/work/ghost");
     expect(head.canonical).toBe(`${site.url}work/ghost`);

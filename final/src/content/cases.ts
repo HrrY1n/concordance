@@ -21,6 +21,10 @@ export interface CaseFigure {
   caption: string;
   /** "half" images render two-up on desktop; default is a full-measure plate. */
   variant?: "half";
+  /** Intrinsic pixel size — set as width/height so the browser reserves
+   *  space before the PNG loads (CLS guard, release-candidate review). */
+  w: number;
+  h: number;
 }
 
 export interface CaseSection {
@@ -72,6 +76,8 @@ export const cases: CaseStudy[] = [
       file: "09-desktop-home-light.png",
       alt: "Private Item Library desktop overview: sidebar navigation, item grid with icons, holding-cost summary and warranty reminders.",
       caption: "Desktop overview (1440×1000): sidebar, wide-screen summary, item grid.",
+      w: 1440,
+      h: 1000,
     },
     provenance:
       "All interface captures come from the project's own recorded set — docs/screenshots/current/, captured 2026-10-19 in an isolated browser with demo data (390×844 @2× mobile, 1440×1000 desktop). No private data appears anywhere.",
@@ -95,12 +101,16 @@ export const cases: CaseStudy[] = [
             alt: "Mobile overview: total invested, holding and category counts, daily cost, warranty alerts and recently added items.",
             caption: "Mobile overview — money answers first: invested, holding cost, daily cost.",
             variant: "half",
+            w: 780,
+            h: 1688,
           },
           {
             file: "03-detail-light.png",
             alt: "Item detail page: purchase information, cost breakdown, warranty tracking with progress.",
             caption: "Item detail — purchase, cost and warranty in one record.",
             variant: "half",
+            w: 780,
+            h: 1688,
           },
         ],
       },
@@ -115,14 +125,18 @@ export const cases: CaseStudy[] = [
           {
             file: "05-icon-picker-light.png",
             alt: "Icon picker: nine categories, three-column category cards and global search, light theme.",
-            caption: "The 220-illustration icon library, browsable and searchable.",
+            caption: "The icon library, browsable by category and searchable.",
             variant: "half",
+            w: 780,
+            h: 1688,
           },
           {
             file: "08-home-dark.png",
             alt: "Dark-theme overview: the same transparent icon assets and clear reading hierarchy.",
             caption: "Dark theme — one transparent asset set, both ink systems.",
             variant: "half",
+            w: 780,
+            h: 1688,
           },
         ],
       },
@@ -137,12 +151,16 @@ export const cases: CaseStudy[] = [
             alt: "Item list: independently expandable cost details, dot-matrix warranty always visible.",
             caption: "Item list — cost details expand independently; warranty is never hidden.",
             variant: "half",
+            w: 780,
+            h: 1688,
           },
           {
             file: "10-desktop-detail-dark.png",
             alt: "Desktop item detail, dark theme: two-column layout with wide-screen overview.",
             caption: "Desktop detail, dark — sidebar + wide-screen split layout.",
             variant: "half",
+            w: 1440,
+            h: 1000,
           },
         ],
       },
@@ -183,6 +201,8 @@ export const cases: CaseStudy[] = [
       file: "hero-night-sea.png",
       alt: "SoundIsle night scene: moon and stars over dark waves, a 25:00 focus timer, and the six-channel mixer below — rain, fire, wind, stream, crickets, birds.",
       caption: "The night sea at rest: waves tinted by the channels you enabled, timer not yet started.",
+      w: 1280,
+      h: 800,
     },
     provenance:
       "Captures rendered from the running app (development server, headless Chromium via Edge channel, 2026-10-30) against a documented demo state — the seeded localStorage snapshot is kept beside this case's sources. Audio is mixed off during capture; the scene you see is the scene a visitor gets.",
@@ -205,12 +225,16 @@ export const cases: CaseStudy[] = [
             alt: "A multi-channel mix: hearth, wind and crickets enabled — wave layers tinted by channel hues, ember and firefly particles visible.",
             caption: "Mix as landscape — wave color and motion follow the enabled channels.",
             variant: "half",
+            w: 1280,
+            h: 800,
           },
           {
             file: "morning-light.png",
             alt: "Light theme: the same scene in morning colors.",
             caption: "Light theme — same engine, different ink.",
             variant: "half",
+            w: 1280,
+            h: 800,
           },
         ],
       },
@@ -232,6 +256,8 @@ export const cases: CaseStudy[] = [
             file: "mobile-375.png",
             alt: "Mobile layout at 375 px: timer and mixer stacked, same scene.",
             caption: "375 px — one screen still means one screen.",
+            w: 375,
+            h: 667,
           },
         ],
       },

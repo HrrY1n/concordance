@@ -15,15 +15,17 @@ import NotFoundPage from "@/pages/NotFoundPage";
 
 function FigureRow({ slug, figure }: { slug: string; figure: CaseFigure }) {
   const src = `${import.meta.env.BASE_URL}cases/${slug}/${figure.file}`;
-  // never upscale beyond intrinsic width (mobile captures stay sharp);
-  // larger captures downscale to the column via max-w-full
+  // width/height reserve the layout box before the PNG loads (CLS guard);
+  // CSS keeps the render responsive: never upscale, shrink on narrow screens
   const img = (
     <img
       src={src}
       alt={figure.alt}
+      width={figure.w}
+      height={figure.h}
       loading="lazy"
       decoding="async"
-      className="block max-w-full border border-line bg-raised"
+      className="block h-auto max-w-full border border-line bg-raised"
     />
   );
   return (
@@ -82,8 +84,10 @@ export default function CasePage() {
         <img
           src={`${import.meta.env.BASE_URL}cases/${cs.slug}/${cs.hero.file}`}
           alt={cs.hero.alt}
+          width={cs.hero.w}
+          height={cs.hero.h}
           decoding="async"
-          className="block max-w-full border border-line bg-raised"
+          className="block h-auto max-w-full border border-line bg-raised"
         />
         <figcaption className="mt-3">
           <span className="t-meta t-caps text-ink">HERO — {cs.hero.caption}</span>
