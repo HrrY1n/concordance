@@ -1,11 +1,12 @@
 import type { Links } from "./types";
 
-/** CONTENT_PACK §links — every channel is null until a real one exists.
- *  Null channels are hidden, never faked; when ALL are null the Connect page
- *  shows its action-oriented empty state plus one explicit mailto slot. */
+/** CONTENT_PACK §links — channels are null until they exist; null channels
+ *  are hidden, never faked. Real Content & Cases pass: the public GitHub
+ *  profile is confirmed and listed; email and academic identifiers stay
+ *  null (not provided). */
 export const links = {
   email: null,
-  github: null,
+  github: "https://github.com/HrrY1n",
   scholar: null,
   orcid: null,
   linkedin: null,

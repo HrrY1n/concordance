@@ -11,6 +11,10 @@ import type { DemoId, TopicId } from "./ids";
 
 export interface Profile {
   name: string | null; // null = not provided; UI must degrade gracefully
+  /** extension (Real Content & Cases pass) — public GitHub signature, e.g.
+   *  "HrrY1n". Rendered as an @-handle only; NEVER fed into Person JSON-LD
+   *  or presented as a legal name (name stays null until a real one exists). */
+  handle: string | null;
   identity: string[]; // hero identity line
   about: string; // About paragraph (contains one CJK sentence on purpose)
   location: string | null;

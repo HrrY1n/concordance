@@ -7,6 +7,8 @@ import { notes } from "@/content/notes";
 import { projects } from "@/content/projects";
 import { publications } from "@/content/publications";
 import { researchQuestions, researchTopics } from "@/content/research";
+import { caseByProjectId } from "@/content/cases";
+import { profile } from "@/content/profile";
 import { site, heroIdentity } from "@/content/site";
 import { DEMO_REGISTRY } from "@/content/ids";
 import { pickLeadPlate, plateNumberOf } from "@/lib/curation";
@@ -144,7 +146,11 @@ export default function HomePage() {
   // while the archive is unconfigured (and carry their own sample readout).
   const lead = pickLeadPlate(projects);
   const leadPlateNo = plateNumberOf(lead, projects);
+  const leadCase = lead ? caseByProjectId(lead.id) : undefined;
   const email = links.email;
+  const firstChannel = (["email", "github", "scholar", "orcid", "linkedin", "rss"] as const).find(
+    (k) => links[k],
+  );
 
   // Honest readings — counted from the content modules, never hand-written.
   const readings = [
@@ -254,19 +260,27 @@ export default function HomePage() {
         </div>
         <div className="mt-6 flex flex-wrap items-baseline justify-between gap-4">
           <p className="t-meta text-ink-2">
-            ledger — {researchQuestions.length} questions ·{" "}
-            {researchQuestions.filter((q) => q.status === "active").length} active
+            {researchQuestions.length > 0
+              ? `ledger — ${researchQuestions.length} questions · ${
+                  researchQuestions.filter((q) => q.status === "active").length
+                } active`
+              : "ledger — open questions are logged when committed work stands behind them"}
           </p>
           <XRef to="/research">All directions and the question ledger</XRef>
         </div>
       </Section>
 
-      {/* ——— REGISTER PLATE ——— current work: the 2–3 things happening now
-           (active ledger questions) and the flagship plate (P1). */}
+      {/* ——— REGISTER PLATE ——— current work: the flagship plate (P1); the
+           active-question strip renders only while the ledger has real
+           current entries. */}
       <Section
         meta={sections.find((s) => s.id === "work")!}
         register="plate"
-        lede="The ledger's open questions, then the work itself — numbered plates with evidence chains, no card walls."
+        lede={
+          currentStrip
+            ? "The ledger's open questions, then the work itself — numbered plates with evidence chains, no card walls."
+            : "The work itself — numbered plates with evidence chains and full case studies, no card walls."
+        }
       >
         {currentStrip ? (
           <div className="max-w-[62rem]">
@@ -318,6 +332,7 @@ export default function HomePage() {
               : ""}
           </p>
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+            {leadCase ? <XRef to={`/work/${leadCase.slug}`}>Read the case study</XRef> : null}
             {lead?.demoRef ? (
               <XRef to="/lab/corruption-sandbox">Case study: run the instrument</XRef>
             ) : null}
@@ -404,6 +419,7 @@ export default function HomePage() {
             {recentNotes.map((n) => (
               <li key={n.id} className="border-b border-line py-5 last:border-b-0">
                 <p className="t-meta text-ink-2">
+                  {n.sample ? "sample entry · " : ""}
                   {n.date} · {n.kind}
                 </p>
                 <h3 className="t-entry mt-2">
@@ -422,29 +438,48 @@ export default function HomePage() {
       </Section>
 
       {/* ——— REGISTER PLATE ——— connect strip (M5: action-oriented, derived —
-           no clickable address exists until links.email does, P0-2) */}
+           a channel appears exactly when links.ts configures it) */}
       <Section meta={sections.find((s) => s.id === "connect")!} register="plate">
         <div className="max-w-[54rem]">
-          {email ? (
-            <h3 className="t-h2">
-              {site.connectFastest}{" "}
-              <span className="t-serif-voice text-ink-2">email.</span>
-            </h3>
+          {firstChannel ? (
+            <>
+              <h3 className="t-h2">
+                {site.connectFastest}{" "}
+                <span className="t-serif-voice text-ink-2">
+                  {firstChannel === "email" ? "email." : `${firstChannel}.`}
+                </span>
+              </h3>
+              <p className="t-lede text-ink-2 mt-4 max-w-[52ch]">{site.connectIntro}</p>
+              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                {firstChannel === "email" && email ? (
+                  <a
+                    href={`mailto:${email}`}
+                    className="u-link t-small inline-flex min-h-[44px] items-center"
+                  >
+                    {email} <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+                {firstChannel !== "email" && firstChannel ? (
+                  <a
+                    href={links[firstChannel] ?? "#"}
+                    className="u-link t-small inline-flex min-h-[44px] items-center"
+                  >
+                    {firstChannel === "github" ? `github.com/${profile.handle ?? ""}` : firstChannel}{" "}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+                <XRef to="/connect">All channels</XRef>
+              </div>
+            </>
           ) : (
-            <h3 className="t-h2 max-w-[30ch]">{site.connectEmptyTitle}</h3>
+            <>
+              <h3 className="t-h2 max-w-[30ch]">{site.connectEmptyTitle}</h3>
+              <p className="t-lede text-ink-2 mt-4 max-w-[52ch]">{site.connectIntro}</p>
+              <div className="mt-6">
+                <XRef to="/connect">All channels</XRef>
+              </div>
+            </>
           )}
-          <p className="t-lede text-ink-2 mt-4 max-w-[52ch]">{site.connectIntro}</p>
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-            {email ? (
-              <a
-                href={`mailto:${email}`}
-                className="u-link t-small inline-flex min-h-[44px] items-center"
-              >
-                {email} <span aria-hidden="true">↗</span>
-              </a>
-            ) : null}
-            <XRef to="/connect">All channels</XRef>
-          </div>
         </div>
       </Section>
     </>

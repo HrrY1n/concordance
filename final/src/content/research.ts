@@ -70,44 +70,11 @@ export const researchTopics = [
 ] satisfies ResearchTopic[];
 
 /** CONTENT_PACK §researchQuestions — the Question Ledger. Statuses use the
- *  low-maintenance enum (active / exploring / paused). */
-export const researchQuestions = [
-  {
-    id: "q1",
-    sample: true,
-    status: "active",
-    updated: "2026-09",
-    topic: "poisoning",
-    relatedDemo: "corruption-sandbox",
-    relatedNotes: ["n1"],
-    text: "How little poisoned content does it take to change a retrieval ranking — and can the change be detected from ranking instability alone?",
-  },
-  {
-    id: "q2",
-    sample: true,
-    status: "active",
-    updated: "2026-08",
-    topic: "poisoning",
-    relatedDemo: "corruption-sandbox",
-    relatedNotes: ["n1"],
-    text: "Which defense — corpus filtering, consistency checks, or generation-side attribution — fails least quietly?",
-  },
-  {
-    id: "q3",
-    sample: true,
-    status: "exploring",
-    updated: null,
-    topic: "robustness",
-    relatedNotes: ["n2"],
-    text: "Do robustness gains measured on one corpus distribution transfer to another?",
-  },
-  {
-    id: "q4",
-    sample: true,
-    status: "paused",
-    updated: "2026-05",
-    topic: "robustness",
-    relatedNotes: ["n2"],
-    text: "What should an evaluation suite for retrieval robustness measure that current benchmarks don’t?",
-  },
-] satisfies ResearchQuestion[];
+ *  low-maintenance enum (active / exploring / paused).
+ *
+ *  Real Content & Cases pass: the four sample questions were REMOVED, not
+ *  promoted — research directions above are the real, public part of the
+ *  picture; questions enter the ledger only when there is committed work
+ *  behind them. An empty ledger is the honest state, and the pages render
+ *  it as one. */
+export const researchQuestions: ResearchQuestion[] = [];

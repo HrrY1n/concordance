@@ -14,6 +14,7 @@ import { isOverlayOpen } from "@/lib/focus";
 import HomePage from "@/pages/HomePage";
 const ResearchPage = lazy(() => import("@/pages/ResearchPage"));
 const WorkPage = lazy(() => import("@/pages/WorkPage"));
+const CasePage = lazy(() => import("@/pages/CasePage"));
 const LabPage = lazy(() => import("@/pages/LabPage"));
 const SandboxPage = lazy(() => import("@/pages/SandboxPage"));
 const PublicationsPage = lazy(() => import("@/pages/PublicationsPage"));
@@ -201,6 +202,7 @@ function Shell() {
             <Route path="/" element={<HomePage />} />
             <Route path="/research" element={<ResearchPage />} />
             <Route path="/work" element={<WorkPage />} />
+            <Route path="/work/:slug" element={<CasePage />} />
             <Route path="/lab" element={<LabPage />} />
             <Route path="/lab/corruption-sandbox" element={<SandboxPage />} />
             <Route path="/notes" element={<NotesPage />} />

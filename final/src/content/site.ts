@@ -21,13 +21,15 @@ export const site = {
    *  hosting domain is a ONE-LINE edit here; nothing else can drift. */
   url: "https://hrry1n.github.io/concordance/",
 
-  /** Dual-voice hero (sans = statement, serif italic = the human qualifier). */
+  /** Dual-voice hero (sans = statement, serif italic = the human qualifier).
+   *  Real Content & Cases pass: the archive now shows real research
+   *  directions and real software, so the hero states the intersection. */
   heroSans: ["Retrieval-augmented", "generation,"],
-  heroSerif: "read at the level of the ranking.",
+  heroSerif: "studied where it breaks, built where it works.",
   heroLede:
-    "An archive about what retrieval-grounded systems do when their evidence turns noisy, " +
-    "conflicting, or deliberately poisoned — with small instruments that make those " +
-    "failure modes visible.",
+    "A research-and-engineering archive about retrieval-grounded systems: what they do " +
+    "when their evidence is noisy, conflicting, or deliberately poisoned — with working " +
+    "instruments, real products, and case studies that keep their evidence attached.",
 
   /** Connect page (M5): action-oriented, never a dead-end. Copy stays in
    *  human language — file paths for maintainers live in CONTENT_GUIDE.md. */

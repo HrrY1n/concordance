@@ -1,0 +1,13 @@
+{
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "soundisle:v1",
+          "value": "{\"theme\":\"light\",\"channels\":{\"rain\":{\"enabled\":true,\"volume\":0.7},\"fire\":{\"enabled\":false,\"volume\":0.65},\"wind\":{\"enabled\":false,\"volume\":0.5},\"stream\":{\"enabled\":false,\"volume\":0.55},\"crickets\":{\"enabled\":false,\"volume\":0.45},\"birds\":{\"enabled\":true,\"volume\":0.4}},\"modeId\":\"pomodoro\",\"custom\":{\"focusMin\":30,\"restMin\":6},\"stats\":{}}"
+        }
+      ]
+    }
+  ]
+}

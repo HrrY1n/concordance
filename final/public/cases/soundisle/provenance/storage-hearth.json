@@ -1,0 +1,13 @@
+{
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "soundisle:v1",
+          "value": "{\"theme\":\"dark\",\"channels\":{\"rain\":{\"enabled\":false,\"volume\":0.7},\"fire\":{\"enabled\":true,\"volume\":0.8},\"wind\":{\"enabled\":true,\"volume\":0.3},\"stream\":{\"enabled\":false,\"volume\":0.55},\"crickets\":{\"enabled\":true,\"volume\":0.75},\"birds\":{\"enabled\":false,\"volume\":0.4}},\"modeId\":\"pomodoro\",\"custom\":{\"focusMin\":30,\"restMin\":6},\"stats\":{\"2026-10-29\":{\"focusSeconds\":5400,\"rounds\":3},\"2026-10-28\":{\"focusSeconds\":3600,\"rounds\":2},\"2026-10-27\":{\"focusSeconds\":4500,\"rounds\":2},\"2026-10-26\":{\"focusSeconds\":2700,\"rounds\":1},\"2026-10-25\":{\"focusSeconds\":5400,\"rounds\":3},\"2026-10-24\":{\"focusSeconds\":1800,\"rounds\":1},\"2026-10-23\":{\"focusSeconds\":4200,\"rounds\":2}}}"
+        }
+      ]
+    }
+  ]
+}

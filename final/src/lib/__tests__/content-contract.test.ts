@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { DEMO_IDS, DEMO_REGISTRY, ROUTE_PATHS, TOPIC_IDS } from "@/content/ids";
+import { cases, caseBySlug } from "@/content/cases";
 import { notes } from "@/content/notes";
 import { projects, chains } from "@/content/projects";
 import { publications } from "@/content/publications";
@@ -12,41 +16,99 @@ import { buildIndex, queryRecords } from "@/lib/search";
 import { colophonHonesty, sections } from "@/lib/sections";
 
 /**
- * Content-contract tests (§4 / D3's runtime complement): the compile-time
- * whitelist unions catch typos in cross-references; these tests assert the
- * honesty and completeness properties the components rely on.
+ * Content-contract tests (§4 / D3's runtime complement) — REAL CONTENT &
+ * CASES era. The compile-time whitelist unions catch typos in cross-
+ * references; these tests assert the honesty properties the components rely
+ * on. The old "everything must be sample" invariants were REPLACED by their
+ * new-truth counterparts (not deleted): the archive now lists only real,
+ * repository-verifiable work, so the contract pins the absence of fiction.
  */
 describe("content contract", () => {
-  it("sample data is flagged; the only unflagged project is this site", () => {
-    for (const q of researchQuestions) expect(q.sample).toBe(true);
-    for (const n of notes) expect(n.sample).toBe(true);
-    // timeline: every entry carries an explicit flag; the site's own
-    // going-online is real (sample:false), everything else must say sample.
-    for (const t of timeline) {
-      expect(typeof t.sample).toBe("boolean");
-      if (t.kind !== "milestone" || !/site went online/i.test(t.title)) {
-        expect(t.sample).toBe(true);
-      }
-    }
+  it("no sample entries remain anywhere in visitor-visible data", () => {
+    for (const p of projects) expect(p.sample, `project ${p.id}`).toBe(false);
+    for (const n of notes) expect(n.sample, `note ${n.id}`).toBe(false);
+    for (const t of timeline) expect(t.sample, `timeline ${t.title}`).toBe(false);
+    for (const q of researchQuestions) expect(q.sample, `question ${q.id}`).toBe(false);
+    expect(colophonHonesty).toContain("No sample entries remain");
+  });
+
+  it("every project is real work: a public repository, no invented résumé", () => {
     for (const p of projects) {
-      if (p.id !== "this-site") expect(p.sample).toBe(true);
-      else expect(p.sample).toBe(false);
+      expect(p.links.github, `${p.id} carries its public repo`).toMatch(
+        /^https:\/\/github\.com\/HrrY1n\/[A-Za-z0-9-]+$/,
+      );
+      expect(p.role).not.toContain("TODO");
+    }
+    // the fictional sample project ids must never return
+    const ids = projects.map((p) => p.id);
+    for (const ghost of ["retrieval-lens", "robust-eval-kit", "poison-sandbox"]) {
+      expect(ids, `fabricated entry ${ghost} stays out`).not.toContain(ghost);
     }
   });
 
-  it("no developer paths or TODOs leak into visitor-visible content", () => {
+  it("evidence chains cite only artifacts that exist", () => {
+    for (const p of projects) {
+      const chain = chains[p.id as keyof typeof chains];
+      expect(chain).toBeTruthy();
+      expect(chain.problem.length).toBeGreaterThan(10);
+      expect(chain.method.length).toBeGreaterThan(0);
+      expect(chain.artifacts.length).toBeGreaterThan(0);
+      const serialized = JSON.stringify(chain);
+      // a sample-era habit: claiming unverifiable private artifacts
+      expect(serialized).not.toMatch(/private|no public release/i);
+    }
+  });
+
+  it("case studies map to real projects; slugs are unique and route-consistent", () => {
+    const slugs = cases.map((c) => c.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    const projectIds = projects.map((p) => p.id);
+    for (const c of cases) {
+      expect(projectIds, `case ${c.slug} needs its project`).toContain(c.projectId);
+      expect(c.summary.length).toBeGreaterThan(20);
+      expect(c.sections.length).toBeGreaterThanOrEqual(3);
+      expect(c.repoUrl).toMatch(/^https:\/\/github\.com\/HrrY1n\//);
+      expect(c.references.length).toBeGreaterThanOrEqual(1);
+    }
+    expect(caseBySlug("item-storage-app")?.slug).toBe("item-storage-app");
+    expect(caseBySlug("soundisle")?.slug).toBe("soundisle");
+    expect(caseBySlug("does-not-exist")).toBeUndefined();
+  });
+
+  it("every case figure is a real asset shipped under public/cases/<slug>/", () => {
+    const publicDir = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "public", "cases");
+    for (const c of cases) {
+      const figures = [c.hero, ...c.sections.flatMap((s) => s.figures ?? [])];
+      expect(figures.length, `case ${c.slug} needs visual evidence`).toBeGreaterThanOrEqual(3);
+      for (const f of figures) {
+        expect(f.alt.length, `figure ${f.file} needs alt text`).toBeGreaterThan(10);
+        const path = join(publicDir, c.slug, f.file);
+        expect(() => readFileSync(path), `missing asset ${path}`).not.toThrow();
+      }
+    }
+  });
+
+  it("no developer paths or TODOs leak — scan includes chains, cases, lab data, links", () => {
     const exported = JSON.stringify({
       profile,
       timeline,
       projects,
+      chains,
+      cases,
       notes,
       researchTopics,
       researchQuestions,
       publications,
+      budgetChunks,
+      sandboxCorpus,
+      links,
     });
     expect(exported).not.toMatch(/TODO/i);
+    // the archive's own internals stay out of copy; public-repo relative
+    // paths inside case evidence (src/services/..., docs/...) are legitimate
     expect(exported).not.toContain("src/content");
     expect(exported).not.toContain("Replace in");
+    expect(exported).not.toMatch(/C:\\\\|D:\\\\|\/Users\/|\/home\//);
   });
 
   it("the colophon honesty line reflects the sample state and carries no paths", () => {
@@ -61,13 +123,24 @@ describe("content contract", () => {
     }
   });
 
-  it("profile claims nothing personal: name/location are null", () => {
+  it("identity: no legal name or location is published; the handle is the only signature", () => {
     expect(profile.name).toBeNull();
     expect(profile.location).toBeNull();
+    expect(profile.handle).toMatch(/^[A-Za-z0-9-]+$/);
+    // the JSON-LD build step keys on profile.name — a handle must never
+    // flow into a Person schema, so name staying null IS the contract
   });
 
-  it("links are all null until real ones exist (UI hides nulls)", () => {
-    for (const value of Object.values(links)) expect(value).toBeNull();
+  it("links: the confirmed GitHub profile is on, and matches the handle; email stays null", () => {
+    expect(links.github).toBe(`https://github.com/${profile.handle}`);
+    expect(links.email).toBeNull();
+    expect(links.scholar).toBeNull();
+    expect(links.orcid).toBeNull();
+    expect(links.linkedin).toBeNull();
+  });
+
+  it("researchQuestions is the honest empty ledger (sample questions were removed, not promoted)", () => {
+    expect(researchQuestions).toHaveLength(0);
   });
 
   it("publications is empty — the empty state is a first-class page", () => {
@@ -91,16 +164,6 @@ describe("content contract", () => {
     }
   });
 
-  it("every project has an evidence chain (compile-time Record, runtime check)", () => {
-    for (const p of projects) {
-      const chain = chains[p.id as keyof typeof chains];
-      expect(chain).toBeTruthy();
-      expect(chain.problem.length).toBeGreaterThan(10);
-      expect(chain.method.length).toBeGreaterThan(0);
-      expect(chain.artifacts.length).toBeGreaterThan(0);
-    }
-  });
-
   it("sidenote numbers are unique per note and bodies are well-formed", () => {
     for (const n of notes) {
       const nums = (n.body ?? [])
@@ -113,11 +176,15 @@ describe("content contract", () => {
     }
   });
 
-  it("sandbox corpus: exactly one poisoned doc, all docs unique ids", () => {
+  it("sandbox corpus: exactly one poisoned doc, all docs unique ids; chunk sources cite no removed notes", () => {
     const poisoned = sandboxCorpus.filter((d) => d.poisoned);
     expect(poisoned).toHaveLength(1);
     expect(new Set(sandboxCorpus.map((d) => d.id)).size).toBe(sandboxCorpus.length);
-    for (const c of budgetChunks) expect(c.text.length).toBeGreaterThan(0);
+    for (const c of budgetChunks) {
+      expect(c.text.length).toBeGreaterThan(0);
+      // n1–n3 were removed; the demo corpus must not cite ghosts
+      expect(c.source).not.toMatch(/note n\d/i);
+    }
   });
 });
 
@@ -132,13 +199,23 @@ describe("palette index", () => {
     expect(index.some((r) => r.route === "/" && r.type === "PAGE")).toBe(true);
   });
 
-  it("indexes demos, projects, topics, questions and notes", () => {
+  it("indexes demos, projects, cases, topics, questions and notes", () => {
     const index = buildIndex();
     expect(index.filter((r) => r.type === "DEMO")).toHaveLength(DEMO_IDS.length);
     expect(index.filter((r) => r.type === "PROJECT")).toHaveLength(projects.length);
+    expect(index.filter((r) => r.type === "CASE")).toHaveLength(cases.length);
     expect(index.filter((r) => r.type === "TOPIC")).toHaveLength(researchTopics.length);
     expect(index.filter((r) => r.type === "QUESTION")).toHaveLength(researchQuestions.length);
     expect(index.filter((r) => r.type === "NOTE")).toHaveLength(notes.length);
+  });
+
+  it("case records deep-link to /work/:slug and the search finds them", () => {
+    const index = buildIndex();
+    for (const c of cases) {
+      expect(index.find((r) => r.id === `case-${c.slug}`)?.route).toBe(`/work/${c.slug}`);
+    }
+    expect(queryRecords(index, "local-first").some((r) => r.type === "CASE")).toBe(true);
+    expect(queryRecords(index, "web audio").some((r) => r.type === "CASE")).toBe(true);
   });
 
   it("note records deep-link to /notes/:slug; all routes are known routes", () => {
@@ -147,10 +224,13 @@ describe("palette index", () => {
       if (rec.route === "") continue; // ACTION records
       const known =
         (ROUTE_PATHS as readonly string[]).includes(rec.route) ||
-        /^\/notes\/[a-z0-9-]+$/.test(rec.route);
+        /^\/notes\/[a-z0-9-]+$/.test(rec.route) ||
+        /^\/work\/[a-z0-9-]+$/.test(rec.route);
       expect(known, `record ${rec.id} has unknown route ${rec.route}`).toBe(true);
     }
-    expect(index.find((r) => r.id === "note-n1")?.route).toBe("/notes/n1");
+    expect(index.find((r) => r.id === "note-archive-as-instrument")?.route).toBe(
+      "/notes/archive-as-instrument",
+    );
   });
 
   it("returns no results for gibberish, and sane results for real queries", () => {

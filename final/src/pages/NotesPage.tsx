@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { notes } from "@/content/notes";
 import { useDocumentMeta } from "@/lib/seo";
-import { PageShell, XRef } from "@/components/structure";
+import { PageShell, XRef, EmptyState } from "@/components/structure";
 import { sectionByRoute } from "@/lib/sections";
 import { useMemo } from "react";
 
@@ -55,7 +55,7 @@ function EntryLengthFigure() {
 export default function NotesPage() {
   useDocumentMeta(
     "Notes",
-    "Working notes: paper readings, robustness arguments, and engineering notes from building small retrieval pipelines. All entries are sample data awaiting replacement.",
+    "Working notes from the archive's own engineering — written to be read in place, with their claims checkable against the public repository.",
   );
   const meta = sectionByRoute("/notes")!;
   const sorted = [...notes].sort((a, b) => b.date.localeCompare(a.date));
@@ -64,10 +64,20 @@ export default function NotesPage() {
     <PageShell
       meta={meta}
       register="essay"
-      lede="Notes are written to be read in place — serif, measured, margin apparatus included. They are where the ledger's questions go to think."
+      lede="Notes are written to be read in place — serif, measured, margin apparatus included. They are where the archive's engineering explains itself."
     >
-      <EntryLengthFigure />
-      <ul className="u-measure mt-12">
+      {sorted.length === 0 ? (
+        <div className="mt-12">
+          <EmptyState
+            mark="notes — empty"
+            why="No working notes are published yet. Notes appear here when there is something real to write down — each one kept honest by revisions rather than secrecy."
+            becomes="A first entry numbers itself here the moment it exists."
+          />
+        </div>
+      ) : (
+        <>
+          <EntryLengthFigure />
+          <ul className="u-measure mt-12">
         {sorted.map((n) => (
           <li key={n.id} className="border-b border-line py-6 last:border-b-0">
             <p className="t-meta text-ink-2">
@@ -87,7 +97,9 @@ export default function NotesPage() {
             ) : null}
           </li>
         ))}
-      </ul>
+          </ul>
+        </>
+      )}
     </PageShell>
   );
 }

@@ -1,49 +1,52 @@
 import type { Project } from "./types";
 
-/** CONTENT_PACK §projects — four entries, p4 (this site) is the only real one. */
+/**
+ * CONTENT_PACK §projects — three entries, all real and all with verifiable
+ * public repos (Real Content & Cases pass). The sample résumé entries were
+ * removed, not renamed: nothing here claims work the repositories don't show.
+ * Order is the display order; the first real featured project leads the
+ * homepage plate (lib/curation.ts).
+ */
 export const projects = [
   {
-    id: "poison-sandbox",
-    sample: true,
+    id: "item-storage-app",
+    sample: false,
     featured: true,
     year: 2026,
     kind: "tool",
-    title: "Poison Sandbox",
+    title: "Private Item Library",
     summary:
-      "A local sandbox that shows how a single corrupted passage rewrites a retrieval ranking — built to make the failure mode visible, not to claim a defense.",
-    role: "Solo",
+      "A local-first PWA for cataloguing the things you own — categories, lifecycle, " +
+      "holding cost and warranty — stored on-device in IndexedDB, with checksummed ZIP " +
+      "backups and an optional recovery-code sync. Offline is the default, not a mode.",
+    role: "Solo — design, engineering, docs",
     status: "active",
-    tags: ["RAG", "Robustness", "Visualization"],
-    links: { github: null, demo: null, writeup: null },
-    demoRef: "corruption-sandbox",
+    tags: ["React", "TypeScript", "Dexie", "IndexedDB", "PWA"],
+    links: {
+      github: "https://github.com/HrrY1n/item-storage-app",
+      demo: null,
+      writeup: null,
+    },
   },
   {
-    id: "retrieval-lens",
-    sample: true,
+    id: "soundisle",
+    sample: false,
     featured: true,
-    year: 2025,
+    year: 2026,
     kind: "tool",
-    title: "Retrieval Lens",
+    title: "SoundIsle · 声屿",
     summary:
-      "Chunk-level similarity inspection for RAG debugging: which chunks were retrieved, why they scored, and what the generator actually used.",
-    role: "Solo",
+      "A focus workbench synthesized entirely in the browser: Web Audio channels rendered " +
+      "from nodes instead of samples, a Canvas night-sea scene that breathes with the mix, " +
+      "and a focus timer. Zero audio assets shipped.",
+    role: "Solo — design, engineering, docs",
     status: "maintained",
-    tags: ["RAG", "Tooling"],
-    links: { github: null, demo: null, writeup: null },
-  },
-  {
-    id: "robust-eval-kit",
-    sample: true,
-    featured: false,
-    year: 2025,
-    kind: "tool",
-    title: "robust-eval-kit",
-    summary:
-      "A small harness of adversarial retrieval checks that runs in CI: noisy neighbors, conflicting sources, injected instructions.",
-    role: "Solo",
-    status: "archived",
-    tags: ["Robustness", "Evaluation"],
-    links: { github: null, demo: null, writeup: null },
+    tags: ["Web Audio", "Canvas", "TypeScript", "Creative coding"],
+    links: {
+      github: "https://github.com/HrrY1n/soundisle",
+      demo: null,
+      writeup: null,
+    },
   },
   {
     id: "this-site",
@@ -51,19 +54,26 @@ export const projects = [
     featured: true,
     year: 2026,
     kind: "site",
-    title: "This site",
+    title: "Concordance",
     summary:
-      "A data-driven personal archive: content as typed TypeScript, designed to grow for years without a redesign.",
+      "A data-driven personal archive: content as typed TypeScript, readings derived from " +
+      "the data, figures computed in the visitor's browser — designed to grow for years " +
+      "without a redesign.",
     role: "Designer & engineer",
     status: "active",
     tags: ["TypeScript", "Design Systems"],
-    links: { github: null, demo: null, writeup: null },
+    links: {
+      github: "https://github.com/HrrY1n/concordance",
+      demo: null,
+      writeup: null,
+    },
   },
 ] satisfies Project[];
 
 /** extension — evidence chains for the PLATE grammar. `Record<ProjectId, …>`
  *  makes a missing chain a COMPILE ERROR: add a project, and tsc demands its
- *  evidence chain too (§4 / D3). */
+ *  evidence chain too (§4 / D3). Every line below is checkable against the
+ *  linked public repository. */
 export type ProjectId = (typeof projects)[number]["id"];
 
 export interface EvidenceChain {
@@ -73,36 +83,35 @@ export interface EvidenceChain {
 }
 
 export const chains: Record<ProjectId, EvidenceChain> = {
-  "poison-sandbox": {
-    problem: "What does one corrupted passage do to a retrieval ranking?",
+  "item-storage-app": {
+    problem:
+      "How should personal inventory data survive device loss, offline use, and schema change — without a required backend?",
     method: [
-      "hand-write an 8-document corpus",
-      "score it with bm25 (k1 1.5, b 0.75)",
-      "inject d8, re-rank, watch the top slot flip",
-      "multiply matched scores ×0.1 and re-rank again",
+      "store everything on-device in indexeddb via dexie",
+      "version the schema and test each migration",
+      "export and restore checksummed zip backups",
+      "pair devices for sync only through an explicit recovery code",
     ],
     artifacts: [
-      "Corruption Sandbox — live on this site",
-      "2 acceptance invariants, tested in vitest",
+      "github.com/HrrY1n/item-storage-app",
+      "vitest suite over migrations, repositories, backup and sync (fake-indexeddb)",
+      "interface record — 14 screenshots with capture provenance in the repo docs",
     ],
   },
-  "retrieval-lens": {
-    problem: "Which chunks were retrieved, why did they score, and what did the generator use?",
+  soundisle: {
+    problem:
+      "Can a focus environment ship with zero audio assets and still feel alive?",
     method: [
-      "log retriever input and output per query",
-      "inspect chunk scores against the query terms",
-      "diff retrieved set against the generator's citations",
+      "synthesize every channel from web audio nodes — no samples",
+      "couple the canvas scene to the live mix, not to a recording",
+      "crossfade loop seams and respect the suspended audio state",
+      "test the engine and the state it drives",
     ],
-    artifacts: ["inspection notebooks (private) — no public release yet"],
-  },
-  "robust-eval-kit": {
-    problem: "Can adversarial retrieval checks run where the code already runs — in CI?",
-    method: [
-      "encode noisy-neighbor and conflicting-source checks",
-      "inject instruction-style passages into test corpora",
-      "fail the build on ranking instability",
+    artifacts: [
+      "github.com/HrrY1n/soundisle",
+      "unit tests over the engine and its state",
+      "design iteration log in the repo docs",
     ],
-    artifacts: ["local harness runs — archived, superseded by the perturbation approach"],
   },
   "this-site": {
     problem: "Can a personal archive grow for years without a redesign?",
@@ -113,7 +122,7 @@ export const chains: Record<ProjectId, EvidenceChain> = {
     ],
     artifacts: [
       "this site",
-      "content contract in src/content/*.ts",
+      "the content contract — typed content files, checked by the test suite",
       "engine tests in src/lib/__tests__/",
     ],
   },

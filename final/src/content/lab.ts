@@ -70,12 +70,12 @@ export const budgetQuestion = "Why does chunking change what a RAG system can an
 export const budgetChunks: BudgetChunk[] = [
   {
     id: "c1",
-    source: "Note n3 — chunk boundaries are policy decisions",
+    source: "hand-written for this demo — chunk boundaries as policy",
     text: "A chunk boundary is not a neutral cut. Where a document is split decides which claims arrive together, which arrive torn apart, and which context the generator never sees.",
   },
   {
     id: "c2",
-    source: "Note n1 — ranking before generation",
+    source: "hand-written for this demo — ranking before generation",
     text: "Whatever the ranking stage lets through is treated as evidence. Errors made above the generator are inherited, not corrected, by the answer.",
   },
   {

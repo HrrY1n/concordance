@@ -39,7 +39,7 @@ export default function SandboxPage() {
         </div>
 
         <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-6">
-          <XRef to="/research#q1">← back to the question ledger</XRef>
+          <XRef to="/research">← back to the research directions</XRef>
           <XRef to="/lab">← all lab instruments</XRef>
           <Link to="/" className="u-link t-small">
             ← home

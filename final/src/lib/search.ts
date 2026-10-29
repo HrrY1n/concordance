@@ -17,13 +17,22 @@
  */
 import { DEMO_REGISTRY } from "@/content/ids";
 import { budgetChunks, sandboxCorpus } from "@/content/lab";
+import { cases } from "@/content/cases";
 import { notes } from "@/content/notes";
 import { projects } from "@/content/projects";
 import { researchQuestions, researchTopics } from "@/content/research";
 import { sections } from "@/lib/sections";
 import { bm25Rank, tokenize } from "@/lib/bm25";
 
-export type RecordType = "PAGE" | "PROJECT" | "TOPIC" | "QUESTION" | "NOTE" | "DEMO" | "ACTION";
+export type RecordType =
+  | "PAGE"
+  | "PROJECT"
+  | "CASE"
+  | "TOPIC"
+  | "QUESTION"
+  | "NOTE"
+  | "DEMO"
+  | "ACTION";
 
 export interface SearchRecord {
   id: string;
@@ -63,14 +72,28 @@ export function buildIndex(): SearchRecord[] {
   }
 
   projects.forEach((p, i) => {
+    const cs = cases.find((c) => c.projectId === p.id);
     records.push({
       id: `project-${p.id}`,
       type: "PROJECT",
       title: p.title,
       hint: p.summary,
       coord: `§02 · PLATE ${String(i + 1).padStart(2, "0")}`,
-      route: "/work",
+      // a project with a case study routes straight to it
+      route: cs ? `/work/${cs.slug}` : "/work",
       keywords: [...p.tags.map((t) => t.toLowerCase()), p.kind, String(p.year)],
+    });
+  });
+
+  cases.forEach((c) => {
+    records.push({
+      id: `case-${c.slug}`,
+      type: "CASE",
+      title: `${c.title} — case study`,
+      hint: c.summary,
+      coord: "§02 · CASE",
+      route: `/work/${c.slug}`,
+      keywords: [...c.stack.map((s) => s.toLowerCase()), c.kicker.toLowerCase()],
     });
   });
 

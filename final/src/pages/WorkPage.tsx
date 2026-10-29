@@ -1,18 +1,16 @@
-import { useMemo } from "react";
-import { Link } from "react-router-dom";
-import { bm25Rank } from "@/lib/bm25";
-import { sandboxCorpus, sandboxQuery, toyDefense } from "@/content/lab";
 import { chains, projects } from "@/content/projects";
-import { DEMO_REGISTRY } from "@/content/ids";
+import { caseByProjectId } from "@/content/cases";
 import { useDocumentMeta } from "@/lib/seo";
 import { useSearch } from "@/lib/palette";
-import { Figure, PageShell, XRef } from "@/components/structure";
+import { PageShell, XRef } from "@/components/structure";
 import { sectionByRoute } from "@/lib/sections";
 
 /**
  * §02 WORK — Selected Work as numbered plates of a concordance: full-measure
  * spreads, display-scale titles, hairline rules, and an evidence chain under
  * each title (problem → method → artifacts that exist). No cards, ever.
+ * Every plate is real work with a verifiable repository (Real Content & Cases
+ * pass — the sample résumé entries were removed, not rewritten).
  */
 
 function StatusMark({ status }: { status: "active" | "maintained" | "archived" | null }) {
@@ -26,70 +24,10 @@ function StatusMark({ status }: { status: "active" | "maintained" | "archived" |
   );
 }
 
-/** FIG.W1 — the poison's score under two regimes, computed live. */
-function PoisonScoreFigure() {
-  const scores = useMemo(() => {
-    const rawRanking = bm25Rank(sandboxCorpus, sandboxQuery);
-    const defendedRanking = bm25Rank(sandboxCorpus, sandboxQuery, {
-      defense: { patterns: toyDefense.patterns, factor: toyDefense.factor },
-    });
-    const raw = rawRanking.find((r) => r.id === "d8")!;
-    const def = defendedRanking.find((r) => r.id === "d8")!;
-    const rawRank = rawRanking.findIndex((r) => r.id === "d8") + 1;
-    const defRank = defendedRanking.findIndex((r) => r.id === "d8") + 1;
-    return {
-      raw: { score: raw.score, rank: rawRank },
-      defended: { score: def.score, rank: defRank },
-    };
-  }, []);
-  const max = Math.max(scores.raw.score, scores.defended.score);
-  const bar = (s: number) => Math.min(1, Math.max(s / max, 0.02));
-  return (
-    <Figure
-      id="FIG. W1"
-      title="The poison's score, d8, under two regimes"
-      method={`bm25 on the full ${sandboxCorpus.length}-doc corpus · computed in this tab · no requests`}
-    >
-      <dl className="max-w-[560px] space-y-3">
-        <div className="flex items-baseline gap-3">
-          <dt className="t-meta t-caps text-ink-2 w-28 shrink-0">undefended</dt>
-          <dd className="flex flex-1 items-baseline gap-3">
-            <span className="rank-track" aria-hidden="true">
-              <span className="rank-fill" data-poisoned="true" style={{ transform: `scaleX(${bar(scores.raw.score)})` }} />
-            </span>
-            <span className="t-meta text-ink-2 tabular-nums">
-              {scores.raw.score.toFixed(2)} · rank {scores.raw.rank}
-            </span>
-          </dd>
-        </div>
-        <div className="flex items-baseline gap-3">
-          <dt className="t-meta t-caps text-ink-2 w-28 shrink-0">toy defense ×0.1</dt>
-          <dd className="flex flex-1 items-baseline gap-3">
-            <span className="rank-track" aria-hidden="true">
-              <span className="rank-fill" style={{ transform: `scaleX(${bar(scores.defended.score)})` }} />
-            </span>
-            <span className="t-meta text-ink-2 tabular-nums">
-              {scores.defended.score.toFixed(2)} · rank {scores.defended.rank}
-            </span>
-          </dd>
-        </div>
-      </dl>
-      <p className="t-small text-ink-2 mt-4 max-w-[60ch]">
-        The defense multiplies matching scores by 0.1 and re-sorts — d8 drops from the top slot to
-        the bottom of the ranking. A heuristic this crude is a demonstration, not a defense; the
-        interesting question is which quiet failures remain.{" "}
-        <Link to="/research#q2" className="u-link">
-          Q2 in the ledger →
-        </Link>
-      </p>
-    </Figure>
-  );
-}
-
 export default function WorkPage() {
   useDocumentMeta(
     "Selected Work",
-    "Plates with evidence chains: retrieval instrumentation, robustness tooling, and the archive itself — links listed only where they exist.",
+    "Real software with its evidence attached: a local-first inventory PWA, a browser-native sound workbench, and the archive itself — every plate linked to a public repository.",
   );
   const { openSearch } = useSearch();
   const meta = sectionByRoute("/work")!;
@@ -98,7 +36,7 @@ export default function WorkPage() {
     <PageShell
       meta={meta}
       register="plate"
-      lede="Each plate carries its evidence chain: the problem as a question, the method as steps, and only artifacts that exist. External links stay unlisted until they do."
+      lede="Each plate is real work: an evidence chain (problem → method → artifacts that exist), a public repository, and — where written — a full case study."
     >
       <ol>
         {projects.map((p, i) => {
@@ -163,15 +101,16 @@ export default function WorkPage() {
                     </dd>
                     <dt className="t-caps text-ink-2">case study</dt>
                     <dd>
-                      {p.demoRef ? (
-                        <XRef to={DEMO_REGISTRY[p.demoRef].route}>
-                          {DEMO_REGISTRY[p.demoRef].title} — live in §03
-                        </XRef>
-                      ) : p.id === "this-site" ? (
-                        <XRef to="/">you are standing in it</XRef>
-                      ) : (
-                        <span className="text-ink-2">none yet</span>
-                      )}
+                      {(() => {
+                        const cs = caseByProjectId(p.id);
+                        if (cs) {
+                          return <XRef to={`/work/${cs.slug}`}>Read the case study</XRef>;
+                        }
+                        if (p.id === "this-site") {
+                          return <XRef to="/">you are standing in it</XRef>;
+                        }
+                        return <span className="text-ink-2">none yet</span>;
+                      })()}
                     </dd>
                   </dl>
 
@@ -190,12 +129,6 @@ export default function WorkPage() {
                       ))}
                     </ul>
                   </div>
-
-                  {p.id === "poison-sandbox" ? (
-                    <div className="mt-10">
-                      <PoisonScoreFigure />
-                    </div>
-                  ) : null}
                 </div>
               </div>
             </li>

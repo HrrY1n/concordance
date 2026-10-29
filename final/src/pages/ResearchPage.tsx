@@ -5,7 +5,7 @@ import { noteById, notes } from "@/content/notes";
 import { researchQuestions, researchTopics } from "@/content/research";
 import { useDocumentMeta } from "@/lib/seo";
 import { useSearch } from "@/lib/palette";
-import { Figure, PageShell, XRef } from "@/components/structure";
+import { Figure, PageShell, XRef, EmptyState } from "@/components/structure";
 import { sectionByRoute } from "@/lib/sections";
 import type { QuestionStatus } from "@/content/types";
 
@@ -130,18 +130,30 @@ export default function ResearchPage() {
         </ul>
       </section>
 
-      {/* ——— ledger status, as a figure ——— */}
-      <div className="mt-12">
-        <StatusDistribution />
-      </div>
+      {/* ——— ledger status, as a figure (only while questions exist) ——— */}
+      {researchQuestions.length > 0 ? (
+        <div className="mt-12">
+          <StatusDistribution />
+        </div>
+      ) : null}
 
       {/* ——— the Question Ledger (D's grammar, low-maintenance statuses) ——— */}
       <section aria-labelledby="research-ledger" className="mt-12">
         <h2 id="research-ledger" className="t-kicker text-ink-2">
           question ledger — {researchQuestions.length} questions
         </h2>
-        <ol className="mt-5">
-          {researchQuestions.map((q, i) => (
+        {researchQuestions.length === 0 ? (
+          <div className="mt-5">
+            <EmptyState
+              mark="ledger — empty by design"
+              why="Questions enter this ledger when there is committed work behind them — a runnable instrument, a note, a case. Directions above are the stable, public part of the picture; the ledger is where working state goes."
+              becomes="When research produces a question worth keeping visible, it numbers itself here."
+            />
+          </div>
+        ) : (
+          <>
+          <ol className="mt-5">
+            {researchQuestions.map((q, i) => (
             <li
               key={q.id}
               id={q.id}
@@ -184,25 +196,27 @@ export default function ResearchPage() {
               </div>
             </li>
           ))}
-        </ol>
+          </ol>
 
-        {/* the one legend the ledger needs */}
-        <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border-t border-line pt-4">
-          {(Object.keys(STATUS_LEGEND) as QuestionStatus[]).map((s) => (
-            <span key={s} className="t-meta text-ink-2 inline-flex items-center gap-2">
-              <span className="dot" data-tone={STATUS_LEGEND[s].tone} aria-hidden="true" />
-              {s} — {STATUS_LEGEND[s].meaning}
-            </span>
-          ))}
-        </div>
-        <p className="t-small text-ink-2 mt-4 max-w-[58ch]">
-          A question joins the ledger when it can be stated in one sentence. It leaves when it is
-          answered, dead, or someone else published the answer first — each exit is a different
-          line in the notes.{" "}
-          <Link to="/notes" className="u-link">
-            Related notes →
-          </Link>
-        </p>
+          {/* the one legend the ledger needs */}
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border-t border-line pt-4">
+            {(Object.keys(STATUS_LEGEND) as QuestionStatus[]).map((s) => (
+              <span key={s} className="t-meta text-ink-2 inline-flex items-center gap-2">
+                <span className="dot" data-tone={STATUS_LEGEND[s].tone} aria-hidden="true" />
+                {s} — {STATUS_LEGEND[s].meaning}
+              </span>
+            ))}
+          </div>
+          <p className="t-small text-ink-2 mt-4 max-w-[58ch]">
+            A question joins the ledger when it can be stated in one sentence. It leaves when it is
+            answered, dead, or someone else published the answer first — each exit is a different
+            line in the notes.{" "}
+            <Link to="/notes" className="u-link">
+              Related notes →
+            </Link>
+          </p>
+          </>
+        )}
       </section>
     </PageShell>
   );
