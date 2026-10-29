@@ -7,7 +7,7 @@
 import { chromium } from "playwright";
 
 const BASE = "http://localhost:4199";
-const OUT = "D:/Codex/play/portfolio/shots/final";
+const OUT = new URL("../shots/final", import.meta.url).pathname;
 const PAGES = ["", "/research", "/work", "/about", "/connect", "/publications"];
 const NAME = { "": "home", "/research": "research", "/work": "work", "/about": "about", "/connect": "connect", "/publications": "publications" };
 const VIEWPORTS = [
@@ -25,7 +25,7 @@ for (const theme of ["light", "dark"]) {
       deviceScaleFactor: 1,
     });
     const page = await context.newPage();
-    page.on("pageerror", (e) => consoleIssues.push(`${NAME[undefined] ?? ""}${vp.tag}/${theme}: ${String(e).slice(0, 120)}`));
+    page.on("pageerror", (e) => consoleIssues.push(`${NAME[route] ?? ""}${vp.tag}/${theme}: ${String(e).slice(0, 120)}`));
     page.on("console", (m) => {
       if (m.type() === "error") consoleIssues.push(`${vp.tag}/${theme}: ${m.text().slice(0, 120)}`);
     });

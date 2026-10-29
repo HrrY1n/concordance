@@ -125,6 +125,23 @@ Notes 列表里显示一行 mono 的 `sample entry`——访客不会把示例�
 
 页面呈现是"图版（Plate）"版式，不是三列卡片；`featured` 的项目会出现在首页。
 
+## 4b. 加一个案例长文 —— `cases.ts`（Real Content & Cases pass 新增）
+
+每个项目可以配一篇完整案例页，路由 `/work/:slug`。**一个模板渲染所有案例**——内容全部在
+`cases.ts`，不为单个案例复制 TSX。最小步骤：
+
+1. 在 `cases.ts` 的 `cases` 数组追加一项：`slug`（=URL）、`projectId`（必须是 `projects.ts`
+   里真实存在的 id，类型系统强制）、`title`、`kicker`、`summary`（=meta description）、
+   `stack`、`repoUrl`、`hero`、`sections`（2–5 节自由叙述：问题/设计决策/工程/证据/反思）、
+   `references`（每条可核验的来源链接）。
+2. 截图放 `final/public/cases/<slug>/`，文件名与 `figures[].file` 对应。**只用真实运行的
+   截图**——在 `provenance` 字段写清采集方式（何时/什么浏览器/什么数据）。没有公开 demo 就
+   不写 demo 链接，绝不放假按钮。
+3. sitemap、搜索索引、`/work` 页的"case study"入口全部自动派生；契约测试会校验 slug 唯一、
+   projectId 存在、图片文件真实在盘、alt 文案非空——红一条就修内容，不要删断言。
+4. 叙事纪律：每条声明都能在 references 里找到出处；数字必须来自源码或测试运行；反思段写
+   真实局限，不写营销话术。
+
 ## 5. 加一篇论文 —— `publications.ts` ★ 当前为空，路径已修通
 
 ```ts

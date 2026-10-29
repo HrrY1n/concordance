@@ -20,7 +20,7 @@ const KIND_LABEL: Record<TimelineEntry["kind"], string> = {
 export default function AboutPage() {
   useDocumentMeta(
     "About",
-    "The about page of a research archive built as a concordance — plus a log, not a résumé. Biographical details appear here only once configured.",
+    "A computer science master's student working on retrieval-augmented generation and building small real software — this archive is where the two meet. Plus a log, not a résumé.",
   );
   const meta = sectionByRoute("/about")!;
   const sorted = timeline.filter((entry) => !entry.sample).slice().reverse();
@@ -38,7 +38,17 @@ export default function AboutPage() {
           <p className="t-meta text-ink-2 mt-5">located — {profile.location}</p>
         ) : null}
         {profile.name === null ? (
-          <p className="t-meta text-ink-2 mt-2">name — not yet configured</p>
+          profile.handle ? (
+            <p className="t-meta text-ink-2 mt-2">
+              kept by{" "}
+              <a className="u-link" href={`https://github.com/${profile.handle}`}>
+                @{profile.handle}
+              </a>{" "}
+              — the public signature; a legal name stays unpublished
+            </p>
+          ) : (
+            <p className="t-meta text-ink-2 mt-2">name — not yet configured</p>
+          )
         ) : (
           <p className="t-meta text-ink-2 mt-2">{profile.name}</p>
         )}

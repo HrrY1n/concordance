@@ -130,7 +130,7 @@ export function ContextBudget() {
       </ul>
 
       <div className="border-t border-line px-5 py-4 md:px-7">
-        <p className="t-meta t-caps text-ink-2">
+        <p className="t-meta t-caps text-ink-2" aria-live="polite">
           budget {budget} tok (est.) · used {used} · truncated {truncated}
         </p>
         <p className="t-small text-ink-2 mt-2 max-w-[60ch]">

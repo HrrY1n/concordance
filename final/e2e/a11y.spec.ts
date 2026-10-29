@@ -15,13 +15,18 @@ const PAGES: { route: string; marker: string }[] = [
   // rendered uppercase by .t-kicker but stored lowercase.
   { route: "/research", marker: "Directions are stable; questions move" },
   { route: "/work", marker: "PLATE" },
+  // Case studies are first-class a11y surfaces (Real Content & Cases pass) —
+  // real images with alt text, LEDGER references, next-case navigation.
+  { route: "/work/item-storage-app", marker: "case study" },
+  { route: "/work/soundisle", marker: "case study" },
   { route: "/lab", marker: "instrument" },
   { route: "/about", marker: "About" },
-  // Empty states are first-class pages in this archive — they are part of
-  // the a11y surface (placeholder pass).
   { route: "/notes", marker: "Notes are written to be read in place" },
+  { route: "/notes/archive-as-instrument", marker: "The archive is the instrument" },
   { route: "/publications", marker: "Selected research will appear here" },
-  { route: "/connect", marker: "Contact details will be added later" },
+  // The connect page now carries a real channel (GitHub); the empty-title
+  // marker is gone by design — the intro line is the stable text.
+  { route: "/connect", marker: "Channels appear here as they exist" },
 ];
 
 for (const { route, marker } of PAGES) {

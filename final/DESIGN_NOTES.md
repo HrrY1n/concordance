@@ -302,3 +302,62 @@ Notes/About 整页 ESSAY——密度、构图、图版形态的层级差异由�
 
 - `npm run build` / `lint`（0-0）/ `test`（84）/ `test:a11y`（8 页）全绿。
 - JSON-LD 产物断言：`"@type":"WebSite"`，无 jobTitle。
+
+---
+
+# REAL CONTENT & CASES PASS（2026-10-30，分支 codex/concordance-real-content-cases）
+
+主题：把档案从"示例语料"升级为"真实定位 + 真实作品 + 案例长文"。设计系统零重设计——
+本轮只让真实内容穿过既有语法（PLATE/LEDGER/ESSAY、mono 派生读数、诚实空态）。
+
+## 内容层
+
+1. **虚构履历出清**：poison-sandbox / retrieval-lens / robust-eval-kit 三个 sample 项目及其
+   证据链删除（不是改名重包装）；Corruption Sandbox 保留其真实身份——Lab 仪器（§03）。
+   projects 现为三件真实作品：Private Item Library（item-storage-app）、SoundIsle（声屿）、
+   Concordance（本站），全部带可核验的公开仓库链接。
+2. **样例问题出清**：q1–q4 删除，Question Ledger 呈现诚实空态（EmptyState 语法；
+   StatusDistribution 图 n=0 时隐藏，避免除零）。研究方向六条保留（公开的主题定位）。
+3. **第一人称样例笔记出清**：n1–n3 删除；新增一篇真实工程笔记
+   /notes/archive-as-instrument（所有声明可对着本仓库核验）。Context Budget 语料的
+   "Note n1/n3" 来源标签改为 "hand-written for this demo"。
+4. **诚实读数清零**：hasSampleEntries=false → colophon 自动翻转为
+   "No sample entries remain — everything this archive lists is real."（派生，非手写）。
+
+## 身份层
+
+5. `profile.handle = "HrrY1n"`（公开署名新字段；类型上明确"不得进入 Person JSON-LD"），
+   name/location 保持 null → JSON-LD 仍是 WebSite schema。About 署名行派生自 handle；
+   links.github 上线（与 handle 一致性有契约测试）；email 仍 null。
+6. hero 双声部 / heroLede / about（中英）重写为已确认定位：CS 硕士研究生 ×
+   RAG/Robustness/Poisoning/AI Security × 独立软件工程。
+
+## 案例系统
+
+7. `content/cases.ts` + `pages/CasePage.tsx`（/work/:slug）：单模板多案例，register 节奏
+   PLATE(hero+provenance) → ESSAY(叙述+实拍) → LEDGER(可核验 references) → PLATE(next)。
+   projectId 用编译期 union 关联 projects；未知 slug 渲染 404（与 /notes/:slug 同语法）。
+8. 视觉证据全部为真实运行截图：item-storage-app 用其仓库自带的 docs/screenshots/current/
+   （README 记录采集溯源：2026-10-19 隔离浏览器示例数据）；soundisle 为本轮 headless 渲染
+   实拍（种子状态 JSON 存于 public/cases/soundisle/provenance/）。无 mockup、无重绘。
+9. 搜索索引新增 CASE 记录；PROJECT 记录在存在案例时直链 /work/:slug；sitemap 派生案例路由。
+
+## 工程层
+
+10. **深链静态输出**：构建期把 sitemap 每条路径写成 dist<path>/index.html（共享外壳 +
+    routeHead() 逐路由 title/description/canonical/og，全部派生自内容层）——深链冷请求
+    HTTP 200。注意：这是静态 head 输出，不是完整 prerender（正文仍客户端渲染，README 已如实标注）。
+    守卫：sitemap.test.ts 新增 routeHead 套件。
+11. **焦点回归修复**（浏览器验证发现的两个真缺陷）：MobileMenu 开启绕过 rememberTrigger →
+    openMenu 助手；palette/help backdrop mousedown 缺 preventDefault（默认焦点转移在
+    restore 之后执行抹掉恢复）。新增 e2e/focus.spec.ts 四场景。上一轮审计"焦点归还完全未实现"
+    的结论系误报（App.tsx 的 P0-13 机制一直在）——本轮以浏览器实测为准。
+12. ContextBudget 补 aria-live="polite"（只播报汇总行，不逐滑杆值播报）。
+13. 文档漂移清理：README 测试数/深链事实、playwright.config 注释（5→11 页）、
+    reports/qa-matrix.mjs（NAME[undefined] 笔误 + 硬编码旧绝对路径 → 相对派生）、
+    links.ts 过时注释重写、CONTENT_GUIDE 新增 4b 案例维护节。
+
+## 验证
+
+- `npm run build` / `lint`（0-0）/ `test`（95）/ `test:a11y`（11 页 axe + 4 焦点回归）全绿。
+- dist/work/item-storage-app/index.html 实测：逐路由 title/canonical/og:description 正确。

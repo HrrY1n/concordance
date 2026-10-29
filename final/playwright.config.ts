@@ -1,7 +1,8 @@
 import { defineConfig } from "@playwright/test";
 
 /**
- * Accessibility smoke suite (production pass, P2-3): five core pages against
+ * Accessibility smoke suite: 11 pages (all routes incl. case studies and a
+ * note detail) plus the overlay focus-restore regression suite, against
  * the regular production build (base "/"), served by `vite preview`. Run via
  * `npm run test:a11y`. The Chromium binary is shared with the repo's existing
  * Playwright install — no extra browser download.

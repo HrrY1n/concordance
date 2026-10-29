@@ -35,12 +35,16 @@ npm run build && npm run preview   # http://localhost:4173
 于 `final/src/content/site.ts` 的 `url` 一处——index.html 的 canonical/OG/JSON-LD 由构建期
 注入（`__SITE_URL__` token），robots.txt 与 sitemap.xml 构建期生成。换域名 = 改一行。
 
-**GitHub Pages 深链事实**：`/` 为真 200；`/research` 等深链是 **HTTP 404 + 404.html SPA 接管**
-（浏览器中全部正常渲染）。这是 GitHub Pages 托管 BrowserRouter SPA 的固有行为；首页可正常
-索引，深链有 soft-404 风险——若未来需要单篇笔记被搜索索引，再加构建期 prerender。
+**GitHub Pages 深链事实（Real Content & Cases pass 后已升级）**：构建现在会把 sitemap 内的每条
+深链输出为 `dist<route>/index.html`（共享 SPA 外壳 + 该路由自己的 title/description/canonical/OG，
+派生自同一内容层）——冷请求 `https://hrry1n.github.io/concordance/work/item-storage-app` 返回
+**HTTP 200**，爬虫与分享预览拿到正确的逐路由 head。注意这是**静态 head 输出，不是完整 body
+prerender**：正文仍由客户端渲染（404.html SPA 回退继续作为兜底）。此前"深链一律 404"的旧行为
+只存在于旧提交。
 
-**质量门禁**：`npm run test`（76 用例：sandbox 数学 / 内容契约 / 对比度 / sitemap）·
-`npm run test:a11y`（axe 八页，零 critical/serious）· `npm run lint`（0/0）。
+**质量门禁**：`npm run test`（95 用例：sandbox 数学 / 内容契约 / 对比度 / sitemap / 路由 head）·
+`npm run test:a11y`（axe 11 页 + 焦点回归 4 项，零 critical/serious）· `npm run lint`（0/0）。
+测试用例数会随内容契约增长——以 vitest 输出为准，不以此处数字为准。
 
 其他命令（均在 `final/` 下）：
 
