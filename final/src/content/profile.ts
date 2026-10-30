@@ -1,40 +1,26 @@
 import type { Profile } from "./types";
 
 /**
- * CONTENT_PACK §profile — Real Content & Cases pass.
+ * CONTENT_PACK §profile — 中文优先视觉增强版（Chinese-first Visual Enrichment pass）。
  *
- * `name` stays null ON PURPOSE: the owner has provided a public positioning
- * and a public handle (HrrY1n) but not a legal name, and the JSON-LD build
- * step must not infer a Person schema from a handle. `handle` is the public
- * GitHub signature — rendered as an @-handle, never presented as a real name.
- * `location` stays null: not provided.
- *
- * The `about` copy now carries the owner-confirmed positioning (CS master's
- * student; RAG / robustness / knowledge poisoning / AI security; independent
- * software with engineering care) — interests and built software only, no
- * achievements, affiliations, or publications. The Chinese sentence is a
- * separate extension field (`aboutZh`) so About can wrap it in lang="zh".
+ * `name` 依然保持 null：公开署名通过 `handle`（HrrY1n）呈现，
+ * 绝不向 Person JSON-LD 注入未确认的真实姓名。
+ * `handle` 是公开的 GitHub 签名与主理人标识。
+ * `identity` 清晰传达个人定位：计算机科学硕士生 × RAG 安全研究 × 独立软件工程。
  */
 export const profile = {
   name: null,
   handle: "HrrY1n",
   identity: [
-    "Computer Science — Master's",
-    "RAG robustness · knowledge poisoning · AI security",
-    "Independent software",
+    "计算机科学 · 硕士研究生",
+    "RAG 鲁棒性 · 知识投毒 · AI 安全",
+    "独立软件工程与数字产品设计",
   ],
   about:
-    "I am a computer science master's student working on retrieval-augmented generation — " +
-    "especially what retrieval-grounded systems do when their evidence is noisy, conflicting, " +
-    "or deliberately poisoned. On the engineering side I build and maintain small, real " +
-    "products: a local-first inventory PWA and a browser-native sound workbench. This archive " +
-    "is where the two meet — research directions, working instruments, and case studies that " +
-    "keep their evidence attached.",
-  // Same statement, in Chinese; wrapped in lang="zh" on About (G5).
+    "我是 HrrY1n，一名计算机科学方向的硕士研究生，主要关注检索增强生成（RAG）在现实扰动下的鲁棒性边界——尤其是当外部证据源存在嘈杂、相互冲突或被恶意投毒时，以检索先行的系统如何保持可控。\n\n" +
+    "在工程与产品设计一侧，我坚持独立开发并持续维护具有真实效用的工具：包括本地优先的个人物品管理应用「Private Item Library」以及完全基于 Web Audio 程序化合成的声音工作台「SoundIsle·声屿」。\n\n" +
+    "CONCORDANCE 是这两种探索的交汇处：既是一份可被检索、带有严谨坐标与浏览器内计算图版的研究档案，也是一处展示真实工程架构与设计决策的个人数字作品集。",
   aboutZh:
-    "我是一名计算机科学方向的硕士研究生，研究检索增强生成——尤其是当证据变得嘈杂、冲突或被" +
-    "蓄意污染时，检索先行的系统会发生什么。工程一侧，我开发并维护小而真实的产品：一个本地优先的" +
-    "物品管理 PWA 和一个完全运行在浏览器里的声音工作台。这个档案是两条线的交汇处——研究方向、" +
-    "可运行的仪器，以及带着证据链的案例。",
+    "我是 HrrY1n，计算机科学方向硕士研究生与独立开发者。主要研究检索增强生成（RAG）及其安全鲁棒性，同时独立研发本地优先（Local-first）与 Web Audio 创意编程产品。本站为个人研究档案与数字作品集。",
   location: null,
 } satisfies Profile & { aboutZh: string };

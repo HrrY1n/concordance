@@ -9,18 +9,13 @@ import { ContextBudget } from "@/demos/ContextBudget";
 import { RankersSideBySide } from "@/demos/RankersSideBySide";
 
 /**
- * §03 LAB — hand-built instruments. Each is a live figure: real arithmetic on
- * hand-written data, method stated in its header row, honest declaration in
- * its footer. The sandbox deep-links to its own page.
- *
- * Anchors (P0-8): the <section> carries the registry anchor id; its heading
- * takes `-title` — the two ids must never collide (invalid HTML, and
- * aria-labelledby used to point at itself).
+ * §03 实验室 Lab —— 纯前端可交互实验仪器。
+ * 纯本地实时运算，展示 RAG 流水线在检索扰动与预算限制下的内部机理。
  */
 export default function LabPage() {
   useDocumentMeta(
-    "Lab",
-    `${DEMO_COUNT} offline instruments for the research directions: the Corruption Sandbox, a context budget calculator, and two rankers side by side. All computation is local.`,
+    "实验室与交互仪器",
+    `${DEMO_COUNT} 项面向研究方向的纯前端实验仪器：知识投毒沙盒、上下文预算折算器与检索算法双轨对照。所有运算完全在本地执行。`,
   );
   const meta = sectionByRoute("/lab")!;
 
@@ -34,12 +29,12 @@ export default function LabPage() {
             id={demo.anchor}
             className="scroll-mt-24"
           >
-            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <h2 id={`${demo.anchor}-title`} className="t-kicker text-ink-2">
-                {demo.index} — {demo.title.toLowerCase()}
-                {demo.flagship ? " (flagship)" : ""}
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line pb-2">
+              <h2 id={`${demo.anchor}-title`} className="t-kicker text-ink-2 font-mono">
+                {demo.index} — {demo.title}
+                {demo.flagship ? " (核心仪器)" : ""}
               </h2>
-              <p className="t-meta text-ink-2">{demo.method.toLowerCase()}</p>
+              <p className="t-meta text-ink-2 font-mono text-xs">{demo.method}</p>
             </div>
             <div className="mt-5">
               {demo.id === "corruption-sandbox" ? (

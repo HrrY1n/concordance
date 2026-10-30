@@ -7,14 +7,12 @@ import { Mark } from "@/components/Header";
 import { brand, site } from "@/content/site";
 
 const THEME_OPTIONS = [
-  { value: "system", label: "Auto" },
-  { value: "light", label: "Light" },
-  { value: "dark", label: "Dark" },
+  { value: "system", label: "自动" },
+  { value: "light", label: "浅色" },
+  { value: "dark", label: "深色" },
 ] as const;
 
-/** Desktop-grade theme radiogroup (roving tabindex), reused in the colophon.
- *  Arrow handling lives on each radio button, so the group div itself needs
- *  no listeners and stays a pure grouping element for AT. */
+/** 桌面级无级单选组 —— 键盘方向键无障碍切换色彩方案 */
 export function ThemeRadiogroup() {
   const { choice, setChoice } = useTheme();
   const move = (dir: 1 | -1) => {
@@ -24,7 +22,7 @@ export function ThemeRadiogroup() {
   const radios = (parent: HTMLElement | null) =>
     parent?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
   return (
-    <div role="radiogroup" aria-label="Colour theme" className="flex items-stretch">
+    <div role="radiogroup" aria-label="色彩主题切换" className="flex items-stretch">
       {THEME_OPTIONS.map((o, i) => (
         <button
           key={o.value}
@@ -46,7 +44,7 @@ export function ThemeRadiogroup() {
             }
           }}
           className={`t-meta min-h-[44px] px-3 transition-colors ${
-            choice === o.value ? "bg-inset text-ink" : "text-ink-2 hover:text-ink"
+            choice === o.value ? "bg-inset text-ink font-medium" : "text-ink-2 hover:text-ink"
           } ${i > 0 ? "border-l border-line" : ""}`}
         >
           {o.label}
@@ -57,9 +55,8 @@ export function ThemeRadiogroup() {
 }
 
 /**
- * Mobile index — a full-screen table of contents with 44px+ rows. This is the
- * re-designed mobile navigation, not a shrunken desktop bar; it honors the
- * bottom safe-area inset (G3).
+ * 移动端全屏目录（Mobile index）—— 专为触摸优化的 44px+ 舒适触控行。
+ * 中文优先，具备安全区与严密焦点陷阱保护。
  */
 export function MobileMenu({
   open,
@@ -100,13 +97,12 @@ export function MobileMenu({
   if (!open) return null;
 
   return (
-    // Tab trapping on the dialog container is the standard focus-trap idiom.
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
       ref={panelRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Site index"
+      aria-label="全站索引目录 (Site index)"
       className="fixed inset-0 z-50 flex flex-col bg-bg"
       style={{
         paddingTop: "env(safe-area-inset-top)",
@@ -116,16 +112,16 @@ export function MobileMenu({
       }}
       onKeyDown={(event) => trapTab(event.nativeEvent, panelRef.current)}
     >
-      <div className="wrap flex h-16 shrink-0 items-center justify-between">
-        <span className="t-meta t-caps text-ink-2 flex items-center gap-2" aria-hidden="true">
+      <div className="wrap flex h-16 shrink-0 items-center justify-between border-b border-line">
+        <span className="t-meta text-ink flex items-center gap-2" aria-hidden="true">
           <Mark className="h-4 w-4" />
-          {brand}
+          <span className="font-medium">{brand}</span>
         </span>
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
-          aria-label="Close site index"
+          aria-label="关闭网站索引 (Close site index)"
           className="flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 transition-colors hover:text-ink"
         >
           <svg viewBox="0 0 20 20" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -134,34 +130,29 @@ export function MobileMenu({
         </button>
       </div>
 
-      <nav aria-label="Sections" className="wrap flex-1 overflow-y-auto pb-8">
+      <nav aria-label="章节导航" className="wrap flex-1 overflow-y-auto py-4">
         <ul>
           {sections.map((s) => (
-            <li key={s.id} className="border-b border-line">
+            <li key={s.id} className="border-b border-line last:border-b-0">
               <Link
                 to={s.route}
                 onClick={onClose}
-                className="flex min-h-[60px] items-baseline gap-4 py-3"
+                className="flex min-h-[64px] items-baseline gap-4 py-4"
               >
-                <span className="t-meta text-accent" aria-hidden="true">
+                <span className="t-meta text-accent font-mono" aria-hidden="true">
                   §{s.num}
                 </span>
-                <span className="t-h4">{s.title}</span>
-                {s.reading ? (
-                  <span className="t-meta text-ink-2 ml-auto text-right" aria-hidden="true">
-                    {s.reading}
-                  </span>
-                ) : null}
+                <span className="t-h3">{s.title}</span>
+                <span className="t-meta text-ink-2 ml-auto text-right text-xs" aria-hidden="true">
+                  {s.titleEn}
+                </span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className="wrap shrink-0 border-t border-line py-4">
-        {/* P0-12: ONE theme control — the radiogroup. The former compact
-            toggle ("syst") sat beside it, showed a stale value before the
-            store existed, and broke the word across the slice. */}
+      <div className="wrap shrink-0 border-t border-line py-4 bg-inset/50">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <button
             type="button"
@@ -169,13 +160,13 @@ export function MobileMenu({
               onClose();
               onOpenPalette();
             }}
-            className="u-link t-small inline-flex min-h-[44px] items-center"
+            className="u-link t-small inline-flex min-h-[44px] items-center font-medium"
           >
-            {site.searchLabel}
+            {site.searchLabel} →
           </button>
           <ThemeRadiogroup />
         </div>
-        <p className="t-meta text-ink-2 mt-3 break-words">{corpusReading()}</p>
+        <p className="t-meta text-ink-2 mt-3 break-words font-mono text-xs">{corpusReading()}</p>
       </div>
     </div>
   );

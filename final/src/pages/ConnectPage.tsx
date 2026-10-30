@@ -7,23 +7,13 @@ import { PageShell } from "@/components/structure";
 import { sectionByRoute } from "@/lib/sections";
 import type { Links } from "@/content/types";
 
-/**
- * §07 CONNECT — action-oriented (§4 / M5). Channels render only when they
- * exist in links.ts; nulls are hidden, never faked.
- *
- * Placeholder pass: the all-null state is ONE calm sentence — no slots, no
- * engineering terms, no clickable placeholder address. Email values stay
- * plain strings in content and become mailto: here (lib/contact.ts), with a
- * lightweight copy affordance beside them.
- */
-
 const CHANNEL_LABEL: Record<keyof Links, string> = {
-  email: "Email",
-  github: "GitHub",
-  scholar: "Google Scholar",
-  orcid: "ORCID",
-  linkedin: "LinkedIn",
-  rss: "RSS",
+  email: "电子邮箱 (Email)",
+  github: "GitHub 个人主页",
+  scholar: "Google Scholar 学术主页",
+  orcid: "ORCID 学者档案",
+  linkedin: "领英 (LinkedIn)",
+  rss: "RSS 订阅源",
 };
 
 const CHANNEL_ORDER: (keyof Links)[] = ["email", "github", "scholar", "orcid", "linkedin", "rss"];
@@ -34,7 +24,7 @@ function CopyEmailButton({ value }: { value: string }) {
     <button
       type="button"
       aria-live="polite"
-      className="t-meta t-caps text-ink-2 hover:text-ink min-h-[44px] px-2 transition-colors"
+      className="t-meta text-ink-2 hover:text-ink min-h-[44px] px-2 transition-colors font-mono text-xs"
       onClick={() => {
         window.navigator.clipboard?.writeText(value).then(
           () => {
@@ -42,20 +32,20 @@ function CopyEmailButton({ value }: { value: string }) {
             window.setTimeout(() => setCopied(false), 1600);
           },
           () => {
-            /* clipboard unavailable — the address is readable right here */
+            /* clipboard unavailable */
           },
         );
       }}
     >
-      {copied ? "copied" : "copy"}
+      {copied ? "已复制" : "复制"}
     </button>
   );
 }
 
 export default function ConnectPage() {
   useDocumentMeta(
-    "Connect",
-    "Correspondence channels. Listed as they exist — nothing staged, nothing pretended.",
+    "联络通道",
+    "公开通讯与社交主页。所有通道按真实存在呈现 —— 绝不摆设虚假占位。",
   );
   const meta = sectionByRoute("/connect")!;
 
@@ -66,32 +56,28 @@ export default function ConnectPage() {
     <PageShell meta={meta} register="plate" lede={site.connectIntro}>
       <div className="max-w-[54rem]">
         {allEmpty ? (
-          /* the unconfigured state: one sentence a visitor can read as a
-             finished page — no slots, no file paths, no fake address */
-          <p className="t-h2 max-w-[30ch]">{site.connectEmptyTitle}</p>
+          <p className="t-h2 max-w-[30ch] font-medium">{site.connectEmptyTitle}</p>
         ) : (
           <>
-            <p className="t-h2">
+            <p className="t-h2 font-medium">
               {site.connectFastest}{" "}
-              <span className="t-serif-voice text-ink-2">
-                {CHANNEL_LABEL[present[0]].toLowerCase() + "."}
+              <span className="t-serif-voice text-accent font-normal">
+                {CHANNEL_LABEL[present[0]]}。
               </span>
             </p>
 
-            {/* channel rows — only real channels appear; email becomes a
-                mailto here, at the render layer (content stays plain) */}
-            <ul className="mt-10">
+            <ul className="mt-10 border-b border-line">
               {present.map((k) => {
                 const value = String(links[k]);
                 const href = toChannelHref(k, value);
                 return (
                   <li key={k} className="border-t border-line">
                     {k === "email" ? (
-                      <div className="grid min-h-[56px] grid-cols-[8rem_1fr_auto] items-baseline gap-x-6 py-4">
-                        <span className="t-meta t-caps text-ink-2">{CHANNEL_LABEL[k]}</span>
+                      <div className="grid min-h-[56px] grid-cols-[10rem_1fr_auto] items-baseline gap-x-6 py-4">
+                        <span className="t-meta text-ink-2 font-mono text-xs">{CHANNEL_LABEL[k]}</span>
                         <a
                           href={href}
-                          className="t-small text-ink min-w-0 break-all transition-colors hover:text-accent"
+                          className="t-small text-ink min-w-0 break-all transition-colors hover:text-accent font-mono"
                         >
                           {value} <span aria-hidden="true">↗</span>
                         </a>
@@ -102,10 +88,10 @@ export default function ConnectPage() {
                         href={href}
                         target="_blank"
                         rel="noreferrer"
-                        className="group grid min-h-[56px] grid-cols-[8rem_1fr] items-baseline gap-x-6 py-4"
+                        className="group grid min-h-[56px] grid-cols-[10rem_1fr] items-baseline gap-x-6 py-4"
                       >
-                        <span className="t-meta t-caps text-ink-2">{CHANNEL_LABEL[k]}</span>
-                        <span className="t-small text-ink min-w-0 break-all transition-colors group-hover:text-accent">
+                        <span className="t-meta text-ink-2 font-mono text-xs">{CHANNEL_LABEL[k]}</span>
+                        <span className="t-small text-ink min-w-0 break-all transition-colors group-hover:text-accent font-mono">
                           {value} <span aria-hidden="true">↗</span>
                         </span>
                       </a>

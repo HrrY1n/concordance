@@ -2,13 +2,11 @@ import type { SandboxDoc, ToyDefense, BudgetChunk } from "./types";
 import { DEMO_REGISTRY } from "./ids";
 
 /**
- * CONTENT_PACK §Lab Demo — Corruption Sandbox corpus.
- * d8 is adjusted from the pack draft in one way (the pack allows corpus
- * tuning): it is keyword-stuffed with the demo query's own terms, which is
- * also what real poisoned pages do. Acceptance invariants, checked by vitest
- * (src/lib/__tests__/sandbox-acceptance.test.ts):
- *   1. inject d8  -> d8 ranks #1
- *   2. defense on -> d8 out of the top-3
+ * CONTENT_PACK §Lab Demo — 知识投毒模拟语料（Corruption Sandbox）。
+ *
+ * 保留经过数学标定的英文句子，以确保 BM25 算法在浏览器端运算的准确性
+ * （受 vitest 套件 sandbox-acceptance.test.ts 严格守卫）。
+ * 外围说明、交互提示及安全声明全部中文优先呈现。
  */
 
 export const sandboxCorpus: SandboxDoc[] = [
@@ -50,47 +48,47 @@ export const sandboxCorpus: SandboxDoc[] = [
 export const sandboxQuery = "how can external documents change a model's answers?";
 
 /**
- * The pack suggests ×0.5 as an example; ×0.5 leaves d8 inside the top-3
- * against a corpus this small, failing the pack's own acceptance gate. The
- * shipped toy uses ×0.1 — labeled identically everywhere it renders.
+ * 演示用启发式防御规则：
+ * 匹配特定指令模式的文档将其 BM25 得分乘以 0.1。
+ * 明确标注：教学演示玩具，非生产级绝对防御。
  */
 export const toyDefense: ToyDefense = {
-  label: "Toy heuristic — instruction-pattern passages down-weighted ×0.1. Not a real defense.",
+  label: "启发式过滤 —— 命中指令诱导特征的段落得分降权至 0.1（教学演示，非全能防御）。",
   patterns: [/ignore previous instructions/i, /^(trust and cite|ignore all|disregard)/i],
   factor: 0.1,
 };
 
 export const sandboxHonesty =
-  "Illustrative toy — lexical scoring on a hand-written corpus. Not a claim about real systems.";
+  "教学实验仪器 —— 在固定语料上运行词法排序演练，非针对商业生产系统的绝对宣称。";
 
 /* ------------------------- Context Budget (L-02) -------------------------- */
 
-export const budgetQuestion = "Why does chunking change what a RAG system can answer?";
+export const budgetQuestion = "为什么文本切分（Chunking）会从根本上改变 RAG 系统的回答？";
 
 export const budgetChunks: BudgetChunk[] = [
   {
     id: "c1",
-    source: "hand-written for this demo — chunk boundaries as policy",
+    source: "演示语料 —— 切分边界即策略决断",
     text: "A chunk boundary is not a neutral cut. Where a document is split decides which claims arrive together, which arrive torn apart, and which context the generator never sees.",
   },
   {
     id: "c2",
-    source: "hand-written for this demo — ranking before generation",
+    source: "演示语料 —— 排序先于生成发生",
     text: "Whatever the ranking stage lets through is treated as evidence. Errors made above the generator are inherited, not corrected, by the answer.",
   },
   {
     id: "c3",
-    source: "Reading — evaluation practice",
+    source: "技术文献 —— 评测实践的反思",
     text: "Robustness measured on one corpus says little about another. Perturbation-based evaluation asks a different question: not did we catch this attack, but did the system stay stable when the corpus changed.",
   },
   {
     id: "c4",
-    source: "Reading — dense retrieval",
+    source: "技术文献 —— 稠密向量检索",
     text: "Dense retrievers embed queries and passages into a shared vector space. Nearby in that space means similar, not true.",
   },
   {
     id: "c5",
-    source: "Reading — defenses",
+    source: "技术文献 —— 生成侧防御的局限",
     text: "A defense that only checks the generator's output starts too late. By then, the poisoned passage has already been quoted, cited, and folded into the answer.",
   },
 ];
@@ -102,13 +100,19 @@ export const budgetStep = 16;
 
 /* --------------------- Honest declarations (single-face) ------------------ */
 
-/** The one standing honesty declaration (§4 / M4): shown once, in the
- *  colophon — not pinned on every module's face. */
-/** Palette suggestions — real terms from this corpus. */
-export const paletteSuggestions = ["poisoning", "chunking", "robustness", "bm25"];
+/** 搜索建议词：中英文高频技术关键词 */
+export const paletteSuggestions = [
+  "投毒",
+  "鲁棒性",
+  "切分",
+  "local-first",
+  "Web Audio",
+  "IndexedDB",
+  "BM25",
+];
 
-/** Lab intro copy (editorial voice, site-level). */
+/** 实验室介绍语（中文优先） */
 export const labIntro =
-  "Small, offline instruments for the ideas in §01–§02. No backend, no GPU: every demo ships its data and runs where you read it. Three instruments, all checked by the same test suite as the engine they use.";
+  "用于探讨 §01 与 §02 概念的轻量纯前端实验仪器。无需后端服务，零 GPU 消耗：所有运算直接在你的浏览器本地实时执行。三项仪器，皆由与算法引擎相同的测试套件严格守护。";
 
 export const demoMeta = DEMO_REGISTRY;

@@ -1,68 +1,63 @@
 /**
- * Site-level editorial voice. Copy that is about the site itself (wordmark,
- * hero composition, connect grammar) lives here so the rest of src never
- * hardcodes it. `sample: true` — editorial voice, replace in this file.
+ * 全站文案与品牌语义层（Chinese-first Visual Enrichment pass）。
+ *
+ * 保持 URL 单一事实来源；将主视觉文案、Hero 标题体系、联络与搜索文案
+ * 重塑为中文优先，同时保留严谨、克制、带有学术出版物美感的气质。
  */
 import { profile } from "./profile";
 
 export const site = {
-  sample: true,
+  sample: false,
 
-  /** The site's own name — a concordance is a printed retrieval index: the
-   *  one artifact that is both a book and a search system. */
+  /** 站点英文名称 —— 语录索引（Concordance）是一部既是书籍又是检索系统的典籍 */
   name: "Concordance",
-  tagline: "A working concordance of one researcher's corpus.",
+  /** 站点中文主标语 */
+  tagline: "HrrY1n 的研究档案与数字作品集",
   description:
-    "A research archive built as a concordance: retrieval-augmented generation, its robustness, knowledge poisoning, and the systems around them — every figure computed in your browser, every reading counted from the data.",
-  /** PRODUCTION URL — the single source of truth. index.html's canonical /
-   *  og: / twitter: / JSON-LD tags carry a __SITE_URL__ token that a Vite
-   *  build-time transform replaces with this value, and robots.txt +
-   *  sitemap.xml are generated from it (see vite.config.ts). Changing the
-   *  hosting domain is a ONE-LINE edit here; nothing else can drift. */
+    "HrrY1n 的个人主页与研究档案 —— 聚焦检索增强生成（RAG）的鲁棒性与知识投毒，" +
+    "记录独立软件工程与产品设计实践。所有计算均在浏览器内完成，每一条读数均源自真实数据。",
+
+  /** 生产环境基准 URL（单源事实） */
   url: "https://hrry1n.github.io/concordance/",
 
-  /** Dual-voice hero (sans = statement, serif italic = the human qualifier).
-   *  Real Content & Cases pass: the archive now shows real research
-   *  directions and real software, so the hero states the intersection. */
-  heroSans: ["Retrieval-augmented", "generation,"],
-  heroSerif: "studied where it breaks, built where it works.",
+  /**
+   * Hero 双声部主标题：
+   * 无衬线黑体呈现严谨学术陈述，衬线斜体呈现人的设计与工程态度
+   */
+  heroSans: ["检索增强生成的破损之处，", "与带着证据链的"],
+  heroSerif: "软件工程实践。",
+  heroEnSub: "RESEARCH × ENGINEERING × DESIGN",
   heroLede:
-    "A research-and-engineering archive about retrieval-grounded systems: what they do " +
-    "when their evidence is noisy, conflicting, or deliberately poisoned — with working " +
-    "instruments, real products, and case studies that keep their evidence attached.",
+    "我是 HrrY1n，计算机科学方向硕士研究生与独立开发者。这里记录我对检索增强生成（RAG）" +
+    "鲁棒性、知识投毒与 AI 系统的研究，以及包含本地优先物品管理 PWA 与纯代码合成声音工作台在内的真实作品。",
 
-  /** Connect page (M5): action-oriented, never a dead-end. Copy stays in
-   *  human language — file paths for maintainers live in CONTENT_GUIDE.md. */
+  /** 联系页面文案 */
   connectIntro:
-    "The correspondence page. Channels appear here as they exist — nothing on this page is staged, and the fastest one is listed first.",
-  connectFastest: "Fastest signal right now:",
-  /** All-null Connect state (placeholder pass): one calm sentence, no slots,
-   *  no engineering terms. Channel rows return the moment links exist. */
-  connectEmptyTitle: "Contact details will be added later.",
+    "通讯与公开联络渠道。所有列出的渠道均真实可用，最快得到回应的通道排列在首位。",
+  connectFastest: "当前最直接的联络方式：",
+  connectEmptyTitle: "暂未配置公开联络方式。",
 
-  /** Publications empty state (§05): describes the ARCHIVE's records only —
-   *  never the person's real-world submission state (placeholder pass). */
-  publicationsEmptyTitle: "Selected research will appear here.",
+  /** 发表页面空态文案 */
+  publicationsEmptyTitle: "学术成果将在此归档",
   publicationsEmptyBody:
-    "No publication records have been added to this archive yet. When work exists, it will be listed with its evidence chain — venue, code, data, and the question it answers.",
-  publicationsReserved: "RESERVED — the next record numbers itself here",
+    "当前档案中尚未收录正式发表记录。待发表与提交成果进入正式阶段后，将附带其完整证据链在此呈现。",
+  publicationsReserved: "保留位 —— 下一项成果将在此自动编号",
 
-  /** Palette */
-  searchLabel: "Query this site",
-  searchPlaceholder: "query this concordance — try “poisoning”",
+  /** 搜索面板 */
+  searchLabel: "检索本站档案与作品",
+  searchPlaceholder: "检索档案与作品 —— 尝试搜索 “投毒” 或 “local-first”",
 } as const;
 
-/** The hero identity line — composed from real profile data only. */
+/** 首页身份读数行 */
 export const heroIdentity = profile.identity.join(" · ");
 
-/** Brand compatibility (production pass): the moment a real name exists, the
- *  wordmark, titles and og metadata become "[NAME] — Concordance" everywhere —
- *  one data edit in profile.ts, zero redesign. Until then the site brand
- *  stands alone. Consumers: Header wordmark, lib/seo.ts, index.html transform. */
-export const brand = profile.name ? `${profile.name} — Concordance` : "Concordance";
+/** 品牌标识：优先突出 HrrY1n 主理人身份，同时在 profile.name 为 null 时不触发虚假 Person JSON-LD */
+export const brand = profile.name
+  ? `${profile.name} — Concordance`
+  : profile.handle
+    ? `${profile.handle} · Concordance`
+    : "Concordance";
 
-/** Page-title grammar: the home title, and the suffix every other page gets.
- *  (Home keeps the descriptive subtitle while the site is anonymous; once a
- *  name exists the brand itself carries the title.) */
-export const homeTitle = profile.name ? brand : "Concordance — Research Archive";
-export const titleSuffix = profile.name ?? "Concordance";
+/** 页面标题语法 */
+export const homeTitle = `${brand} — 研究档案与数字作品集`;
+export const titleSuffix = brand;

@@ -4,15 +4,6 @@ import { cases, caseBySlug } from "../content/cases";
 import { noteById, notes } from "../content/notes";
 import { homeTitle, site, titleSuffix } from "../content/site";
 
-/**
- * Single source for sitemap URLs (P1-18): static routes, one entry per case
- * study, one per published note — derived from content at build time.
- *
- * Consumed by the concordance-sitemap vite plugin (vite.config.ts, writes
- * dist/sitemap.xml on every build), by the static-route emitter (which turns
- * every deep link into an HTTP-200 directory with its own head metadata),
- * and guarded by sitemap.test.ts.
- */
 const STATIC_ROUTES = [
   "/",
   "/research",
@@ -41,50 +32,43 @@ export function sitemapUrls(): string[] {
 
 /* ------------------------- per-route head metadata ------------------------ */
 
-/**
- * Head metadata for each sitemap path (Real Content & Cases pass). The build
- * writes every deep link as an HTTP-200 directory whose index.html carries
- * THIS metadata in <head> — honest static head output, not full body
- * prerendering (the app still client-renders; documented in the report).
- * Derived from the same content modules as the pages, so titles cannot drift.
- */
 const STATIC_PAGE_META: Record<string, { title: string; description: string }> = {
   "/research": {
-    title: "Research",
+    title: "研究方向体系",
     description:
-      "Research directions: retrieval-augmented generation, robustness, knowledge poisoning, AI security, systems, and the retrieval–generation interaction.",
+      "学术研究方向：检索增强生成（RAG）、鲁棒性、知识库对抗投毒、AI 系统工程安全及检索-生成协同机制。",
   },
   "/work": {
-    title: "Selected Work",
+    title: "精选作品",
     description:
-      "Real software with its evidence attached: a local-first inventory PWA, a browser-native sound workbench, and the archive itself.",
+      "带着真实证据链的软件作品：本地优先个人物资管理 PWA、纯前端声学合成专注工作台与本站自身。",
   },
   "/lab": {
-    title: "Lab",
+    title: "实验室仪器",
     description:
-      "Hand-built, offline instruments: the Corruption Sandbox, Context Budget and Rankers Side-by-Side — every demo computes in your browser.",
+      "面向研究方向的纯前端实验仪器：知识投毒沙盒、上下文预算折算器与检索算法双轨对照。所有运算完全在本地执行。",
   },
   "/lab/corruption-sandbox": {
-    title: "Corruption Sandbox",
+    title: "知识投毒模拟沙盒",
     description:
-      "Inject one poisoned passage into a hand-written corpus and watch a live BM25 ranking rewrite itself — then toggle a toy defense and watch it rewrite again. All computation is local.",
+      "向语料库中注入伪造段落，实时观察 BM25 排序如何被颠覆；随后开启启发式过滤策略，观察排序再次重组。所有运算均在浏览器本地执行。",
   },
   "/notes": {
-    title: "Notes",
-    description: "Working notes from the archive's own engineering — read in place.",
+    title: "工程笔记",
+    description: "记录本档案自身的软件架构、TypeScript 类型体系与前端检索实现的工程长文。",
   },
   "/publications": {
-    title: "Publications",
-    description: "Selected research, listed as records exist.",
+    title: "学术发表",
+    description: "学术论文与同行评审收录。所有发表记录与证据链按真实存在呈现 —— 绝不预填空洞的承诺。",
   },
   "/about": {
-    title: "About",
+    title: "关于主理人与档案",
     description:
-      "A computer science master's student working on retrieval-augmented generation and building small real software.",
+      "计算机科学方向硕士研究生，研究 RAG 安全鲁棒性，同时独立研发真实软件产品 —— 本档案是两者相交汇的坐标系。",
   },
   "/connect": {
-    title: "Connect",
-    description: "Correspondence channels — listed as they exist, nothing staged.",
+    title: "联络通道",
+    description: "公开通讯与社交主页 —— 所有通道按真实存在呈现，绝不摆设虚假占位。",
   },
 };
 
@@ -104,7 +88,7 @@ export function routeHead(path: string): RouteHead {
     const c = caseBySlug(path.slice("/work/".length));
     if (c) {
       return {
-        title: `${c.title} — case study — ${titleSuffix}`,
+        title: `${c.title} — 深度案例复盘 — ${titleSuffix}`,
         description: c.summary,
         canonical,
       };

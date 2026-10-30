@@ -1,80 +1,79 @@
 import type { ResearchQuestion, ResearchTopic } from "./types";
 
-/** CONTENT_PACK §researchTopics — six real directions. `adjoins` and
- *  `relatedDemo` are researcher-curated cross-references; both are type-checked
- *  against the literal unions in ./ids (a typo fails the build). */
+/**
+ * CONTENT_PACK §researchTopics — 6 大稳定研究方向（中文优先呈现）。
+ * `adjoins` 与 `relatedDemo` 经严格类型约束。
+ */
 export const researchTopics = [
   {
     id: "rag",
     order: 1,
-    name: "Retrieval-Augmented Generation",
+    name: "检索增强生成（RAG）",
     short: "RAG",
     blurb:
-      "Grounding language models in external evidence instead of parametric memory alone. The full loop matters: what gets retrieved, how it conditions generation, and how errors propagate.",
-    facetLine: "What gets retrieved decides what can be said.",
+      "将大型语言模型锚定于外部检索证据而非仅依赖参数记忆。深入探索检索召回、条件上下文生成以及误差沿流水线传播的系统性闭环。",
+    facetLine: "检索出的上下文，决定了模型能说出什么。",
     adjoins: ["robustness", "llm-systems", "retrieval-generation"],
   },
   {
     id: "robustness",
     order: 2,
-    name: "RAG Robustness",
-    short: "Robustness",
+    name: "RAG 鲁棒性研究",
+    short: "鲁棒性",
     blurb:
-      "Real corpora are noisy, conflicting, and sometimes adversarial. The open question is how retrieval-grounded systems behave when the evidence is wrong, stale, or manipulated — and what “reliably grounded” should even mean.",
-    facetLine: "Grounded in evidence, until the evidence turns.",
+      "真实语料往往伴随噪声、事实冲突甚至对抗性诱导。核心课题在于探讨以检索先行的系统在外部证据失真或受控时，如何衡量与维持其可靠性边界。",
+    facetLine: "基于证据而立，直到证据本身发生偏折。",
     adjoins: ["rag", "poisoning"],
     relatedDemo: "rankers-side-by-side",
   },
   {
     id: "poisoning",
     order: 3,
-    name: "Knowledge Poisoning",
-    short: "Poisoning",
+    name: "知识库投毒与数据对抗",
+    short: "知识投毒",
     blurb:
-      "A few adversarial documents in a corpus can steer retrieval and, through it, generation. The attack surface runs through chunks and rankings, and defenses have to survive normal use.",
-    facetLine: "Whoever writes the corpus writes the ranking.",
+      "语料库中极少数对抗性构造的段落即可大幅操纵检索排名，进而左右生成答案。攻击面贯穿分块与重排序阶段，而有效防御必须在日常检索中保持低损耗。",
+    facetLine: "掌控了语料的排位，就掌控了模型的发声。",
     adjoins: ["robustness", "ai-security"],
     relatedDemo: "corruption-sandbox",
   },
   {
     id: "ai-security",
     order: 4,
-    name: "AI Security",
-    short: "Security",
+    name: "AI 系统工程安全",
+    short: "系统安全",
     blurb:
-      "What happens when language systems meet adversaries: prompt injection, data poisoning, evaluation gaming — and the systems engineering that bounds the damage.",
-    facetLine: "Bounded damage is a systems property.",
+      "面对提示词注入、数据投毒与评估作弊等对抗性场景时的工程防线建设，重点在于通过系统性工程架构严格限制潜在风险的破坏半径。",
+    facetLine: "受控的损害范围，是系统工程固有的底线。",
     adjoins: ["poisoning"],
   },
   {
     id: "llm-systems",
     order: 5,
-    name: "LLM / AI Systems",
-    short: "Systems",
+    name: "LLM / AI 系统工程架构",
+    short: "AI架构",
     blurb:
-      "RAG is a systems problem as much as a modeling one: latency budgets, index freshness, evaluation pipelines, and the glue that keeps research code honest.",
-    facetLine: "Research code stays honest in pipelines, not papers.",
+      "RAG 既是算法命题更是严肃的系统工程：涵盖毫秒级延迟预算、动态索引实时性、持续评测流水线以及确保研究代码严谨落地的工程脚手架。",
+    facetLine: "严谨的研究代码在真实流水线中证明自己。",
     adjoins: ["rag", "robustness"],
     relatedDemo: "context-budget",
   },
   {
     id: "retrieval-generation",
     order: 6,
-    name: "Retrieval–Generation Interaction",
-    short: "Retrieval × Generation",
+    name: "检索与生成协同交互",
+    short: "检索×生成",
     blurb:
-      "Retrieval decisions are generation decisions. Chunking, ranking, and query formulation silently shape what a model can say; the interaction is studied directly, at the level of the pipeline.",
-    facetLine: "Chunk boundaries are policy decisions.",
+      "检索决策本质上即是生成决策。文本切分粒度、加权排序与查询重构都在隐式塑造模型能够调用的事实空间，需在系统层面整体审视两者的协同。",
+    facetLine: "分块边界的划定，本质上是一项策略决断。",
     adjoins: ["rag"],
   },
 ] satisfies ResearchTopic[];
 
-/** CONTENT_PACK §researchQuestions — the Question Ledger. Statuses use the
- *  low-maintenance enum (active / exploring / paused).
+/**
+ * CONTENT_PACK §researchQuestions — 问题台账（Question Ledger）。
  *
- *  Real Content & Cases pass: the four sample questions were REMOVED, not
- *  promoted — research directions above are the real, public part of the
- *  picture; questions enter the ledger only when there is committed work
- *  behind them. An empty ledger is the honest state, and the pages render
- *  it as one. */
+ * 保持诚实空态：只有具备实质性持续投入的研究议题才会进入台账编号。
+ * 空台账是当前阶段的真实状态，界面将以优雅的诚实空态呈现。
+ */
 export const researchQuestions: ResearchQuestion[] = [];

@@ -2,88 +2,89 @@ import { profile } from "@/content/profile";
 import { timeline } from "@/content/timeline";
 import type { TimelineEntry } from "@/content/types";
 import { useDocumentMeta } from "@/lib/seo";
-import { PageShell } from "@/components/structure";
+import { PageShell, XRef } from "@/components/structure";
 import { sectionByRoute } from "@/lib/sections";
 
-/**
- * §06 ABOUT — prose in the essay register + a Now/Log (data-driven). The log
- * is deliberately NOT a résumé timeline: no connected dots, no dates as
- * decoration — a changelog of a person, replaceable in one file.
- */
 const KIND_LABEL: Record<TimelineEntry["kind"], string> = {
-  education: "education",
-  research: "research",
-  milestone: "milestone",
-  elsewhere: "elsewhere",
+  education: "教育背景",
+  research: "学术研究",
+  milestone: "重要里程碑",
+  elsewhere: "其他履历",
 };
 
 export default function AboutPage() {
   useDocumentMeta(
-    "About",
-    "A computer science master's student working on retrieval-augmented generation and building small real software — this archive is where the two meet. Plus a log, not a résumé.",
+    "关于主理人与档案",
+    "计算机科学硕士研究生，聚焦检索增强生成（RAG）及其安全鲁棒性，同时独立研发真实软件产品 —— 本档案是两者相交汇的坐标系。",
   );
   const meta = sectionByRoute("/about")!;
   const sorted = timeline.filter((entry) => !entry.sample).slice().reverse();
 
   return (
-    <PageShell meta={meta} register="essay" lede="Short by design: the archive itself is the longer answer.">
+    <PageShell meta={meta} register="essay" lede="保持克制：档案本身所承载的作品与实验，是更详尽的注脚。">
       <div className="u-measure">
-        <p className="essay">{profile.about}</p>
-        {profile.aboutZh ? (
-          <p className="essay mt-4" lang="zh">
-            {profile.aboutZh}
+        {/* 主体阐述段落 */}
+        <div className="space-y-5 text-base md:text-lg leading-relaxed text-ink font-serif">
+          {profile.about.split("\n\n").map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </div>
+
+        {/* 身份识别读数栏 */}
+        <div className="mt-8 border-t border-line pt-6 space-y-2 font-mono text-xs text-ink-2">
+          {profile.location ? (
+            <p>所在地：{profile.location}</p>
+          ) : null}
+          <p className="flex items-center gap-2">
+            <span>档案主理：</span>
+            <a
+              className="u-link text-ink font-medium"
+              href={`https://github.com/${profile.handle}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              @{profile.handle}
+            </a>
+            <span className="text-ink-2">（公开 GitHub 签名 · 法律姓名等隐私未予登记）</span>
           </p>
-        ) : null}
-        {profile.location ? (
-          <p className="t-meta text-ink-2 mt-5">located — {profile.location}</p>
-        ) : null}
-        {profile.name === null ? (
-          profile.handle ? (
-            <p className="t-meta text-ink-2 mt-2">
-              kept by{" "}
-              <a className="u-link" href={`https://github.com/${profile.handle}`}>
-                @{profile.handle}
-              </a>{" "}
-              — the public signature; a legal name stays unpublished
-            </p>
-          ) : (
-            <p className="t-meta text-ink-2 mt-2">name — not yet configured</p>
-          )
-        ) : (
-          <p className="t-meta text-ink-2 mt-2">{profile.name}</p>
-        )}
+        </div>
       </div>
 
-      {/* Now/Log — changelog grammar, no résumé styling. Hidden entirely
-          while no real entry exists: an empty log is not a page. */}
+      {/* 履历记录日志（Now/Log） */}
       {sorted.length > 0 ? (
-      <section aria-labelledby="about-log" className="mt-16 max-w-[54rem]">
-        <h2 id="about-log" className="t-kicker text-ink-2">
-          log — now and then
-        </h2>
-        <ul className="mt-5">
-          {sorted.map((entry, i) => (
-            <li
-              key={`${entry.year}-${entry.title}-${i}`}
-              className="grid grid-cols-[5.5rem_1fr] gap-x-6 border-t border-line py-4 first:border-t-0"
-            >
-              <span className="t-meta text-accent">{entry.year}</span>
-              <div>
-                <p className="t-small text-ink">
-                  <span className="t-meta t-caps text-ink-2 mr-3">{KIND_LABEL[entry.kind]}</span>
-                  {entry.title}
-                </p>
-                <p className="t-small text-ink-2 mt-1">{entry.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <p className="t-meta text-ink-2 mt-5 max-w-[58ch]">
-          the log replaces a résumé timeline: newest line first, every line replaceable in the
-          content files.
-        </p>
-      </section>
+        <section aria-labelledby="about-log" className="mt-16 max-w-[54rem]">
+          <h2 id="about-log" className="t-kicker text-ink-2">
+            演进日志与时间轨迹 (Now and Then)
+          </h2>
+          <ul className="mt-5">
+            {sorted.map((entry, i) => (
+              <li
+                key={`${entry.year}-${entry.title}-${i}`}
+                className="grid grid-cols-[5.5rem_1fr] gap-x-6 border-t border-line py-5 first:border-t-0"
+              >
+                <span className="t-meta text-accent font-mono font-medium">{entry.year}</span>
+                <div>
+                  <p className="t-small text-ink font-medium">
+                    <span className="t-meta text-ink-2 mr-3 font-mono text-xs">
+                      [{KIND_LABEL[entry.kind] ?? entry.kind}]
+                    </span>
+                    {entry.title}
+                  </p>
+                  <p className="t-small text-ink-2 mt-1.5 leading-relaxed">{entry.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="t-meta text-ink-2 mt-6 max-w-[58ch] font-mono text-xs">
+            日志遵循更新记录体例（Changelog Grammar）：最新事件排在首位，杜绝任何未经核验的虚饰履历。
+          </p>
+        </section>
       ) : null}
+
+      <div className="mt-14 pt-8 border-t border-line max-w-[54rem] flex flex-wrap gap-6 items-center">
+        <XRef to="/work">浏览精选作品与完整案例 →</XRef>
+        <XRef to="/research">查看当前 6 大研究方向 →</XRef>
+      </div>
     </PageShell>
   );
 }

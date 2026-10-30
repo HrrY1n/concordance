@@ -1,8 +1,8 @@
 /**
- * Section registry — the site's coordinate system. Every page has an address
- * (§00–§07); the palette cites these coordinates in its results, the header
- * keeps them as the persistent nav, and the colophon reads them as counts
- * derived from the content modules (honest readings — never hand-written).
+ * 章节地址系统（Section Registry）—— 站点的坐标核心（§00–§07）。
+ *
+ * 中文优先版：大标题与说明文字以高品质中文呈现，同时保留次级英文索引，
+ * 命令面板、页眉常驻导航与页脚均由数据计算派生（诚实读数，杜绝硬编码）。
  */
 import { notes } from "@/content/notes";
 import { timeline } from "@/content/timeline";
@@ -13,7 +13,7 @@ import { budgetChunks, sandboxCorpus } from "@/content/lab";
 import { DEMO_REGISTRY } from "@/content/ids";
 import type { RoutePath } from "@/content/ids";
 
-/** Honest counts — everything here is derived from the content modules. */
+/** 真实统计读数 —— 严格派生自各模块数据 */
 export const DEMO_COUNT = Object.keys(DEMO_REGISTRY).length;
 export const LAB_RECORD_COUNT = sandboxCorpus.length + budgetChunks.length;
 
@@ -21,9 +21,10 @@ export interface SectionMeta {
   num: string;
   id: string;
   title: string;
+  titleEn: string;
   route: RoutePath;
   kicker: string;
-  /** Honest reading shown at the right edge of the section header. */
+  /** 章节页眉右侧的真实数据读数 */
   reading: string;
 }
 
@@ -31,64 +32,69 @@ export const sections: SectionMeta[] = [
   {
     num: "01",
     id: "research",
-    title: "Research",
+    title: "研究",
+    titleEn: "Research",
     route: "/research",
-    kicker: "Directions & questions",
-    reading: `${researchTopics.length} TOPICS · ${researchQuestions.length} QUESTIONS`,
+    kicker: "研究方向与开放问题",
+    reading: `${researchTopics.length} 个方向 · ${researchQuestions.length} 个问题`,
   },
   {
     num: "02",
     id: "work",
-    title: "Selected Work",
+    title: "精选作品",
+    titleEn: "Selected Work",
     route: "/work",
-    kicker: "Plates & evidence chains",
-    reading: `${projects.length} CHAINS`,
+    kicker: "项目图版与证据链",
+    reading: `${projects.length} 项成果 · 附完整案例`,
   },
   {
     num: "03",
     id: "lab",
-    title: "Lab",
+    title: "实验室",
+    titleEn: "Lab",
     route: "/lab",
-    kicker: "Hand-built instruments",
-    reading: `${DEMO_COUNT} DEMOS · ALL LOCAL`,
+    kicker: "浏览器内可交互仪器",
+    reading: `${DEMO_COUNT} 项演示 · 纯前端运算`,
   },
   {
     num: "04",
     id: "notes",
-    title: "Notes",
+    title: "笔记",
+    titleEn: "Notes",
     route: "/notes",
-    kicker: "Working notes",
-    reading: `${notes.length} ENTRIES`,
+    kicker: "工程思考与长文归档",
+    reading: `${notes.length} 篇归档`,
   },
   {
     num: "05",
     id: "publications",
-    title: "Publications",
+    title: "学术发表",
+    titleEn: "Publications",
     route: "/publications",
-    kicker: "Peer-reviewed work",
-    reading: `${publications.length} RECORDS`,
+    kicker: "同行评审与发表成果",
+    reading: `${publications.length} 篇收录`,
   },
   {
     num: "06",
     id: "about",
-    title: "About",
+    title: "关于",
+    titleEn: "About",
     route: "/about",
-    kicker: "Who keeps this archive",
+    kicker: "主理人背景与档案理念",
     reading: "",
   },
   {
     num: "07",
     id: "connect",
-    title: "Connect",
+    title: "联络通道",
+    titleEn: "Connect",
     route: "/connect",
-    kicker: "Correspondence",
+    kicker: "公开通讯与社交主页",
     reading: "",
   },
 ];
 
-/** The colophon's standing honesty line — DERIVED from the data (placeholder
- *  pass): it says "sample" exactly while sample entries exist, and reports
- *  their absence the moment the archive is fully real. No file paths. */
+/** 诚实读数：判断是否残留 sample 占位 */
 export const hasSampleEntries = [
   ...projects,
   ...notes,
@@ -97,22 +103,19 @@ export const hasSampleEntries = [
 ].some((entry) => entry.sample === true);
 
 export const colophonHonesty = hasSampleEntries
-  ? "Entries marked sample in the content files are example data awaiting replacement — the formats are live, nothing else on this site is staged."
-  : // Release-candidate wording: the archive's claims stay scoped — work
-    // plates point at public repos, Lab demos are labeled teaching data, and
-    // no blanket "everything is real" guarantee is made on the site's behalf.
-    "No sample entries remain — work links to its public repositories, Lab demos run on hand-written teaching data, and details not yet configured stay empty.";
+  ? "内容文件中标记为 sample 的条目为待替换的示例数据 —— 展示格式真实有效，本站其余部分均为实盘。"
+  : "全站正式条目均有据可查 —— 作品直链公开代码仓库，实验室演示基于说明清晰的教学数据，尚未配置的个人资料保持诚实空态。";
 
 export const sectionByRoute = (route: string): SectionMeta | undefined =>
   sections.find((s) => s.route === route);
 
-/** One line, rendered in the colophon: the corpus size, honestly counted. */
+/** 页脚底部单行数据盘点：实时计算各项内容规模 */
 export const corpusReading = (): string =>
   [
-    `WORK ${projects.length}`,
-    `TOPICS ${researchTopics.length}`,
-    `QUESTIONS ${researchQuestions.length}`,
-    `NOTES ${notes.length}`,
-    `PUBS ${publications.length}`,
-    `LAB ${DEMO_COUNT} DEMOS · ${LAB_RECORD_COUNT} RECORDS`,
+    `精选作品 ${projects.length}`,
+    `研究方向 ${researchTopics.length}`,
+    `问题台账 ${researchQuestions.length}`,
+    `工程笔记 ${notes.length}`,
+    `论文收录 ${publications.length}`,
+    `实验仪器 ${DEMO_COUNT} 项`,
   ].join(" · ");

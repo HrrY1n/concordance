@@ -15,21 +15,13 @@ import { budgetChunks, sandboxCorpus } from "@/content/lab";
 import { buildIndex, queryRecords } from "@/lib/search";
 import { colophonHonesty, sections } from "@/lib/sections";
 
-/**
- * Content-contract tests (§4 / D3's runtime complement) — REAL CONTENT &
- * CASES era. The compile-time whitelist unions catch typos in cross-
- * references; these tests assert the honesty properties the components rely
- * on. The old "everything must be sample" invariants were REPLACED by their
- * new-truth counterparts (not deleted): the archive now lists only real,
- * repository-verifiable work, so the contract pins the absence of fiction.
- */
 describe("content contract", () => {
   it("no sample entries remain anywhere in visitor-visible data", () => {
     for (const p of projects) expect(p.sample, `project ${p.id}`).toBe(false);
     for (const n of notes) expect(n.sample, `note ${n.id}`).toBe(false);
     for (const t of timeline) expect(t.sample, `timeline ${t.title}`).toBe(false);
     for (const q of researchQuestions) expect(q.sample, `question ${q.id}`).toBe(false);
-    expect(colophonHonesty).toContain("No sample entries remain");
+    expect(colophonHonesty).toContain("全站正式条目均有据可查");
   });
 
   it("every project is real work: a public repository, no invented résumé", () => {
@@ -39,7 +31,6 @@ describe("content contract", () => {
       );
       expect(p.role).not.toContain("TODO");
     }
-    // the fictional sample project ids must never return
     const ids = projects.map((p) => p.id);
     for (const ghost of ["retrieval-lens", "robust-eval-kit", "poison-sandbox"]) {
       expect(ids, `fabricated entry ${ghost} stays out`).not.toContain(ghost);
@@ -54,7 +45,6 @@ describe("content contract", () => {
       expect(chain.method.length).toBeGreaterThan(0);
       expect(chain.artifacts.length).toBeGreaterThan(0);
       const serialized = JSON.stringify(chain);
-      // a sample-era habit: claiming unverifiable private artifacts
       expect(serialized).not.toMatch(/private|no public release/i);
     }
   });
@@ -104,8 +94,6 @@ describe("content contract", () => {
       links,
     });
     expect(exported).not.toMatch(/TODO/i);
-    // the archive's own internals stay out of copy; public-repo relative
-    // paths inside case evidence (src/services/..., docs/...) are legitimate
     expect(exported).not.toContain("src/content");
     expect(exported).not.toContain("Replace in");
     expect(exported).not.toMatch(/C:\\\\|D:\\\\|\/Users\/|\/home\//);
@@ -119,7 +107,7 @@ describe("content contract", () => {
       expect(colophonHonesty).toContain("sample");
       expect(colophonHonesty).not.toContain("src/content");
     } else {
-      expect(colophonHonesty).toContain("No sample entries remain");
+      expect(colophonHonesty).toContain("全站正式条目均有据可查");
     }
   });
 
@@ -127,8 +115,6 @@ describe("content contract", () => {
     expect(profile.name).toBeNull();
     expect(profile.location).toBeNull();
     expect(profile.handle).toMatch(/^[A-Za-z0-9-]+$/);
-    // the JSON-LD build step keys on profile.name — a handle must never
-    // flow into a Person schema, so name staying null IS the contract
   });
 
   it("links: the confirmed GitHub profile is on, and matches the handle; email stays null", () => {
@@ -182,7 +168,6 @@ describe("content contract", () => {
     expect(new Set(sandboxCorpus.map((d) => d.id)).size).toBe(sandboxCorpus.length);
     for (const c of budgetChunks) {
       expect(c.text.length).toBeGreaterThan(0);
-      // n1–n3 were removed; the demo corpus must not cite ghosts
       expect(c.source).not.toMatch(/note n\d/i);
     }
   });
@@ -216,12 +201,13 @@ describe("palette index", () => {
     }
     expect(queryRecords(index, "local-first").some((r) => r.type === "CASE")).toBe(true);
     expect(queryRecords(index, "web audio").some((r) => r.type === "CASE")).toBe(true);
+    expect(queryRecords(index, "投毒").length).toBeGreaterThan(0);
   });
 
   it("note records deep-link to /notes/:slug; all routes are known routes", () => {
     const index = buildIndex();
     for (const rec of index) {
-      if (rec.route === "") continue; // ACTION records
+      if (rec.route === "") continue;
       const known =
         (ROUTE_PATHS as readonly string[]).includes(rec.route) ||
         /^\/notes\/[a-z0-9-]+$/.test(rec.route) ||
@@ -237,7 +223,7 @@ describe("palette index", () => {
     const index = buildIndex();
     expect(queryRecords(index, "qqqqzzzz")).toHaveLength(0);
     expect(queryRecords(index, "poisoning")[0]?.id).toBeTruthy();
-    // Empty query doubles as a menu: pages and actions first.
+    expect(queryRecords(index, "投毒")[0]?.id).toBeTruthy();
     const empty = queryRecords(index, "");
     expect(empty[0]?.type).toBe("PAGE");
   });

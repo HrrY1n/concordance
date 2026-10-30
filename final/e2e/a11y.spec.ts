@@ -2,31 +2,22 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 /**
- * Production-pass accessibility smoke (P2-3): one pass per core page with
- * axe-core. The gate is the site's own contract — no critical or serious
- * violations (moderate/minor findings are reported to the console for
- * awareness but do not fail; the AA contrast token layer already has its
- * own vitest guard in src/lib/__tests__/contrast.test.ts).
+ * 无障碍回归冒烟套件（Accessibility Smoke Suite，中文优先版）。
+ * 覆盖全部 11 个一等公民路由，以零 critical / serious 违规作为硬性门槛。
  */
 
 const PAGES: { route: string; marker: string }[] = [
-  { route: "/", marker: "Retrieval-augmented generation" },
-  // NB: DOM text, not the CSS-uppercased rendering — "Question ledger" is
-  // rendered uppercase by .t-kicker but stored lowercase.
-  { route: "/research", marker: "Directions are stable; questions move" },
+  { route: "/", marker: "检索增强生成" },
+  { route: "/research", marker: "研究方向相对稳固" },
   { route: "/work", marker: "PLATE" },
-  // Case studies are first-class a11y surfaces (Real Content & Cases pass) —
-  // real images with alt text, LEDGER references, next-case navigation.
-  { route: "/work/item-storage-app", marker: "case study" },
-  { route: "/work/soundisle", marker: "case study" },
-  { route: "/lab", marker: "instrument" },
-  { route: "/about", marker: "About" },
-  { route: "/notes", marker: "Notes are written to be read in place" },
-  { route: "/notes/archive-as-instrument", marker: "The archive is the instrument" },
-  { route: "/publications", marker: "Selected research will appear here" },
-  // The connect page now carries a real channel (GitHub); the empty-title
-  // marker is gone by design — the intro line is the stable text.
-  { route: "/connect", marker: "Channels appear here as they exist" },
+  { route: "/work/item-storage-app", marker: "深度复盘" },
+  { route: "/work/soundisle", marker: "深度复盘" },
+  { route: "/lab", marker: "实验仪器" },
+  { route: "/about", marker: "关于" },
+  { route: "/notes", marker: "专为深度静心阅读而排版" },
+  { route: "/notes/archive-as-instrument", marker: "档案即仪器" },
+  { route: "/publications", marker: "学术成果将在此归档" },
+  { route: "/connect", marker: "通讯与公开联络渠道" },
 ];
 
 for (const { route, marker } of PAGES) {

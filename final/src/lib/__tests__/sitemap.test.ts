@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { routeHead, sitemapPaths, sitemapUrls } from "../sitemap";
 import { cases } from "@/content/cases";
 import { notes } from "@/content/notes";
-import { site } from "@/content/site";
+import { site, titleSuffix } from "@/content/site";
 
-/** P1-18 guard: the sitemap is derived, so it can never drift from content. */
+/** 站点地图单源派生与深度路由元数据断言 */
 describe("sitemap contract", () => {
   it("contains exactly one URL per note, derived from notes.ts", () => {
     const noteUrls = sitemapUrls().filter((u) => u.includes("/notes/"));
@@ -51,12 +51,10 @@ describe("sitemap contract", () => {
   });
 });
 
-/** Real Content & Cases pass: per-route head metadata for the static deep
- *  links — derived, canonical-correct, and never holding a ghost route. */
-describe("route head metadata", () => {
+describe("route head metadata (Chinese-first)", () => {
   it("home keeps the archive title; section pages get the suffix grammar", () => {
     expect(routeHead("/").title).toMatch(/Concordance/);
-    expect(routeHead("/research").title).toBe("Research — Concordance");
+    expect(routeHead("/research").title).toBe(`研究方向体系 — ${titleSuffix}`);
     expect(routeHead("/research").canonical).toBe(`${site.url}research`);
   });
 
@@ -76,12 +74,10 @@ describe("route head metadata", () => {
   });
 
   it("every static route has a specific head (no bare-brand fallback)", () => {
-    // /lab/corruption-sandbox regressed to the bare "Concordance" title once
-    // — pin every STATIC_PAGE_META route to a real title.
     for (const path of sitemapPaths()) {
       const head = routeHead(path);
       expect(head.title, `route ${path} needs a specific title`).not.toBe("Concordance");
-      expect(head.description.length).toBeGreaterThan(20);
+      expect(head.description.length).toBeGreaterThan(15);
     }
   });
 

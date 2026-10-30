@@ -10,9 +10,8 @@ import {
 import { RANK_FLOOR } from "@/components/RankList";
 
 /**
- * L-02 — Context Budget. A token budget and five chunks in an order you
- * control. Order decides what fits; that is why reranking matters. Token
- * counts are the honest estimate (chars ÷ 4) and every row is labeled est.
+ * 实验仪器 L-02 —— 上下文预算动态折算器 (Context Budget)。
+ * 严密的 Token 预算下展示切分与排序对大模型可用证据空间的强制截断。
  */
 export function ContextBudget() {
   const [budget, setBudget] = useState(budgetDefault);
@@ -22,8 +21,6 @@ export function ContextBudget() {
     .map((id) => budgetChunks.find((c) => c.id === id))
     .filter((c): c is (typeof budgetChunks)[number] => Boolean(c));
 
-  // Pure pass: tokens are the honest chars ÷ 4 estimate; a chunk fits when
-  // everything before it plus itself stays inside the budget.
   const states = chunks.reduce<{ chunk: (typeof chunks)[number]; tokens: number; fits: boolean; used: number }[]>(
     (acc, chunk) => {
       const tokens = Math.ceil(chunk.text.length / 4);
@@ -50,17 +47,17 @@ export function ContextBudget() {
   };
 
   return (
-    <div className="border border-line-strong bg-inset">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 md:px-7">
-        <p className="t-meta text-ink-2 break-words">
-          query <span className="text-ink">“{budgetQuestion}”</span>
+    <div className="border border-line-strong bg-inset rounded-sm">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-5 py-4 md:px-7 font-mono text-xs">
+        <p className="text-ink-2 break-words">
+          核心问题：<span className="text-ink font-medium">“{budgetQuestion}”</span>
         </p>
-        <p className="t-meta t-caps text-ink-2">counts = chars ÷ 4 (est.) · nothing leaves this tab</p>
+        <p className="text-ink-2">折算规则：字符数 ÷ 4 (估算) · 纯本地即时运算</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-line px-5 py-4 md:px-7">
-        <label htmlFor="budget-slider" className="t-small text-ink-2">
-          Token budget
+        <label htmlFor="budget-slider" className="t-small text-ink-2 font-mono text-xs md:text-sm">
+          Token 预算上限 (Token budget)
         </label>
         <input
           id="budget-slider"
@@ -73,7 +70,7 @@ export function ContextBudget() {
           className="min-h-[44px] min-w-[180px] flex-1"
           style={{ accentColor: "var(--accent)" }}
         />
-        <output htmlFor="budget-slider" className="t-meta text-ink">
+        <output htmlFor="budget-slider" className="t-meta text-ink font-mono font-medium">
           {budget} tok
         </output>
       </div>
@@ -82,39 +79,39 @@ export function ContextBudget() {
         {states.map(({ chunk, tokens, fits }, i) => (
           <li key={chunk.id} className="border-b border-line py-4 last:border-b-0">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span className="t-meta text-ink-2">{chunk.id}</span>
-              <span className="t-meta text-ink-2">{tokens} tok est.</span>
+              <span className="t-meta text-ink-2 font-mono text-xs">{chunk.id}</span>
+              <span className="t-meta text-ink-2 font-mono text-xs">约 {tokens} Token</span>
               {fits ? (
-                <span className="t-meta t-caps text-ok">▲ fits</span>
+                <span className="t-meta t-caps text-ok font-mono text-xs">▲ 完整容纳 (fits)</span>
               ) : (
-                <span className="t-meta t-caps text-signal" data-flag="truncated">
-                  ▼ truncated
+                <span className="t-meta t-caps text-signal font-mono text-xs" data-flag="truncated">
+                  ▼ 硬性截断 (truncated)
                 </span>
               )}
-              <span className="ml-auto flex items-center">
+              <span className="ml-auto flex items-center gap-1">
                 <button
                   type="button"
-                  aria-label={`Move ${chunk.id} up`}
+                  aria-label={`将 ${chunk.id} 上移`}
                   disabled={i === 0}
                   onClick={() => move(chunk.id, -1)}
-                  className="flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 transition-colors hover:text-ink disabled:opacity-30"
+                  className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded border border-line bg-raised text-ink-2 transition-colors hover:text-ink disabled:opacity-30"
                 >
                   ↑
                 </button>
                 <button
                   type="button"
-                  aria-label={`Move ${chunk.id} down`}
+                  aria-label={`将 ${chunk.id} 下移`}
                   disabled={i === states.length - 1}
                   onClick={() => move(chunk.id, 1)}
-                  className="flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 transition-colors hover:text-ink disabled:opacity-30"
+                  className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded border border-line bg-raised text-ink-2 transition-colors hover:text-ink disabled:opacity-30"
                 >
                   ↓
                 </button>
               </span>
             </div>
-            <p className="t-small text-ink-2 mt-1 max-w-[72ch]">{chunk.text}</p>
-            <p className="t-meta text-faint mt-2" aria-hidden="true">
-              {chunk.source}
+            <p className="t-small text-ink mt-1.5 max-w-[72ch] leading-relaxed text-xs md:text-sm">{chunk.text}</p>
+            <p className="t-meta text-faint mt-1.5 font-mono text-xs" aria-hidden="true">
+              来源：{chunk.source}
             </p>
             <span className="rank-track mt-2 max-w-[320px]" aria-hidden="true">
               <span
@@ -129,13 +126,12 @@ export function ContextBudget() {
         ))}
       </ul>
 
-      <div className="border-t border-line px-5 py-4 md:px-7">
-        <p className="t-meta t-caps text-ink-2" aria-live="polite">
-          budget {budget} tok (est.) · used {used} · truncated {truncated}
+      <div className="border-t border-line px-5 py-4 md:px-7 font-mono text-xs">
+        <p className="t-meta text-ink-2" aria-live="polite">
+          预算上限 {budget} tok (est.) · 已占用 {used} · 被截断段落数 {truncated} (budget {budget} tok (est.) · used {used} · truncated {truncated})
         </p>
-        <p className="t-small text-ink-2 mt-2 max-w-[60ch]">
-          Order decides what fits. That is why reranking matters — it is a decision about which
-          evidence exists, made before the model ever speaks.
+        <p className="t-small text-ink-2 mt-2 max-w-[62ch] font-sans leading-relaxed">
+          排列顺序直接决定了哪些文本能够存活于模型上下文内。重排序之所以至关重要，在于它在模型尚未开始生成之前，就已经裁决了哪些事实证据能够被模型获知。
         </p>
       </div>
     </div>

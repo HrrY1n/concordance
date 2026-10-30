@@ -1,14 +1,8 @@
 import type { Note } from "./types";
 
 /**
- * CONTENT_PACK §notes — Real Content & Cases pass. The three first-person
- * sample notes (n1–n3) were REMOVED, not rewritten: no fictional personal
- * history stays in the visitor-visible data. What remains is one engineering
- * note about this archive itself — every claim checkable against the public
- * repository you are reading the note on.
- *
- * A draft note lives outside the content system (docs/drafts/) until the
- * owner promotes it; nothing else auto-enters this ledger.
+ * CONTENT_PACK §notes — 真实工程笔记（中文优先呈现）。
+ * 所有论述均可对照本仓库开源代码直接核验，拒绝任何虚构的第一人称经历。
  */
 export const notes = [
   {
@@ -16,48 +10,49 @@ export const notes = [
     sample: false,
     date: "2026-10-30",
     kind: "engineering",
-    title: "The archive is the instrument",
+    title: "档案即仪器：以检索引得隐喻构建数据驱动型个人主页",
     summary:
-      "How this site is built: content as typed TypeScript, readings derived instead of written, and a retrieval index that runs where you read.",
+      "解析 Concordance 的工程架构：如何将内容抽象为类型化的 TypeScript 数据层，使所有统计读数皆为运算派生，并在浏览器本地实现毫秒级语录检索与静态深链输出。",
     body: [
       {
         type: "p",
-        text: "Most portfolio sites are documents: fixed pages that quietly rot as the underlying facts change. This archive takes the opposite bet — it behaves like its namesake. A printed concordance is both a book and an index; every entry in it points back to something that actually exists. So the site's first-class objects are data files, not pages, and everything a visitor reads about the site — counts, dates, section readings — is computed from those files at render time.",
+        text: "大多数个人作品集往往只是静态排版的切片：一旦底层的项目、日期或技术栈发生变动，维护者就需要逐个页面搜寻硬编码的字符串，在不知不觉中任由陈旧数据腐化。CONCORDANCE 尝试走向完全相反的方向——它向古典文献学中的「语录索引（Concordance）」借取隐喻。在古籍编纂中，索引不仅是一份附录，更是连结文献与事实的严密坐标系。因此，本站将「内容数据」确立为系统的一等公民，让访客在界面上读到的每一条统计、每一个时间节点与章节读数，均在渲染时由真实数据动态计算得出。",
         sidenote: {
           n: 1,
-          text: "The colophon at the bottom of every page prints WORK / TOPICS / QUESTIONS / NOTES / PUBS counts. None of those numbers is hand-written; each is a .length somewhere in src/lib/sections.ts.",
+          text: "每个页面底部的页脚都会打印出作品、方向、问题、笔记与演示的数量统计。这些数字绝无人工硬编码，每一个数字都是 src/lib/sections.ts 中对应数组实时的 .length。",
         },
       },
       {
         type: "p",
-        text: "Typing the content buys more than autocomplete. Cross-references between files — a research question citing a demo, a topic adjoining another topic — are literal union types, so a typo'd reference is a compile error, not a silently dead link. The evidence chains under each work plate are keyed the same way: adding a project without evidence fails the build.",
+        text: "全面类型化带来的收益远不止代码补全。不同数据模块之间的交叉引用——例如某个研究问题指向特定的交互实验演示、某个研究方向与相邻领域的连结——均通过 TypeScript 字面量联合类型予以约束。这意味着一旦在数据中拼错了一个 ID，或是引用了不存在的演示模块，tsc 将在编译期直接报错阻断，彻底杜绝线上死链。类似地，作品图版下方的「证据链（Evidence Chains）」也是按项目 ID 强类型索引的——新增项目若遗漏了事实证据链，构建系统绝不予放行。",
       },
       {
         type: "p",
-        text: "The retrieval index is the second half of the metaphor. The palette (Ctrl+K) searches a local index of records — pages, projects, topics, notes, demos — and a second layer splits note bodies and demo corpora into sentences, ranked with the site's own BM25 implementation. A hit renders as a KWIC citation line, the way a printed concordance quotes its term in context.",
+        text: "本地检索索引是这一隐喻的另一半灵魂。全站命令面板（快捷键 / 或 Ctrl+K）内嵌了一个毫秒级响应的轻量检索系统：第一层涵盖页面、作品、研究主题、笔记与实验的结构化编目；第二层则将笔记正文与沙盒语料切分为句子级微小单元，利用纯前端实现的 BM25 算法进行实时相关度打分。命中的段落会以如同古典引得般的 KWIC（Key Word in Context）语境行呈现，让每一段文字都具备精准的溯源坐标。",
         sidenote: {
           n: 2,
-          text: "bm25 with k1 = 1.5, b = 0.75 — the same parameters the Corruption Sandbox displays. The parameters are not hidden in a config file; they are part of the copy.",
+          text: "检索算法采用标准 BM25 参数（k1 = 1.5, b = 0.75），这与站内实验仪器「Corruption Sandbox」所展示的数学机制完全一致。算法参数不是藏在内部的黑盒，而是与设计语言融为一体的透明事实。",
         },
       },
       {
         type: "p",
-        text: "Deriving structure from content reaches the build output too. The sitemap is not a hand-maintained XML file; it is a function over the content modules. Publishing a new note extends the sitemap as a side effect of the note existing:",
+        text: "数据驱动的理念同样延伸到了构建产物中。本站的站点地图（sitemap.xml）并非手动编写的 XML，而是直接映射内容模块的纯函数；当在内容文件中新增一篇笔记或一个案例研究时，深链路由与搜索引擎索引在构建期自动同步扩充：",
       },
       {
         type: "code",
         lang: "ts",
-        caption: "src/lib/sitemap.ts — routes derived from content",
+        caption: "src/lib/sitemap.ts —— 静态深链与地图完全自内容层派生",
         text: `export function sitemapPaths(): string[] {
   return [
     ...STATIC_ROUTES,
+    ...cases.map((c) => \`/work/\${c.slug}\`),
     ...notes.map((note) => \`/notes/\${note.id}\`),
   ];
 }`,
       },
       {
         type: "p",
-        text: "The same discipline sets the site's honesty budget. Entries that are examples rather than records carry a sample flag in the data, and the pages derive their wording from it — a sample entry says so wherever it renders, and the colophon flips its line the moment no sample entries remain. That is the whole trick: make the honest sentence the cheap one to render, and the expensive one to fake.",
+        text: "这一套工程体系同样守护着站点的真实性纪律。作为占位或示例的数据必须在数据层显式标注 sample 标识，视图层据此自动降级展示，而页脚声明更会在全站所有样本归零后自动翻转文案。这正是 CONCORDANCE 最核心的技术态度：让诚实的表述成为系统最自然的输出，而让任何虚饰在编译期变得昂贵且无处遁形。",
       },
     ],
   },

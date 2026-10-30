@@ -14,15 +14,8 @@ import { paletteSuggestions } from "@/content/lab";
 import { site } from "@/content/site";
 
 /**
- * The concordance proper — the site's active retrieval surface. Full combobox
- * semantics: input[role=combo] + listbox + aria-activedescendant (§4 / H3).
- * Opened from the header, from the keyboard (/ or ⌘K), from ?q= deep links,
- * and from any facet/tag that calls openSearch(term) (§4 / M3).
- *
- * Two result genotypes (P2-20): catalog rows (type · title · coord) and KWIC
- * quotation rows — the matched sentence with the term in <mark>, cited by
- * coordinate and date. This is what makes the palette a concordance instead
- * of a menu.
+ * 语录检索命令面板（The Concordance Palette）。
+ * 支持双层结果：结构化编目条目（页面/作品/案例/主题/演示/动作）+ 语境行引言（KWIC 语境高亮）。
  */
 export function SearchPalette({
   open,
@@ -46,13 +39,10 @@ export function SearchPalette({
   const quotes = useMemo(() => queryPassages(passages, query), [passages, query]);
   const optionCount = selection.shown.length + quotes.length;
 
-  // Open/close transitions and new pre-queries are derived state changes made
-  // during render (react-hooks guidance) — no cascading effect.
   const [openState, setOpenState] = useState(() => ({ open, initialQuery }));
   if (openState.open !== open || openState.initialQuery !== initialQuery) {
     setOpenState({ open, initialQuery });
     if (open) {
-      // Priority: programmatic query (facet clicks) > ?q= deep link > empty.
       let initial = initialQuery ?? "";
       if (initial === "") {
         try {
@@ -72,7 +62,6 @@ export function SearchPalette({
     setActiveIdx(0);
   }
 
-  // External-system side effects of being open: focus, scroll lock, Esc.
   useEffect(() => {
     if (!open) return;
     setOverlayOpen(true);
@@ -137,25 +126,18 @@ export function SearchPalette({
   };
 
   return (
-    /* Backdrop click-to-dismiss is a standard modal idiom — the heuristic
-       below (no-static-element-interactions) is intentionally satisfied by
-       the adjacent dialog role instead. */
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className="fixed inset-0 z-[var(--z-overlay)] overflow-y-auto p-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:p-6"
       style={{ background: "color-mix(in oklab, var(--ink) 32%, transparent)" }}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
-          // preventDefault stops mousedown's default focus transfer (to
-          // <body>) from running after restoreTriggerFocus and wiping it.
           event.preventDefault();
           onClose();
         }
       }}
     >
       <div className="u-figure mx-auto mt-[8vh] w-full">
-        {/* Tab trapping on the dialog container is the standard focus-trap
-            idiom for non-trivial modals. */}
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <div
           ref={dialogRef}
@@ -183,15 +165,13 @@ export function SearchPalette({
             />
           </div>
 
-          {/* P0-9: truncation is announced, never silent. */}
           {selection.truncated ? (
-            <p className="t-meta text-ink-2 border-b border-line px-5 py-2" aria-live="polite">
-              showing {selection.shown.filter((r) => !r.action).length} of {selection.totalMatches}{" "}
-              matches — refine the query to narrow
+            <p className="t-meta text-ink-2 border-b border-line px-5 py-2 text-xs" aria-live="polite">
+              当前展示前 {selection.shown.filter((r) => !r.action).length} 条（共 {selection.totalMatches} 条匹配）—— 请键入更多词缩小检索范围
             </p>
           ) : null}
 
-          <ul id="palette-list" role="listbox" aria-label="Results" className="max-h-[46vh] overflow-y-auto">
+          <ul id="palette-list" role="listbox" aria-label="检索结果" className="max-h-[48vh] overflow-y-auto">
             {selection.shown.map((record, i) => (
               <li key={record.id}>
                 <button
@@ -202,13 +182,13 @@ export function SearchPalette({
                   onMouseEnter={() => setActiveIdx(i)}
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => execute(i)}
-                  className={`flex min-h-[44px] w-full items-baseline gap-3 px-5 py-2.5 text-left ${
-                    i === activeIdx ? "bg-inset" : ""
+                  className={`flex min-h-[44px] w-full items-baseline gap-3 px-5 py-2.5 text-left transition-colors ${
+                    i === activeIdx ? "bg-inset" : "hover:bg-inset/50"
                   }`}
                 >
-                  <span className="t-meta t-caps text-ink-2 w-16 shrink-0">{record.type}</span>
+                  <span className="t-meta t-caps text-ink-2 w-16 shrink-0 text-xs font-mono">{record.type}</span>
                   <span className="t-small text-ink min-w-0 flex-1 truncate">{record.title}</span>
-                  <span className="t-meta text-ink-2 shrink-0">{record.coord}</span>
+                  <span className="t-meta text-ink-2 shrink-0 font-mono text-xs">{record.coord}</span>
                 </button>
               </li>
             ))}
@@ -225,17 +205,17 @@ export function SearchPalette({
                     onMouseEnter={() => setActiveIdx(i)}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => execute(i)}
-                    className={`flex min-h-[44px] w-full items-baseline gap-3 px-5 py-2.5 text-left ${
-                      i === activeIdx ? "bg-inset" : ""
+                    className={`flex min-h-[44px] w-full items-baseline gap-3 px-5 py-2.5 text-left transition-colors ${
+                      i === activeIdx ? "bg-inset" : "hover:bg-inset/50"
                     }`}
                   >
-                    <span className="t-meta t-caps text-accent w-16 shrink-0">QUOTE</span>
+                    <span className="t-meta t-caps text-accent w-16 shrink-0 text-xs font-mono">引证</span>
                     <span className="t-small min-w-0 flex-1 truncate text-ink-2">
                       {kwic.left}
-                      <mark className="text-ink">{kwic.match}</mark>
+                      <mark className="bg-accent/20 text-ink px-0.5 rounded-sm">{kwic.match}</mark>
                       {kwic.right}
                     </span>
-                    <span className="t-meta text-ink-2 shrink-0">{quote.coord}</span>
+                    <span className="t-meta text-ink-2 shrink-0 font-mono text-xs">{quote.coord}</span>
                   </button>
                 </li>
               );
@@ -243,23 +223,23 @@ export function SearchPalette({
             {optionCount === 0 ? (
               <li className="px-5 py-6">
                 <p className="t-small text-ink-2" aria-live="polite">
-                  no documents matched <span className="font-mono">“{query}”</span>
+                  未检索到与 <span className="font-mono text-ink">“{query}”</span> 匹配的内容
                 </p>
                 <p className="t-meta text-ink-2 mt-2">
-                  try: {paletteSuggestions.join(" · ")}
+                  推荐尝试检索：{paletteSuggestions.join(" · ")}
                 </p>
               </li>
             ) : null}
           </ul>
 
-          <div className="t-meta text-ink-2 flex flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-3">
+          <div className="t-meta text-ink-2 flex flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-3 font-mono text-xs">
             <span aria-live="polite">
-              local index · {indexSize()} records · 0ms network
+              本地索引 · 共 {indexSize()} 条编目 · 0ms 纯前端运算
             </span>
             <span className="flex items-center gap-2" aria-hidden="true">
-              <kbd>↑↓</kbd>
-              <kbd>↵</kbd>
-              <kbd>esc</kbd>
+              <kbd className="px-1.5 py-0.5 border border-line rounded bg-bg">↑↓ 选择</kbd>
+              <kbd className="px-1.5 py-0.5 border border-line rounded bg-bg">↵ 进入</kbd>
+              <kbd className="px-1.5 py-0.5 border border-line rounded bg-bg">esc 关闭</kbd>
             </span>
           </div>
         </div>
@@ -268,7 +248,7 @@ export function SearchPalette({
   );
 }
 
-/** `?` — the help layer: keyboard discoverability. */
+/** `?` 快捷键帮助浮层 */
 export function HelpOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -276,8 +256,6 @@ export function HelpOverlay({ open, onClose }: { open: boolean; onClose: () => v
     if (!open) return;
     setOverlayOpen(true);
     lockScroll(true);
-    // P0-13: the dialog takes focus when it opens (previously focus stayed
-    // wherever it was, so keyboard users kept typing into the page below).
     const timer = window.setTimeout(() => dialogRef.current?.focus(), 20);
     return () => {
       window.clearTimeout(timer);
@@ -307,8 +285,6 @@ export function HelpOverlay({ open, onClose }: { open: boolean; onClose: () => v
       style={{ background: "color-mix(in oklab, var(--ink) 32%, transparent)" }}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
-          // preventDefault stops mousedown's default focus transfer (to
-          // <body>) from running after restoreTriggerFocus and wiping it.
           event.preventDefault();
           onClose();
         }
@@ -320,35 +296,35 @@ export function HelpOverlay({ open, onClose }: { open: boolean; onClose: () => v
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Keyboard help"
+          aria-label="快捷键帮助 (Keyboard help)"
           tabIndex={-1}
-          className="border border-line-strong bg-raised p-6 outline-none md:p-8"
+          className="border border-line-strong bg-raised p-6 outline-none md:p-8 shadow-xl"
           onKeyDown={(event) => trapTab(event.nativeEvent, dialogRef.current)}
         >
-          <h2 className="t-entry">Keyboard</h2>
+          <h2 className="t-entry">快捷键指南</h2>
           <dl className="mt-5 space-y-3">
             {[
-              ["/ or ⌘K", "Query this site"],
-              ["?", "This help"],
-              ["esc", "Close any layer"],
-              ["tab", "Move focus — everything is reachable"],
+              ["/ 或 ⌘K", "呼出全站检索命令面板"],
+              ["?", "打开本快捷键帮助浮层"],
+              ["esc", "关闭任意当前弹出的浮层"],
+              ["tab", "无障碍遍历页面上所有焦点交互目标"],
             ].map(([key, what]) => (
               <div key={key} className="flex items-baseline justify-between gap-4">
                 <dt>
-                  <kbd>{key}</kbd>
+                  <kbd className="px-2 py-1 text-xs border border-line rounded bg-bg font-mono">{key}</kbd>
                 </dt>
                 <dd className="t-small text-ink-2 text-right">{what}</dd>
               </div>
             ))}
           </dl>
-          <h2 className="t-entry mt-8">Addresses</h2>
-          <p className="t-small text-ink-2 mt-3">
-            Every section has a coordinate (§01–§07); the palette cites them. The theme button
-            cycles system → light → dark and remembers your choice.
+          <h2 className="t-entry mt-8">章节坐标系统</h2>
+          <p className="t-small text-ink-2 mt-3 leading-relaxed">
+            每个页面均配备固定的章节地址坐标（§01–§07），命令面板检索命中项皆附带精准坐标指引。
+            右上角主题切换按钮支持在「自动跟随系统 → 浅色暖纸 → 深色阅读室」之间循环切换并自动记住您的偏好。
           </p>
           <div className="mt-6 flex justify-end">
             <button type="button" onClick={onClose} className="u-link t-small inline-flex min-h-[44px] items-center">
-              Close
+              关闭帮助 (Close)
             </button>
           </div>
         </div>
