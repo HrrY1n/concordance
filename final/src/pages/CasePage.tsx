@@ -58,7 +58,7 @@ export default function CasePage() {
         <span className="text-accent">案例复盘</span>
       </nav>
 
-      {/* ——— PLATE —— 头部元数据与成果主视觉 */}
+      {/* ——— PLATE —— 头部信息 */}
       <header className="mt-6 max-w-[58rem]">
         <div className="flex flex-wrap items-center gap-2.5">
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-accent/15 text-accent border border-accent/20">
@@ -78,39 +78,13 @@ export default function CasePage() {
           </p>
         ) : null}
 
-        <p className="t-lede text-ink-2 mt-5 max-w-[56ch] leading-relaxed text-base md:text-lg">
+        <p className="t-lede text-ink-2 mt-4 max-w-[56ch] leading-relaxed text-base md:text-lg">
           {cs.summary}
         </p>
-
-        {/* 关键工程事实元数据表格 */}
-        <dl className="t-meta mt-8 grid max-w-[64rem] gap-x-8 gap-y-3 sm:grid-cols-[6rem_1fr] border-y border-line py-6 font-mono text-xs">
-          <dt className="text-ink-2 font-medium">研发年份</dt>
-          <dd className="text-ink">{cs.year}</dd>
-
-          <dt className="text-ink-2 font-medium">当前状态</dt>
-          <dd className="text-ink">{cs.status}</dd>
-
-          <dt className="text-ink-2 font-medium">角色分工</dt>
-          <dd className="text-ink">{cs.role}</dd>
-
-          <dt className="text-ink-2 font-medium">技术选型</dt>
-          <dd className="flex flex-wrap gap-1.5 text-ink">
-            {cs.stack.map((s) => (
-              <span key={s} className="px-2 py-0.5 rounded bg-inset border border-line">
-                {s}
-              </span>
-            ))}
-          </dd>
-
-          <dt className="text-ink-2 font-medium">开源代码</dt>
-          <dd>
-            <XRef to={cs.repoUrl}>GitHub 源码仓库 ↗</XRef>
-          </dd>
-        </dl>
       </header>
 
-      {/* 核心主视觉图版（Hero Plate）—— 尽早见图 */}
-      <figure className="mt-10 border border-line bg-raised rounded overflow-hidden shadow-sm">
+      {/* 核心主视觉图版（Hero Plate）—— 尽早见图，优先呈现实际产品画面 */}
+      <figure className="mt-8 border border-line bg-raised rounded overflow-hidden shadow-sm">
         <img
           src={`${import.meta.env.BASE_URL}cases/${cs.slug}/${cs.hero.file}`}
           alt={cs.hero.alt}
@@ -119,11 +93,37 @@ export default function CasePage() {
           decoding="async"
           className="block h-auto max-w-full w-full"
         />
-        <figcaption className="p-4 bg-inset/70 border-t border-line text-xs">
+        <figcaption className="p-3.5 bg-inset/70 border-t border-line text-xs">
           <p className="t-meta text-ink font-medium font-mono">主视觉图版 —— {cs.hero.caption}</p>
-          <p className="t-meta text-ink-2 mt-1.5 leading-relaxed">{cs.provenance}</p>
+          <p className="t-meta text-ink-2 mt-1 leading-relaxed">{cs.provenance}</p>
         </figcaption>
       </figure>
+
+      {/* 关键工程事实元数据表格 —— 位于大图下方作为数据规格栏 */}
+      <dl className="t-meta mt-8 grid max-w-[64rem] gap-x-8 gap-y-2.5 sm:grid-cols-[6rem_1fr] border-y border-line py-5 font-mono text-xs">
+        <dt className="text-ink-2 font-medium">研发年份</dt>
+        <dd className="text-ink">{cs.year}</dd>
+
+        <dt className="text-ink-2 font-medium">当前状态</dt>
+        <dd className="text-ink">{cs.status}</dd>
+
+        <dt className="text-ink-2 font-medium">角色分工</dt>
+        <dd className="text-ink">{cs.role}</dd>
+
+        <dt className="text-ink-2 font-medium">技术选型</dt>
+        <dd className="flex flex-wrap gap-1.5 text-ink">
+          {cs.stack.map((s) => (
+            <span key={s} className="px-2 py-0.5 rounded bg-inset border border-line">
+              {s}
+            </span>
+          ))}
+        </dd>
+
+        <dt className="text-ink-2 font-medium">开源代码</dt>
+        <dd>
+          <XRef to={cs.repoUrl}>GitHub 源码仓库 ↗</XRef>
+        </dd>
+      </dl>
 
       {/* ——— ESSAY —— 正文深度长文复盘与真实截图穿插 ——— */}
       <div className="mt-16 max-w-[64rem]" data-register="essay">

@@ -81,7 +81,7 @@ export function CorruptionSandbox({ detailed = false }: { detailed?: boolean }) 
           onClick={() => setInjected((v) => !v)}
           className={btn}
         >
-          {injected ? "移除投毒文档 (Remove poisoned document)" : "注入对抗性投毒文档 (Inject poisoned document d8)"}
+          {injected ? "移除投毒文档" : "注入对抗性投毒文档 (d8)"}
         </button>
         <button
           type="button"
@@ -89,7 +89,7 @@ export function CorruptionSandbox({ detailed = false }: { detailed?: boolean }) 
           onClick={() => setDefense((v) => !v)}
           className={btn}
         >
-          {defense ? "关闭启发式过滤 (Disable toy defense)" : "开启启发式过滤 (Enable toy defense)"}
+          {defense ? "关闭启发式过滤" : "开启启发式过滤"}
         </button>
         {defense ? (
           <p className="t-meta text-accent break-all text-xs font-mono">{toyDefense.label}</p>

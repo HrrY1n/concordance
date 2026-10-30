@@ -58,4 +58,19 @@ test.describe("overlay focus restore", () => {
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(page.locator("#main-content")).toBeFocused();
   });
+
+  test("palette: Chinese keyword search (投毒) and keyboard navigation", async ({ page }) => {
+    await page.goto("/");
+    const trigger = page.getByRole("button", { name: /press slash/ }).first();
+    await trigger.click();
+    const input = page.getByRole("combobox");
+    await expect(input).toBeFocused();
+    await page.keyboard.type("投毒");
+    const firstOpt = page.getByRole("option").first();
+    await firstOpt.waitFor();
+    await expect(firstOpt).toContainText("投毒");
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/\/lab\/corruption-sandbox|\/research/);
+  });
 });

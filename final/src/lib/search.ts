@@ -63,6 +63,12 @@ export function buildIndex(): SearchRecord[] {
 
   projects.forEach((p, i) => {
     const cs = cases.find((c) => c.projectId === p.id);
+    const customKw =
+      p.id === "item-storage-app"
+        ? ["物品", "物品管理", "物资", "资产", "pwa", "local-first", "dexie", "indexeddb"]
+        : p.id === "soundisle"
+          ? ["声音", "音频", "工作台", "声屿", "web audio", "canvas", "专注"]
+          : ["档案", "主页", "语录", "concordance"];
     records.push({
       id: `project-${p.id}`,
       type: "PROJECT",
@@ -72,6 +78,7 @@ export function buildIndex(): SearchRecord[] {
       route: cs ? `/work/${cs.slug}` : "/work",
       keywords: [
         ...p.tags.map((t) => t.toLowerCase()),
+        ...customKw,
         p.kind,
         String(p.year),
         "作品",
@@ -81,6 +88,10 @@ export function buildIndex(): SearchRecord[] {
   });
 
   cases.forEach((c) => {
+    const customKw =
+      c.slug === "item-storage-app"
+        ? ["物品", "物品管理", "物资", "资产", "pwa", "local-first", "dexie", "indexeddb"]
+        : ["声音", "音频", "工作台", "声屿", "web audio", "canvas", "专注"];
     records.push({
       id: `case-${c.slug}`,
       type: "CASE",
@@ -90,6 +101,7 @@ export function buildIndex(): SearchRecord[] {
       route: `/work/${c.slug}`,
       keywords: [
         ...c.stack.map((s) => s.toLowerCase()),
+        ...customKw,
         c.kicker.toLowerCase(),
         "案例",
         "复盘",
@@ -99,6 +111,14 @@ export function buildIndex(): SearchRecord[] {
   });
 
   researchTopics.forEach((t) => {
+    const customKw =
+      t.id === "poisoning"
+        ? ["投毒", "知识投毒", "恶意数据", "数据污染", "对抗攻击"]
+        : t.id === "robustness"
+          ? ["鲁棒性", "对抗", "可靠性", "评测"]
+          : t.id === "rag"
+            ? ["rag", "检索增强生成", "知识库"]
+            : [t.short.toLowerCase()];
     records.push({
       id: `topic-${t.id}`,
       type: "TOPIC",
@@ -106,7 +126,7 @@ export function buildIndex(): SearchRecord[] {
       hint: t.facetLine ?? t.blurb,
       coord: "§01",
       route: "/research",
-      keywords: [t.short.toLowerCase(), t.id, "研究", "方向", "rag"],
+      keywords: [t.short.toLowerCase(), t.id, ...customKw, "研究", "方向"],
     });
   });
 

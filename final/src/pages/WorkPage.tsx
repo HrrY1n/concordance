@@ -36,7 +36,7 @@ export default function WorkPage() {
     <PageShell
       meta={meta}
       register="plate"
-      lede="拒绝模板化卡片墙。每一件作品均配备完整且可核验的证据链（核心问题 → 实现步骤 → 真实存在交付物），并提供详尽的深度案例复盘与开源代码。"
+      lede="每一件作品均配备直观的真实运行图版、可核验的事实证据链（核心问题 → 关键解法 → 公开交付物），并附带深入的案例复盘与开源代码。"
     >
       <ol className="space-y-16 md:space-y-24">
         {projects.map((p, i) => {
@@ -97,7 +97,7 @@ export default function WorkPage() {
                         />
                         <div className="p-3 bg-inset/70 border-t border-line flex items-baseline justify-between text-xs text-ink-2 font-mono">
                           <span>{cs.hero.caption}</span>
-                          <span className="text-accent group-hover:underline">阅读完整复盘文章 →</span>
+                          <span className="text-accent group-hover:underline">阅读案例复盘 →</span>
                         </div>
                       </Link>
                     </div>

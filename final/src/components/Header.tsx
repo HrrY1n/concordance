@@ -31,7 +31,7 @@ function ThemeToggle() {
       type="button"
       onClick={cycle}
       aria-label={`Color scheme: ${choice}. Activate to switch to ${next}. 当前色彩主题：${labelMap[choice]}，点击切换至${nextMap[choice]}`}
-      className="t-meta text-ink-2 hover:text-ink min-h-[44px] px-2 transition-colors font-mono"
+      className="t-meta text-ink-2 hover:text-ink min-h-[44px] px-2.5 transition-colors font-mono whitespace-nowrap shrink-0"
     >
       {labelMap[choice]}
     </button>
@@ -102,11 +102,11 @@ export function Header({
       <div className="wrap flex h-16 items-center gap-2 md:gap-4">
         <Link
           to="/"
-          className="group flex min-h-[44px] items-center gap-2.5 pr-2 transition-opacity hover:opacity-85"
-          aria-label={`${brand} — 首页 (home)`}
+          className="group flex min-h-[44px] min-w-0 shrink items-center gap-2 pr-1.5 transition-opacity hover:opacity-85"
+          aria-label={`${brand} — 首页`}
         >
-          <Mark className="h-[18px] w-[18px] text-ink" />
-          <span className="t-entry tracking-[0.01em] font-medium">{brand}</span>
+          <Mark className="h-[18px] w-[18px] text-ink shrink-0" />
+          <span className="t-entry tracking-[0.01em] font-medium truncate">{brand}</span>
         </Link>
 
         <nav aria-label="全站章节导航" className="ml-4 hidden flex-1 lg:block">
@@ -143,13 +143,13 @@ export function Header({
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
+        <div className="ml-auto flex items-center gap-1 sm:gap-1.5 lg:ml-0 shrink-0">
           <ThemeToggle />
           <button
             type="button"
             onClick={onOpenPalette}
             aria-label={`${site.searchLabel} — 按 / 键检索 (press slash)`}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded text-ink-2 transition-colors hover:text-ink hover:bg-inset"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded text-ink-2 transition-colors hover:text-ink hover:bg-inset shrink-0"
           >
             <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
               <circle cx="9" cy="9" r="5.5" />
@@ -160,8 +160,8 @@ export function Header({
           <button
             type="button"
             onClick={onOpenMenu}
-            aria-label="打开网站索引 (Open site index)"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded text-ink-2 transition-colors hover:text-ink hover:bg-inset lg:hidden"
+            aria-label="打开网站导航目录 (Open site index)"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded text-ink-2 transition-colors hover:text-ink hover:bg-inset lg:hidden shrink-0"
           >
             <svg viewBox="0 0 20 20" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
               <path d="M2 5h16M2 10h16M2 15h16" />

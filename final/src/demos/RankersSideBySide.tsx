@@ -44,12 +44,12 @@ export function RankersSideBySide() {
 
       <div className="flex flex-wrap items-center gap-3 border-b border-line px-5 py-4 md:px-7">
         <button type="button" aria-pressed={injected} onClick={() => setInjected((v) => !v)} className="u-btn">
-          {injected ? "移除投毒文档 (Remove poisoned document)" : "注入对抗性投毒文档 (Inject poisoned document d8)"}
+          {injected ? "移除投毒文档" : "注入对抗性投毒文档 (d8)"}
         </button>
         <p className="t-meta text-ink-2 font-mono text-xs" aria-live="polite">
           {disagree
             ? `算法分歧：BM25 首位为 ${top1.bm}，而 TF·IDF 首位为 ${top1.tf}`
-            : `两套算法首位取得一致：${top1.bm} (both rankers agree on top-1: ${top1.bm})`}
+            : `两套算法首位取得一致：${top1.bm}`}
         </p>
       </div>
 

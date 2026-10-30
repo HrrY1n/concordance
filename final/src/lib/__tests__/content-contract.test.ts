@@ -227,4 +227,28 @@ describe("palette index", () => {
     const empty = queryRecords(index, "");
     expect(empty[0]?.type).toBe("PAGE");
   });
+
+  it("indexes and accurately matches core Chinese keywords (投毒, 鲁棒性, 物品管理, 声音)", () => {
+    const index = buildIndex();
+
+    // 1. 投毒 -> 命中知识投毒主题与沙盒
+    const rPoison = queryRecords(index, "投毒");
+    expect(rPoison.length).toBeGreaterThan(0);
+    expect(rPoison.some((r) => r.id === "topic-poisoning" || r.id === "demo-corruption-sandbox")).toBe(true);
+
+    // 2. 鲁棒性 -> 命中 RAG 鲁棒性方向
+    const rRobust = queryRecords(index, "鲁棒性");
+    expect(rRobust.length).toBeGreaterThan(0);
+    expect(rRobust.some((r) => r.id === "topic-robustness")).toBe(true);
+
+    // 3. 物品管理 -> 命中 Private Item Library 项目与案例
+    const rItem = queryRecords(index, "物品管理");
+    expect(rItem.length).toBeGreaterThan(0);
+    expect(rItem.some((r) => r.id === "project-item-storage-app" || r.id === "case-item-storage-app")).toBe(true);
+
+    // 4. 声音 -> 命中 SoundIsle 项目与案例
+    const rSound = queryRecords(index, "声音");
+    expect(rSound.length).toBeGreaterThan(0);
+    expect(rSound.some((r) => r.id === "project-soundisle" || r.id === "case-soundisle")).toBe(true);
+  });
 });

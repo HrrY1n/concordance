@@ -138,33 +138,31 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ——— REGISTER PLATE —— 首页首屏：强化个人主理身份与研究/工程双重视角 */}
+      {/* ——— REGISTER PLATE —— 首页首屏：个人主页与研究/工程双重视角 */}
       <section
         aria-labelledby="hero-title"
         data-live="true"
         data-section="home"
-        className="wrap flex min-h-[calc(100svh-4rem)] flex-col justify-center pb-14 pt-10 md:pt-16"
+        className="wrap flex flex-col justify-center pb-8 pt-6 sm:pb-12 sm:pt-10 md:min-h-[calc(100svh-4rem)] md:pb-14 md:pt-16"
       >
         <div className="max-w-[58rem]">
-          {/* 主理人与定位标签 */}
-          <div className="settle flex flex-wrap items-center gap-x-3 gap-y-1.5" style={{ "--settle-i": 0 } as React.CSSProperties}>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-accent/15 text-accent border border-accent/20">
-              主理人 @{profile.handle}
+          {/* 自然学术署名 */}
+          <div className="settle flex flex-wrap items-center gap-x-2.5 gap-y-1" style={{ "--settle-i": 0 } as React.CSSProperties}>
+            <span className="font-mono text-xs md:text-sm text-ink font-medium">
+              @{profile.handle}
             </span>
-            <p className="t-meta text-ink-2 font-mono text-xs md:text-sm">
+            <span className="text-ink-2/40 text-xs" aria-hidden="true">/</span>
+            <p className="t-meta text-ink-2 text-xs md:text-sm font-mono">
               {heroIdentity}
             </p>
           </div>
 
-          {/* 双声部大标题：中文优先，具有古典学术文献与现代软件美感的排版 */}
-          <h1 id="hero-title" className="t-display settle mt-6 max-w-[26ch] tracking-tight leading-[1.15]" style={{ "--settle-i": 1 } as React.CSSProperties}>
+          {/* 双声部大标题：中文自然流畅，高度适中 */}
+          <h1 id="hero-title" className="settle mt-4 md:mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.2]" style={{ "--settle-i": 1 } as React.CSSProperties}>
             <span className="block text-ink">
               {site.heroSans[0]}
             </span>
-            <span className="block text-ink mt-1">
-              {site.heroSans[1]}
-            </span>
-            <span className="t-serif-voice block text-accent font-normal mt-2">
+            <span className="t-serif-voice block text-accent font-normal mt-1 md:mt-2">
               {site.heroSerif}
               <span aria-hidden="true" className="caret ml-1" />
             </span>
@@ -172,15 +170,15 @@ export default function HomePage() {
 
           {/* 阐述副标题 */}
           <p
-            className="t-lede text-ink-2 settle mt-7 max-w-[56ch] leading-relaxed"
+            className="t-lede text-ink-2 settle mt-4 md:mt-5 max-w-[54ch] leading-relaxed text-sm md:text-base"
             style={{ "--settle-i": 2 } as React.CSSProperties}
           >
             {site.heroLede}
           </p>
 
-          {/* 核心检索词汇快捷入口（Facets Chips） */}
+          {/* 核心检索词汇快捷入口 */}
           <div
-            className="mt-8 flex flex-wrap items-center gap-2.5"
+            className="mt-6 md:mt-8 flex flex-wrap items-center gap-2"
             role="group"
             aria-label="快速检索建议词 —— 点击直接唤出检索面板"
           >
@@ -199,28 +197,28 @@ export default function HomePage() {
           </div>
 
           {/* 关键行动入口按钮组 */}
-          <div className="settle mt-10 flex flex-wrap items-center gap-4" style={{ "--settle-i": 3 } as React.CSSProperties}>
+          <div className="settle mt-7 md:mt-10 flex flex-wrap items-center gap-3 md:gap-4" style={{ "--settle-i": 3 } as React.CSSProperties}>
             <Link
               to="/work"
-              className="inline-flex min-h-[48px] items-center justify-center px-6 rounded border border-line-strong bg-ink text-bg font-medium text-sm transition-all hover:opacity-90 hover:shadow-md"
+              className="inline-flex min-h-[44px] md:min-h-[48px] items-center justify-center px-5 md:px-6 rounded border border-line-strong bg-ink text-bg font-medium text-sm transition-all hover:opacity-90 hover:shadow-md"
             >
-              浏览精选作品 (View Work) →
+              浏览精选作品 →
             </Link>
             <Link
               to="/research"
-              className="inline-flex min-h-[48px] items-center justify-center px-5 rounded border border-line bg-raised text-ink text-sm font-medium transition-colors hover:bg-inset"
+              className="inline-flex min-h-[44px] md:min-h-[48px] items-center justify-center px-4 md:px-5 rounded border border-line bg-raised text-ink text-sm font-medium transition-colors hover:bg-inset"
             >
               §01 研究方向
             </Link>
             <Link
               to="/lab"
-              className="inline-flex min-h-[48px] items-center justify-center px-5 rounded border border-line bg-raised text-ink text-sm font-medium transition-colors hover:bg-inset"
+              className="inline-flex min-h-[44px] md:min-h-[48px] items-center justify-center px-4 md:px-5 rounded border border-line bg-raised text-ink text-sm font-medium transition-colors hover:bg-inset"
             >
               §03 实验仪器
             </Link>
             <Link
               to="/about"
-              className="u-link t-small inline-flex min-h-[48px] items-center px-3"
+              className="u-link t-small inline-flex min-h-[44px] md:min-h-[48px] items-center px-2 md:px-3 text-sm"
             >
               关于档案与我 →
             </Link>
@@ -228,17 +226,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ——— REGISTER PLATE —— 精选作品展示（Selected Work）：重度视觉增强图版 */}
+      {/* ——— REGISTER PLATE —— 精选作品展示（Selected Work）：视觉优先图版 */}
       <Section
         meta={sections.find((s) => s.id === "work")!}
         register="plate"
-        lede="拒绝千篇一律的卡片瀑布流。每一件作品均配备直观的真实运行图版、可核验的公开代码仓库与完整的工程证据链。"
+        lede="真实可用的软件作品，每项均配备直观的运行界面图版、公开代码仓库与深入的工程案例复盘。"
       >
-        <div className="space-y-16 md:space-y-24">
+        <div className="space-y-12 md:space-y-20">
           {/* 旗舰作品 1: Private Item Library */}
-          <article className="border border-line bg-raised/50 p-6 md:p-10 rounded-sm">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-              <span className="t-meta t-caps text-accent font-mono font-medium">
+          <article className="border border-line bg-raised/50 p-5 md:p-8 rounded-sm">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-3">
+              <span className="t-meta text-accent font-mono font-medium text-xs md:text-sm">
                 PLATE 01 · 旗舰作品 · 本地优先物资归置 PWA
               </span>
               <span className="t-meta text-ink-2 font-mono text-xs">
@@ -246,34 +244,48 @@ export default function HomePage() {
               </span>
             </div>
 
-            <div className="mt-4 grid gap-8 lg:grid-cols-12 lg:items-start">
-              <div className="lg:col-span-5">
-                <h3 className="t-h1 text-2xl md:text-3xl font-medium tracking-tight">
-                  <Link to="/work/item-storage-app" className="hover:text-accent transition-colors">
-                    Private Item Library
-                  </Link>
-                </h3>
-                <p className="t-lede text-ink-2 mt-4 text-sm md:text-base leading-relaxed">
-                  本地优先的个人私密物资与资产管理应用。数据完全驻留设备端 IndexedDB，
-                  支持物品全生命周期追踪、持有成本与日均折算、点阵保修倒计时、校验 ZIP 备份恢复及配对码增量同步。
-                </p>
+            <div className="mt-5 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 lg:items-start">
+              {/* 真实界面图版 —— 移动端优先显示大图 */}
+              <div className="lg:col-span-7 order-first lg:order-last">
+                <Link to="/work/item-storage-app" className="group block overflow-hidden border border-line bg-raised rounded shadow-sm hover:shadow-md transition-shadow">
+                  <img
+                    src={`${import.meta.env.BASE_URL}cases/item-storage-app/09-desktop-home-light.png`}
+                    alt="Private Item Library 桌面端资产看板：侧栏导航、宽屏资产与成本看板、物品网格与保修提醒"
+                    width={1440}
+                    height={1000}
+                    loading="lazy"
+                    decoding="async"
+                    className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                  />
+                  <div className="p-2.5 bg-inset/70 border-t border-line flex items-baseline justify-between text-xs text-ink-2 font-mono">
+                    <span>桌面端看板实拍（1440×1000）</span>
+                    <span className="text-accent group-hover:underline">点击进入案例 →</span>
+                  </div>
+                </Link>
+              </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {["React 19", "TypeScript", "Dexie 4", "IndexedDB", "PWA", "Local-first"].map((tag) => (
-                    <span key={tag} className="px-2 py-0.5 text-xs font-mono border border-line rounded bg-inset text-ink-2">
-                      {tag}
-                    </span>
-                  ))}
+              {/* 标题、精简摘要与操作入口 */}
+              <div className="lg:col-span-5 flex flex-col justify-between">
+                <div>
+                  <h3 className="t-h1 text-xl md:text-2xl lg:text-3xl font-medium tracking-tight">
+                    <Link to="/work/item-storage-app" className="hover:text-accent transition-colors">
+                      Private Item Library
+                    </Link>
+                  </h3>
+                  <p className="t-lede text-ink-2 mt-3 text-sm md:text-base leading-relaxed">
+                    无需云端服务器的私有物品与开销管理工具。数据纯本地持久化，支持全生命周期追踪、日均持有成本、点阵保修倒计时与配对码可选同步。
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {["React 19", "Dexie 4", "IndexedDB", "PWA", "Local-first"].map((tag) => (
+                      <span key={tag} className="px-2 py-0.5 text-xs font-mono border border-line rounded bg-inset text-ink-2">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="mt-6 border-l-2 border-accent/40 pl-4 space-y-1.5 text-xs text-ink-2">
-                  <p className="font-mono text-ink font-medium">核心事实证据：</p>
-                  <p>· 10+ 单元测试覆盖 Schema 迁移与 fake-indexeddb 仓库</p>
-                  <p>· 220 套高清透明立体插画图标体系，浅深双色共用</p>
-                  <p>· 14 张真实界面无损截图留档，零私人隐私侵入</p>
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5">
                   <Link
                     to="/work/item-storage-app"
                     className="inline-flex min-h-[44px] items-center px-4 rounded bg-ink text-bg font-medium text-sm transition-opacity hover:opacity-90"
@@ -285,32 +297,13 @@ export default function HomePage() {
                   </XRef>
                 </div>
               </div>
-
-              {/* 真实界面图版 */}
-              <div className="lg:col-span-7">
-                <Link to="/work/item-storage-app" className="group block overflow-hidden border border-line bg-raised rounded shadow-sm hover:shadow-md transition-shadow">
-                  <img
-                    src={`${import.meta.env.BASE_URL}cases/item-storage-app/09-desktop-home-light.png`}
-                    alt="Private Item Library 桌面端资产看板：侧栏导航、宽屏资产与成本看板、物品网格与保修提醒"
-                    width={1440}
-                    height={1000}
-                    loading="lazy"
-                    decoding="async"
-                    className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
-                  />
-                  <div className="p-3 bg-inset/70 border-t border-line flex items-baseline justify-between text-xs text-ink-2 font-mono">
-                    <span>桌面端完整看板（1440×1000 真实实测截图）</span>
-                    <span className="text-accent group-hover:underline">点击查看案例详情 →</span>
-                  </div>
-                </Link>
-              </div>
             </div>
           </article>
 
           {/* 旗舰作品 2: SoundIsle · 声屿 */}
-          <article className="border border-line bg-raised/50 p-6 md:p-10 rounded-sm">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-              <span className="t-meta t-caps text-accent font-mono font-medium">
+          <article className="border border-line bg-raised/50 p-5 md:p-8 rounded-sm">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-3">
+              <span className="t-meta text-accent font-mono font-medium text-xs md:text-sm">
                 PLATE 02 · 创意编程 · 纯算法合成 Web Audio 工作台
               </span>
               <span className="t-meta text-ink-2 font-mono text-xs">
@@ -318,34 +311,48 @@ export default function HomePage() {
               </span>
             </div>
 
-            <div className="mt-4 grid gap-8 lg:grid-cols-12 lg:items-start">
-              <div className="lg:col-span-5">
-                <h3 className="t-h1 text-2xl md:text-3xl font-medium tracking-tight">
-                  <Link to="/work/soundisle" className="hover:text-accent transition-colors">
-                    SoundIsle · 声屿
-                  </Link>
-                </h3>
-                <p className="t-lede text-ink-2 mt-4 text-sm md:text-base leading-relaxed">
-                  纯前端程序化合成的声音专注空间。零外部音频素材依赖，基于 Web Audio 节点网络实时合成 6 组环境音景，
-                  配合随实时频谱律动的 Canvas 夜海交互场景与防后台漂移专注计时器。打包体积仅 35 KB JavaScript。
-                </p>
+            <div className="mt-5 flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 lg:items-start">
+              {/* 真实界面图版 —— 移动端优先显示大图 */}
+              <div className="lg:col-span-7 order-first lg:order-last">
+                <Link to="/work/soundisle" className="group block overflow-hidden border border-line bg-raised rounded shadow-sm hover:shadow-md transition-shadow">
+                  <img
+                    src={`${import.meta.env.BASE_URL}cases/soundisle/hero-night-sea.png`}
+                    alt="SoundIsle 默认夜海全景视图：明月与星空、波浪、中央极简计时器与 6 轨混音台"
+                    width={1280}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
+                    className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
+                  />
+                  <div className="p-2.5 bg-inset/70 border-t border-line flex items-baseline justify-between text-xs text-ink-2 font-mono">
+                    <span>静谧夜海全景（1280×800 纯代码无损实拍）</span>
+                    <span className="text-accent group-hover:underline">点击进入案例 →</span>
+                  </div>
+                </Link>
+              </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {["Web Audio API", "Canvas 2D", "TypeScript", "音频算法", "零资源依赖"].map((tag) => (
-                    <span key={tag} className="px-2 py-0.5 text-xs font-mono border border-line rounded bg-inset text-ink-2">
-                      {tag}
-                    </span>
-                  ))}
+              {/* 标题、精简摘要与操作入口 */}
+              <div className="lg:col-span-5 flex flex-col justify-between">
+                <div>
+                  <h3 className="t-h1 text-xl md:text-2xl lg:text-3xl font-medium tracking-tight">
+                    <Link to="/work/soundisle" className="hover:text-accent transition-colors">
+                      SoundIsle · 声屿
+                    </Link>
+                  </h3>
+                  <p className="t-lede text-ink-2 mt-3 text-sm md:text-base leading-relaxed">
+                    完全由算法与纯代码合成的环境音专注工作台。零音频采样加载，实时合成 6 轨环境声，夜海波浪随音频频谱物理律动，体积仅 35 KB。
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {["Web Audio API", "Canvas 2D", "TypeScript", "音频算法", "零资源依赖"].map((tag) => (
+                      <span key={tag} className="px-2 py-0.5 text-xs font-mono border border-line rounded bg-inset text-ink-2">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="mt-6 border-l-2 border-accent/40 pl-4 space-y-1.5 text-xs text-ink-2">
-                  <p className="font-mono text-ink font-medium">核心事实证据：</p>
-                  <p>· 零 MP3/WAV 采样下载，代码体积仅 35 KB</p>
-                  <p>· 波浪物理振幅与月径碎光直接绑定各声道实时频谱数据</p>
-                  <p>· 7 轮抗削波失真与时钟防漂移调校记录公开可核查</p>
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5">
                   <Link
                     to="/work/soundisle"
                     className="inline-flex min-h-[44px] items-center px-4 rounded bg-ink text-bg font-medium text-sm transition-opacity hover:opacity-90"
@@ -357,34 +364,15 @@ export default function HomePage() {
                   </XRef>
                 </div>
               </div>
-
-              {/* 真实界面图版 */}
-              <div className="lg:col-span-7">
-                <Link to="/work/soundisle" className="group block overflow-hidden border border-line bg-raised rounded shadow-sm hover:shadow-md transition-shadow">
-                  <img
-                    src={`${import.meta.env.BASE_URL}cases/soundisle/hero-night-sea.png`}
-                    alt="SoundIsle 默认夜海全景视图：明月与星空、波浪、中央极简计时器与 6 轨混音台"
-                    width={1280}
-                    height={800}
-                    loading="lazy"
-                    decoding="async"
-                    className="block w-full h-auto transition-transform duration-300 group-hover:scale-[1.01]"
-                  />
-                  <div className="p-3 bg-inset/70 border-t border-line flex items-baseline justify-between text-xs text-ink-2 font-mono">
-                    <span>静谧夜海全景（1280×800 纯代码无损实拍）</span>
-                    <span className="text-accent group-hover:underline">点击查看案例详情 →</span>
-                  </div>
-                </Link>
-              </div>
             </div>
           </article>
 
           {/* 元项目: Concordance */}
           <article className="border-t border-line pt-8 flex flex-wrap items-baseline justify-between gap-4">
             <div>
-              <p className="t-meta text-accent font-mono">PLATE 03 · 档案本体</p>
-              <h4 className="t-h3 mt-1 font-medium">Concordance · 个人研究与作品档案</h4>
-              <p className="t-small text-ink-2 mt-2 max-w-[54ch]">
+              <p className="t-meta text-accent font-mono text-xs">PLATE 03 · 档案本体</p>
+              <h4 className="t-h3 mt-1 font-medium text-lg">Concordance · 个人研究与作品档案</h4>
+              <p className="t-small text-ink-2 mt-2 max-w-[54ch] text-sm leading-relaxed">
                 以书籍索引为隐喻构建的数据驱动型个人网站。全站内容皆为类型化 TypeScript 数据，所有统计与图版皆为纯前端运算。
               </p>
             </div>

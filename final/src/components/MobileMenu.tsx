@@ -102,7 +102,7 @@ export function MobileMenu({
       ref={panelRef}
       role="dialog"
       aria-modal="true"
-      aria-label="全站索引目录 (Site index)"
+      aria-label="全站导航目录"
       className="fixed inset-0 z-50 flex flex-col bg-bg"
       style={{
         paddingTop: "env(safe-area-inset-top)",
@@ -121,7 +121,7 @@ export function MobileMenu({
           ref={closeRef}
           type="button"
           onClick={onClose}
-          aria-label="关闭网站索引 (Close site index)"
+          aria-label="关闭网站导航目录"
           className="flex min-h-[44px] min-w-[44px] items-center justify-center text-ink-2 transition-colors hover:text-ink"
         >
           <svg viewBox="0 0 20 20" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
